@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:9.4
+    ports:
+      - 127.0.0.1:5432:5432
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: db
+
+  dbt:
+    build: .
+    volumes:
+      - ./:/dbt/
+    entrypoint: ["/bin/bash", "-c", "dbt run --profiles-dir .dbt --profile medic"]
+    working_dir: /dbt/
