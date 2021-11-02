@@ -1,0 +1,1 @@
+SELECT * FROM {{ env_var('POSTGRES_TABLE') }} LIMIT 10

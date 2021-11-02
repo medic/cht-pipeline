@@ -1,6 +1,11 @@
 version: '3.7'
 
 services:
+  logstash:
+    depends_on:
+      - couchdb
+      - elasticsearch
+
   couchdb:
     image: couchdb
     restart: always

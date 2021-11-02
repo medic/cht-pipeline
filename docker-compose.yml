@@ -3,6 +3,8 @@ version: '3.7'
 services:
   elasticsearch:
     image: elasticsearch:7.14.1
+    logging:
+      driver: none
     environment:
       - discovery.type=single-node
 
@@ -10,7 +12,6 @@ services:
     image: logstash:7.14.1
     restart: always
     depends_on:
-      - couchdb
       - elasticsearch
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
@@ -56,7 +57,14 @@ services:
 
   dbt:
     build: .
+    depends_on:
+      - postgres
     volumes:
       - ./:/dbt/
     entrypoint: ["/bin/bash", "-c", "dbt run --profiles-dir .dbt --profile medic"]
     working_dir: /dbt/
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_TABLE=${POSTGRES_TABLE}
