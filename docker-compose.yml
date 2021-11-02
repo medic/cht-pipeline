@@ -1,13 +1,58 @@
 version: '3.7'
 
 services:
-  postgres:
-    image: postgres:9.4
-    ports:
-      - 127.0.0.1:5432:5432
+  elasticsearch:
+    image: elasticsearch:7.14.1
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: db
+      - discovery.type=single-node
+
+  logstash:
+    image: logstash:7.14.1
+    restart: always
+    depends_on:
+      - couchdb
+      - elasticsearch
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    environment:
+      - COUCHDB_USER=${COUCHDB_USER}
+      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+      - COUCHDB_DB=${COUCHDB_DB}
+      - COUCHDB_HOST=${COUCHDB_HOST}
+      - POSTGRES_TABLE=${POSTGRES_TABLE}
+      - HTTP_ENDPOINT=postgrest:3000
+
+  postgres:
+    image: postgres:13
+    restart: always
+    volumes:
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_TABLE=${POSTGRES_TABLE}
+
+  postgrest:
+    image: nginx
+    restart: always
+    environment:
+      - HOST=${COMPOSE_PROJECT_NAME}_postgrest-cluster
+      - PORT=3000
+    volumes:
+      - ./load-balancer.conf.template:/etc/nginx/templates/default.conf.template:ro
+
+  postgrest-cluster:
+    image: postgrest/postgrest
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 2
+    environment:
+      - PGRST_DB_URI=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - PGRST_DB_SCHEMA=public
+      # CHANGE FOR PROD!!!!
+      - PGRST_DB_ANON_ROLE=${POSTGRES_USER}
 
   dbt:
     build: .
