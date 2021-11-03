@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+for POSTGRES_TABLE in $POSTGRES_TABLES
+do
+
+echo Creating $POSTGRES_TABLE
+
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE TABLE public.$POSTGRES_TABLE (
         "@version" TEXT,
@@ -12,3 +17,5 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         UNIQUE ("_id", "_rev")
     );
 EOSQL
+
+done
