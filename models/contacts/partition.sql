@@ -1,1 +1,12 @@
-SELECT * FROM {{ env_var('POSTGRES_TABLE') }} LIMIT 10
+{{
+    config(
+        materialized = 'table',
+        indexes=[
+            {'columns': ['"@timestamp"'], 'type': 'brin'},
+        ]
+    )
+}}
+
+SELECT
+    *
+FROM {{ env_var('POSTGRES_TABLE') }}

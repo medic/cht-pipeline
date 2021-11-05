@@ -16,6 +16,9 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         doc_as_upsert BOOLEAN,
         UNIQUE ("_id", "_rev")
     );
+    CREATE INDEX CONCURRENTLY time_index_$POSTGRES_TABLE
+    ON public.$POSTGRES_TABLE
+    USING BRIN ("@timestamp");
 EOSQL
 
 done
