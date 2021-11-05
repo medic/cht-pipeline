@@ -16,4 +16,5 @@ gamma: down
 			logstash \
 			postgres \
 			postgrest \
-			postgrest-cluster
+			postgrest-cluster \
+			dbt
