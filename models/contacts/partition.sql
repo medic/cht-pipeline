@@ -9,7 +9,7 @@
 
 SELECT
     *
-FROM {{ env_var('POSTGRES_TABLE') }}
+FROM {{ ref('couchdb') }}
 
 {% if is_incremental() %}
   WHERE "@timestamp" > (SELECT max("@timestamp") FROM {{ this }})

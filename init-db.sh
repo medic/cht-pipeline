@@ -6,8 +6,13 @@ do
 
 echo Creating $POSTGRES_TABLE
 
+## DO NOT put any additional SQL here
+#
+#  Put all SQL into DBT. Bootstrapping should be the absolute minimum
+#
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-    CREATE TABLE public.$POSTGRES_TABLE (
+    CREATE SCHEMA IF NOT EXISTS $POSTGRES_SCHEMA AUTHORIZATION $POSTGRES_USER;
+    CREATE TABLE $POSTGRES_SCHEMA.$POSTGRES_TABLE (
         "@version" TEXT,
         "@timestamp" TIMESTAMP,
         "_id" TEXT,
@@ -16,9 +21,6 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         doc_as_upsert BOOLEAN,
         UNIQUE ("_id", "_rev")
     );
-    CREATE INDEX CONCURRENTLY time_index_$POSTGRES_TABLE
-    ON public.$POSTGRES_TABLE
-    USING BRIN ("@timestamp");
 EOSQL
 
 done
