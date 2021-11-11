@@ -1,0 +1,18 @@
+{
+  "type": "health_center",
+  "parent": {
+    "type": "district_hospital",
+    "parent": "",
+    "is_name_generated": "false",
+    "name": "Pregnancies",
+    "external_id": "",
+    "notes": "",
+    "geolocation": "",
+    "reported_date": 1544031155715,
+    "_id": "fc9928ae-9f48-5d2d-8a0f-222b2389f77f"
+  },
+  "is_name_generated": "FALSE",
+  "name": "HC15",
+  "reported_date": 1544031155715,
+  "_id": "13a8c26b-18cf-571d-87f8-5da84b3e7098"
+}
