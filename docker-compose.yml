@@ -23,21 +23,6 @@ services:
       - POSTGRES_TABLE=${POSTGRES_TABLE}
       - HTTP_ENDPOINT=postgrest:3000
 
-  logstash-sentinel:
-    image: logstash:7.14.1
-    restart: always
-    depends_on:
-      - elasticsearch
-    volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:z
-    environment:
-      - COUCHDB_USER=${COUCHDB_USER}
-      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
-      - COUCHDB_DB=${COUCHDB_DB}_sentinel
-      - COUCHDB_HOST=${COUCHDB_HOST}
-      - POSTGRES_TABLE=${POSTGRES_TABLE}_sentinel
-      - HTTP_ENDPOINT=postgrest:3000
-
   postgres:
     image: timescale/timescaledb:2.5.0-pg12
     restart: always
