@@ -7,4 +7,7 @@
     )
 }}
 
-SELECT * FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
+SELECT
+    doc->>'type' AS type,
+    *
+FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}

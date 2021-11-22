@@ -35,6 +35,6 @@ models:
     type_partitions:
         root:
             materialized: view
-        contacts:
+        types:
             materialized: incremental
 
