@@ -37,4 +37,6 @@ models:
             materialized: view
         types:
             materialized: incremental
+        contact_views:
+            materialized: view
 
