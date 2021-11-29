@@ -1,15 +1,19 @@
-Welcome to your new dbt project!
+# CHT Pipeline (EXPERIMENTAL)
 
-### Using the starter project
+CHT Pipeline brings data from CouchDB to Postgres, with transformations to make the data efficient to query.
 
-Try running the following commands:
-- dbt run
-- dbt test
+You can deploy this as is, or with a **subpackage** like https://github.com/medic/cht-bombilla.
 
+### Deployment
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](http://slack.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+```
+# ONLY IF USING SUBPACKAGE
+export CHT_PIPELINE_SUBPACKAGE=https://github.com/medic/cht-bombilla.git
+
+export CHT_PIPELINE_STAGE=local # OR gamma/prod
+make $STAGE
+```
+
+### Subpackage
+
+Subpackages make use of https://docs.getdbt.com/docs/building-a-dbt-project/package-management to deploy a package that makes transformation in DBT
