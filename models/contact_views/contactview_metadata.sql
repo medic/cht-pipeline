@@ -1,3 +1,15 @@
+{{
+    config(
+        materialized = 'view',
+        indexes=[
+            {'columns': ['contact_uuid']},
+            {'columns': ['parent_uuid']},
+            {'columns': ['type']},
+            {'columns': ['uuid']},
+        ]
+    )
+}}
+
 SELECT
     raw_contacts.doc ->> '_id'::text AS uuid,
     raw_contacts.doc ->> 'name'::text AS name,
