@@ -1,0 +1,3 @@
+packages:
+  - git: {{ env_var("CHT_PIPELINE_SUBPACKAGE") }}
+    revision: {{ env_var("CHT_PIPELINE_SUBPACKAGE_VERSION") }}

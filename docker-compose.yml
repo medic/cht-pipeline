@@ -62,7 +62,9 @@ services:
       - postgres
     volumes:
       - ./:/dbt/:z
-    entrypoint: ["/bin/bash", "-c", "while true; do dbt run --profiles-dir .dbt --profile medic; sleep 5s; done"]
+      - ./dbt-run.sh:/dbt/dbt-run.sh:z
+    entrypoint: ["/bin/bash"]
+    command: "/dbt/dbt-run.sh"
     working_dir: /dbt/
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
