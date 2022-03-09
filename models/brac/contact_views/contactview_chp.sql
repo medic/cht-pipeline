@@ -9,6 +9,7 @@
         ]
     )
 }}
+
 SELECT contactview_chw.name,
     contactview_chw.uuid,
     contactview_chw.phone,

@@ -8,6 +8,7 @@
         ]
     )
 }}
+
 SELECT
     doc ->> '_id'::text AS uuid,
     doc #>> '{parent,contact,_id}'::text[] AS chw,
