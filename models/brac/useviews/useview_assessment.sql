@@ -14,7 +14,7 @@
 }}
 
 SELECT  
-        {{ dbt_utils.surrogate_key([to_timestamp((NULLIF(form.doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision), uuid]) }} AS useview_assessment_reported_age_uuid,
+        {{ dbt_utils.surrogate_key(([to_timestamp((NULLIF(form.doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision)), uuid]) }} AS useview_assessment_reported_age_uuid,
         form.doc ->> '_id'::text AS uuid,
         form.doc #>> '{contact,_id}'::text[] AS chw,
         form.doc #>> '{contact,_id}'::text[] AS reported_by,
