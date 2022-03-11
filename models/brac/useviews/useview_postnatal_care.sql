@@ -16,7 +16,7 @@
 }}
   
 SELECT
-        {{ dbt_utils.surrogate_key([(doc #>> '{fields,follow_up_count}'::text[]), (to_timestamp((NULLIF(doc ->> 'reported_date', '')::bigint / 1000)::double precision)), (doc ->> '_id'::text])) }} AS useview_postnatal_care_count_reported_uuid,
+        {{ dbt_utils.surrogate_key([follow_up_count, reported, uuid]) }} AS useview_postnatal_care_count_reported_uuid,
 		doc ->> '_id'::text AS uuid,
 		doc ->> 'form'::text AS form,
 		doc #>> '{contact,_id}'::text[] AS chw,
