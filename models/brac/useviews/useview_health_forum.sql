@@ -1,7 +1,7 @@
 {{
     config(
         materialized = 'view',
-        unique_key="uuid"
+        unique_key="uuid",
         indexes=[
             {'columns': ['xmlforms_uuid']}         
         ]

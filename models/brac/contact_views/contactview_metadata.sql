@@ -5,7 +5,7 @@
             {'columns': ['contact_uuid']},
             {'columns': ['parent_uuid']},
             {'columns': ['type']},
-            {'columns': ['uuid']},
+            {'columns': ['uuid']}
         ]
     )
 }}

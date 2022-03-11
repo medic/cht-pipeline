@@ -5,7 +5,7 @@
             {'columns': ['area_uuid']},
             {'columns': ['branch_uuid']},
             {'columns': ['supervisor_uuid']},
-            {'columns': ['uuid']},
+            {'columns': ['uuid']}
         ]
     )
 }}
