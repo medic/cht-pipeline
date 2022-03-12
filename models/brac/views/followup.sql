@@ -4,4 +4,4 @@ SELECT
                     form,
                     longterm_fp_received,
                     reported
-                FROM formview_fp_patient_record
+                FROM {{ ref("formview_fp_patient_record") }};
