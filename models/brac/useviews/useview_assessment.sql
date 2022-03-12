@@ -84,5 +84,5 @@ SELECT
         form.doc #>> '{fields,group_deworm_vit, deworming_received}'::text[] AS deworming_received,
         NULLIF(form.doc #>> '{fields,group_nutrition_assessment, muac_score}'::text[], '')::double precision AS muac_score,
         form.doc #>> '{fields,group_nutrition_assessment, has_oedema}'::text[] AS has_oedema
-    FROM {{ ref("couchdb") }} form
+    FROM {{ ref("couchdb") }} AS form
     WHERE (form.doc ->> 'form'::text) = 'assessment'::text
