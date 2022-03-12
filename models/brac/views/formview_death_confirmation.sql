@@ -14,7 +14,7 @@ SELECT
         ) AS age_in_months,
         person.sex AS sex,
         to_timestamp((NULLIF(form.doc ->> 'reported_date', '')::bigint / 1000)::double precision) AS reported
-    FROM {{ ref("formview_fp_patient_record") }} form 
+    FROM {{ ref("couchdb") }} form 
     JOIN {{ ref("form_metadata") }} fm ON fm.uuid = (form.doc ->> '_id'::text)
     LEFT JOIN {{ ref("contactview_person") }} person ON person.uuid = (form.doc ->> '_id'::text)
-    WHERE doc ->> 'form' = 'death_confirmation'
+    WHERE form.doc ->> 'form' = 'death_confirmation'
