@@ -20,4 +20,4 @@ GROUP BY branch.uuid,
     chp.name,
     chp.phone,
     branch.area,
-    branch.region;
+    branch.region

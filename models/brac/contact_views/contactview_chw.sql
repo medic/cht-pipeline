@@ -12,4 +12,4 @@ SELECT
 FROM {{ ref("contactview_person_fields") }} AS pplfields  
   JOIN {{ ref("contactview_metadata") }} AS chw ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)
   JOIN {{ ref("contactview_metadata") }} AS meta ON meta.uuid = contactview_chw.uuid
-  WHERE pplfields.parent_type = 'health_center'::text;
+  WHERE pplfields.parent_type = 'health_center'::text

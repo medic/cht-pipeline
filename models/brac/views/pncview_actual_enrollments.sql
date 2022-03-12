@@ -18,4 +18,3 @@ SELECT
 		
 FROM
 	{{ ref("confirmed_deliveries_CTE") }} AS deliv
-	;

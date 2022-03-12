@@ -24,7 +24,7 @@ SELECT contactview_chw.name,
   FROM {{ ref("contactview_chw") }} AS contactview_chw  
   JOIN {{ ref("raw_contacts") }} AS raw_contacts ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)
   JOIN {{ ref("contactview_metadata") }} AS meta ON meta.uuid = contactview_chw.uuid
-  JOIN {{ ref("contactview_branch") }} AS branch ON contactview_chw.branch_uuid = branch.uuid;
+  JOIN {{ ref("contactview_branch") }} AS branch ON contactview_chw.branch_uuid = branch.uuid
 
 
   

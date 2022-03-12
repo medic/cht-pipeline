@@ -5,4 +5,4 @@ SELECT
     couchdb.doc->>'region' AS region
 FROM
     {{ ref("contactview_hospital") }}
-    INNER JOIN {{ ref("couchdb") }} ON (couchdb.doc ->> '_id'::text = contactview_hospital.uuid AND couchdb.doc ->> 'type' = 'district_hospital');
+    INNER JOIN {{ ref("couchdb") }} ON (couchdb.doc ->> '_id'::text = contactview_hospital.uuid AND couchdb.doc ->> 'type' = 'district_hospital')
