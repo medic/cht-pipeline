@@ -1,3 +1,15 @@
+{{
+    config(
+        materialized = 'view',
+        unique_key='uuid',
+        indexes=[
+            {'columns': ['patient_id']},
+            {'columns': ['parent_uuid']}
+        ]
+    )
+}}
+ 
+
 SELECT
 		doc->>'_id' AS uuid,
 		doc->>'name' AS name,
