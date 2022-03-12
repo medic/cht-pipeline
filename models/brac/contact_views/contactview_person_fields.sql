@@ -5,4 +5,4 @@ SELECT person.uuid,
 		parent.type AS parent_type
 	FROM {{ ref("contactview_metadata") }} person
 	LEFT JOIN {{ ref("contactview_metadata") }} parent ON person.parent_uuid = parent.uuid
-	WHERE person.type = 'person'::text;
+	WHERE person.type = 'person'::text

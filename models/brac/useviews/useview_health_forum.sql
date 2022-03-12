@@ -26,4 +26,4 @@ SELECT
  FROM {{ ref("couchdb") }}
  WHERE 
 (doc ->> 'type'::text) = 'data_record'::text
-AND (doc ->> 'form'::text) = 'health_forum'::text;
+AND (doc ->> 'form'::text) = 'health_forum'::text

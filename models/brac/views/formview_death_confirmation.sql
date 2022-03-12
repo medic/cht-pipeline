@@ -17,4 +17,4 @@ SELECT
     FROM {{ ref("formview_fp_patient_record") }} form 
     JOIN {{ ref("form_metadata") }} fm ON fm.uuid = (form.doc ->> '_id'::text)
     LEFT JOIN {{ ref("contactview_person") }} person ON person.uuid = (form.doc ->> '_id'::text)
-    WHERE doc ->> 'form' = 'death_confirmation';
+    WHERE doc ->> 'form' = 'death_confirmation'

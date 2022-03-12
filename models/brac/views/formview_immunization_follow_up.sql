@@ -15,4 +15,4 @@ SELECT
     FROM {{ ref("couchdb") }} form
     JOIN {{ ref("form_metadata") }} fm ON fm.uuid = (form.doc ->> '_id'::text)
     LEFT JOIN {{ ref("couchdb") }} patient ON (patient.doc ->> '_id'::text) = (form.doc #>> '{fields,patient_id}'::text[])
-    WHERE (form.doc ->> 'form'::text) = 'immunization_follow_up'::text;
+    WHERE (form.doc ->> 'form'::text) = 'immunization_follow_up'::text
