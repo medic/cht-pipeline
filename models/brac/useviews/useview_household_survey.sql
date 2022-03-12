@@ -21,4 +21,4 @@ SELECT
 FROM
     {{ ref("couchdb") }}
 WHERE
-    (doc ->> 'type') = 'clinic';
+    (doc ->> 'type') = 'clinic'
