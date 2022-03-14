@@ -14,7 +14,7 @@
 }}
 
 SELECT
-{{ dbt_utils.surrogate_key([reported, uuid]) }} AS useview_assessment_reported_age_uuid,
+{{ dbt_utils.surrogate_key('reported', 'uuid') }} AS useview_assessment_reported_age_uuid,
 *
 FROM(
     SELECT  
