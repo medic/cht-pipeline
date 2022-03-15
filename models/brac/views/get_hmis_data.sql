@@ -128,11 +128,11 @@ LEFT JOIN
 		meta.parent_uuid as area_uuid,
 		COUNT(person.uuid) FILTER(
 			WHERE extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int BETWEEN 12 AND 52  
-			AND person.sex ='female' AND (date_trunc('hour',person.reported)::DATE) <= date_trunc('hour','{{ var("end_date") }}')::DATE
+			AND person.sex ='female' AND (date_trunc('hour',(person.reported)::DATE)) <= date_trunc('hour',('{{ var("end_date") }}')::DATE)
 		) AS tot_eligible_women,
 		COUNT(person.uuid) FILTER(
 			WHERE extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int BETWEEN 12 AND 52  
-			AND person.sex ='female' AND (date_trunc('hour',person.reported)::DATE) <= (date_trunc('hour','{{ var("end_date") }}')::DATE - INTERVAL '1 months')
+			AND person.sex ='female' AND (date_trunc('hour',(person.reported)::DATE)) <= (date_trunc('hour',('{{ var("end_date") }}')::DATE) - INTERVAL '1 months')
 		) AS tot_eligible_women_old,
 		COUNT(DISTINCT person.parent_uuid) AS total_households
 	FROM 
