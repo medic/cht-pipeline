@@ -1,1 +1,1 @@
-{% set time_now =  {{ dbt_date.now() }} %} 
+{% set time_now =  dbt_date.now() %} 
