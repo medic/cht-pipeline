@@ -1,1 +1,1 @@
-{% set time_now =  SELECT date_trunc('day', NOW()) %} 
+{% set time_now =  ["bank_transfer", "credit_card", "gift_card"]  %} 
