@@ -1,4 +1,4 @@
-{% set time_now =  date_trunc('day', NOW()) }
+{% set time_now =  {{ dbt_utils.date_trunc('day', NOW()) }} } 
 
 {% endset %}
 
