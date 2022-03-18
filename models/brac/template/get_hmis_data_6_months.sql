@@ -1,7 +1,15 @@
+{% set time_now =  date_trunc('day', NOW()) }
+
+{% endset %}
+
+{% set time_six_months = date_trunc('day', NOW() - interval '6 month') }
+
+{% endset %}
+
 {% set six_months_ago %}
 SELECT
 
-{{get_hmis_data((date_trunc('day', NOW())), (date_trunc('day', NOW() - interval '6 month')))}}
+{{ get_hmis_data((time_now), (time_six_months)) }}
 
 {% endset %}
 
