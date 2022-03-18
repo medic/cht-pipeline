@@ -1,8 +1,8 @@
-{% set time_now =  {{ dbt_utils.date_trunc('day', NOW()) }} } 
+{% set time_now =  SELECT date_trunc('day', NOW()) } 
 
 {% endset %}
 
-{% set time_six_months = date_trunc('day', NOW() - interval '6 month') }
+{% set time_six_months = SELECT date_trunc('day', NOW() - interval '6 month') }
 
 {% endset %}
 
