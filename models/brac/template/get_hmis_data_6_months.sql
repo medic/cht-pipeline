@@ -5,5 +5,3 @@
 {% set results = time_six_months_ago %}
 
 {{ log(results, info=True) }}
-
-{{ return([]) }}
