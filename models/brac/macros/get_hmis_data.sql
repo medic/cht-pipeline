@@ -1,4 +1,4 @@
-{% macro get_hmis_data(start_date time timestamp, end_date timestamp) %}
+{% macro get_hmis_data(start_date timestamp, end_date timestamp) %}
 SELECT
 	period_chp.uuid AS chp_uuid,
 	period_chp.name,
