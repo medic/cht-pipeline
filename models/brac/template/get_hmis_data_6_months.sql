@@ -1,1 +1,1 @@
-{% set time_now =  ["bank_transfer", "credit_card", "gift_card"]  %} 
+{% set time_now =  SELECT 1 %} 
