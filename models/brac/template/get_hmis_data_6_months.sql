@@ -6,7 +6,7 @@
 
 SELECT
 
-{{ get_hmis_data(:time_now, :time_six_months_ago) }}
+{{ get_hmis_data(time_now, time_six_months_ago) }}
 
 {% endset %}
 
