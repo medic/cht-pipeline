@@ -9,5 +9,3 @@
 {{ log(results, info=True) }}
 
 {{ return([]) }}
-
-{% endset %}
