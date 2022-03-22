@@ -1,9 +1,4 @@
-\set time_now NOW()
-
-\set time_six_months_ago (date_trunc('day', NOW() - interval '6 month'))
-
-\set six_months_ago = SELECT {{ get_hmis_data(startDate=time_now, endDate=time_six_months_ago) }}
-
-\set results = run_query(six_months_ago)
-
-{{ log(results, info=True) }}
+{{ get_hmis_data(
+    startDate='2022-02-22 00:00:00.000 +0300', 
+    endDate='2021-09-22 00:00:00.000 +0300'
+)}}
