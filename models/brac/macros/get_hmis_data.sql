@@ -24,7 +24,7 @@ FROM
 	) AS period_chp
 {% endset %}
 
-{% set results = run_query(get_hmis_data_query)}
+{% set results = run_query(get_hmis_data_query) %}
 
 {% if execute %}
 {% set result_list=results.columns[0].values() %}
