@@ -6,10 +6,13 @@ name: 'pipeline'
 version: '0.0.1'
 config-version: 2
 
+# DBT Date
+
 vars:
   # The start_date variable will be accessible in all resources
   start_date: '2012-10-19 10:23:54'
   end_date: '2022-10-19 10:23:54'
+  'dbt_date:time_zone': 'Africa/Nairobi'
 
 # This setting configures which "profile" dbt uses for this project.
 profile: 'default'
