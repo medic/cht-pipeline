@@ -12,4 +12,11 @@
 
 {% set results = run_query(get_assessment_query) %}
 
-{{ log(results, info=True) }}
+{% if execute %}
+{# Return the first column #}
+{% set uuid_results_list = results.columns[0].values() %}
+{% else %}
+{% set uuid_results_list = [] %}
+{% endif %}
+
+{{ log(uuid_results_list, info=True) }}
