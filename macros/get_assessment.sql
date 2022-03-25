@@ -1,4 +1,4 @@
-{% macro get_hmis_data(startDate, endDate) %}
+{% macro get_assessment_data(startDate, endDate) %}
 
     SELECT  
             form.doc ->> '_id'::text AS uuid,
