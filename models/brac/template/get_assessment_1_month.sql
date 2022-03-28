@@ -3,7 +3,7 @@
         materialized = 'incremental',
         unique_key='uuid',
         indexes=[
-            {'columns': ['reported_date']},
+            {'columns': ['reported']},
             {'columns': ['reported_by_parent']}
         ]
     )
