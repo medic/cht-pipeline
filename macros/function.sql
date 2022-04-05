@@ -1,8 +1,10 @@
 {% materialization raw_sql, default %}
 
   {%- set target_relation = api.Relation.create(
-        identifier='hello', schema=schema, database=database,
-        type='raw_sql') -%}
+        identifier=this, schema=schema, database=database,
+        type='view') -%}
+
+  {{ run_hooks(pre_hooks) }}
 
   {% call statement('main') -%}
     {{ sql }}
