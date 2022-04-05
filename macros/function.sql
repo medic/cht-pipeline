@@ -1,7 +1,7 @@
 {% materialization raw_sql, default %}
 
   {%- set target_relation = api.Relation.create(
-        identifier=relation, schema=schema, database=database,
+        identifier='hello', schema=schema, database=database,
         type='raw_sql') -%}
 
   {% call statement('main') -%}
