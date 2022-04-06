@@ -1,12 +1,10 @@
 {{
     config(
-        materialized = 'view',
-        indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
-        ]
+        materialized = 'raw_sql',
     )
 }}
 
+CREATE VIEW {{ this }} AS
 SELECT
     doc->>'type' AS type,
     *
