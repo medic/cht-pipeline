@@ -1,15 +1,7 @@
-{{
-    config(
-        materialized = 'view',
-        indexes=[
-            {'columns': ['area_uuid']},
-            {'columns': ['branch_uuid']},
-            {'columns': ['supervisor_uuid']},
-            {'columns': ['uuid']}
-        ]
-    )
-}}
+{{ config(materialized = 'raw_sql') }}  
 
+CREATE MATERIALIZED VIEW contactview_chp AS
+(
 SELECT contactview_chw.name,
     contactview_chw.uuid,
     contactview_chw.phone,
@@ -25,6 +17,16 @@ SELECT contactview_chw.name,
   JOIN {{ ref("raw_contacts") }} AS raw_contacts ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)
   JOIN {{ ref("contactview_metadata") }} AS meta ON meta.uuid = contactview_chw.uuid
   JOIN {{ ref("contactview_branch") }} AS branch ON contactview_chw.branch_uuid = branch.uuid
+
+);
+
+CREATE INDEX contactview_chp_area_uuid ON public.contactview_chp USING btree (area_uuid);
+CREATE INDEX contactview_chp_branch_uuid ON public.contactview_chp USING btree (branch_uuid);
+CREATE INDEX contactview_chp_supervisor_uuid ON public.contactview_chp USING btree (supervisor_uuid);
+CREATE UNIQUE INDEX contactview_chp_uuid ON public.contactview_chp USING btree (uuid);
+
+ALTER  MATERIALIZED VIEW contactview_chp OWNER TO full_access;
+GRANT SELECT ON contactview_chp TO klipfolio, brac_access;
 
 
   
