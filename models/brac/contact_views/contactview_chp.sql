@@ -1,15 +1,3 @@
-{{
-    config(
-        materialized = 'view',
-        indexes=[
-            {'columns': ['area_uuid']},
-            {'columns': ['branch_uuid']},
-            {'columns': ['supervisor_uuid']},
-            {'columns': ['uuid']}
-        ]
-    )
-}}
-
 SELECT contactview_chw.name,
     contactview_chw.uuid,
     contactview_chw.phone,
