@@ -1,4 +1,5 @@
 {{ config(materialized = 'raw_sql') }}  
+
 SET search_path TO dbt;
 
 DROP FUNCTION IF EXISTS get_hmis_data(start_date timestamp, end_date timestamp) ;
@@ -245,7 +246,7 @@ LEFT JOIN
 		) AS tot_eligible_women_old,
 		COUNT(DISTINCT person.parent_uuid) AS total_households
 	FROM 
-		public.contactview_person person
+		contactview_person person
 	LEFT JOIN contactview_metadata AS meta ON person.parent_uuid = meta.uuid
 	WHERE
 		meta.type = 'clinic'
@@ -301,7 +302,7 @@ LEFT JOIN
 		SUM((mosquito_nets ='true')::int) AS num_of_hh_bed_nets, 
     	SUM((hygeinic_toilet ='true')::int) AS num_of_hh_latrines, 
 		SUM((COALESCE(source_of_drinking_water,'') != 'spring')::int) AS num_of_hh_safe_water
-	FROM public.useview_household_survey
+	FROM useview_household_survey
 
 	GROUP BY 
 		chw, 
@@ -323,7 +324,7 @@ LEFT JOIN
 		END ) AS num_of_comm_members, 
 		COUNT(xmlforms_uuid) AS num_of_health_forum,
 		date_trunc('month',reported_day	) AS reported_month
-	FROM public.useview_health_forum
+	FROM useview_health_forum
 	GROUP BY 
  		chw, 
  		area_uuid,
@@ -337,7 +338,7 @@ LEFT JOIN
 			chp.area_uuid,
 			date_trunc('MONTH', reported) AS reported_month,
 			COUNT(DISTINCT patient_id) FILTER(WHERE preg_test != 'neg') AS count
-		FROM public.useview_pregnancy preg
+		FROM useview_pregnancy preg
 		LEFT JOIN contactview_chp chp ON chp.uuid =  preg.chw 
 		WHERE date_trunc('month',reported) ::DATE <= date_trunc('MONTH',end_date)::DATE
 		GROUP BY 
@@ -360,7 +361,7 @@ LEFT JOIN
 		SUM ((fpostnatal.health_facility_delivery ='no')::int ) AS num_home_deliveries,  /* Assumption is that home deliveries have answer no  */
 		date_trunc('month',fpostnatal.reported)::date  AS reported_month
 	FROM 
-		public.useview_postnatal_care AS fpostnatal
+		useview_postnatal_care AS fpostnatal
 	WHERE 
 		(date_trunc('month',fpostnatal.reported) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',fpostnatal.reported) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 	GROUP BY
@@ -447,7 +448,7 @@ LEFT JOIN
 	SUM ((COALESCE(diagnosis_cough,'')   ~* 'pneumonia1|pneumonia2b|pneumonia2c'  AND COALESCE (patient_age_in_months,0) <60 AND COALESCE(referral_follow_up,'')='true'  AND COALESCE(sex,'') ='male')::int) AS num_reffered_ari_u5_male,
 	SUM ((COALESCE(diagnosis_cough,'')   ~* 'pneumonia1|pneumonia2b|pneumonia2c'  AND COALESCE (patient_age_in_months,0) <60 AND COALESCE(referral_follow_up,'')='true' AND COALESCE(sex,'') ='female')::int) AS num_reffered_ari_u5_female
 	
-FROM public.useview_assessment
+FROM useview_assessment
 
 WHERE 
 		(date_trunc('month',useview_assessment.reported) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',useview_assessment.reported) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
@@ -472,9 +473,9 @@ reported_month
 	SUM ((COALESCE(assess.diagnosis_cough,'')   ~* 'pneumonia1|pneumonia2b|pneumonia2c'  AND COALESCE (assess.patient_age_in_months,0) <60 AND COALESCE(assess.treatment_follow_up,'')  ~* 'true'  AND assess.reported >= follow_up.reported - interval '48 hours')::int) AS num_u5_followed_ari,
 	SUM ((COALESCE(assess.patient_age_in_months,0) < 60 AND COALESCE(assess.treatment_follow_up,'')  ~* 'true'   AND assess.reported >= follow_up.reported - interval '48 hours')::int) AS num_u5_treated
 
-FROM public.useview_assessment AS assess
+FROM useview_assessment AS assess
 
-INNER JOIN public.useview_assessment_follow_up  AS follow_up 
+INNER JOIN useview_assessment_follow_up  AS follow_up 
 ON  assess.uuid = follow_up.form_source_id
 
 WHERE 
@@ -555,8 +556,8 @@ GROUP BY
 		COUNT( DISTINCT(person.parent_uuid)) FILTER (WHERE extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int < 5) as num_hh_with_u5,
 		date_trunc('month',person.reported) AS reported_month,
 		meta.PARENT_UUID AS area_uuid
-	FROM public.contactview_person person
-	LEFT JOIN public.contactview_metadata AS meta 
+	FROM contactview_person person
+	LEFT JOIN contactview_metadata AS meta 
 	ON person.parent_uuid = meta.UUID
 	
 	WHERE 
@@ -574,7 +575,7 @@ SELECT
 	reported_by_parent AS area_uuid,
 	date_trunc('month',delivery_date)::date AS reported_month,
 	SUM((first_visit_on_time)::int) AS pnc_visit_48_hrs
-FROM public.pncview_actual_enrollments
+FROM pncview_actual_enrollments
 WHERE 
 		(date_trunc('month',delivery_date) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',delivery_date) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 
@@ -597,7 +598,7 @@ LEFT JOIN
     			WHEN anc_visit ='' THEN 0
     			ELSE RIGHT(anc_visit,1)::int END
     			) > 0)::int ) AS num_anc_at_facility
-	FROM public.useview_pregnancy_visit
+	FROM useview_pregnancy_visit
     WHERE 
 	reported_month::DATE >= (date_trunc('MONTH',start_date)::DATE) AND (reported_month ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 
@@ -606,3 +607,8 @@ LEFT JOIN
  		area_uuid
 ) AS visit ON ( visit. area_uuid = period_chp.area_uuid AND visit.reported_month = period_chp.date )
 $function$;
+
+REASSIGN OWNED BY current_user TO full_access;
+ALTER FUNCTION get_hmis_data(start_date timestamp , end_date timestamp) OWNER TO full_access;
+GRANT EXECUTE ON FUNCTION get_hmis_data(start_date timestamp , end_date timestamp) TO brac_access;
+	
