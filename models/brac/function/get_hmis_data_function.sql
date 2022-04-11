@@ -1,9 +1,7 @@
 {{ config(materialized = 'raw_sql') }}  
 
-SET search_path TO dbt;
 
-DROP FUNCTION IF EXISTS get_hmis_data(start_date timestamp, end_date timestamp) ;
-CREATE OR REPLACE FUNCTION get_hmis_data(start_date timestamp , end_date timestamp)
+CREATE OR REPLACE FUNCTION {{ this }}(start_date timestamp , end_date timestamp)
 RETURNS TABLE(
 	chp_uuid TEXT,
 	name TEXT, 
