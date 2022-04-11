@@ -1,5 +1,7 @@
 {{ config(materialized = 'raw_sql') }}  
 
+SET search_path TO dbt;
+
 
 CREATE OR REPLACE FUNCTION {{ this }}(start_date timestamp , end_date timestamp)
 RETURNS TABLE(
