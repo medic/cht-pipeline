@@ -245,7 +245,7 @@ LEFT JOIN
 		COUNT(DISTINCT person.parent_uuid) AS total_households
 	FROM 
 		{{ ref("contactview_person") }} person
-	LEFT JOIN contactview_metadata AS meta ON person.parent_uuid = meta.uuid
+	LEFT JOIN {{ ref("contactview_metadata") }} AS meta ON person.parent_uuid = meta.uuid
 	WHERE
 		meta.type = 'clinic'
 	GROUP BY 
@@ -281,7 +281,7 @@ LEFT JOIN
 			
 		FROM
 			{{ ref("form_metadata") }} AS fmeta
-		INNER JOIN contactview_person AS cperson ON (fmeta.patient_id = cperson.patient_id)
+		INNER JOIN {{ ref("contactview_person") }} AS cperson ON (fmeta.patient_id = cperson.patient_id)
 		WHERE
 			fmeta.reported BETWEEN start_date AND end_date /* only pick whats necessary */
 			
@@ -337,7 +337,7 @@ LEFT JOIN
 			date_trunc('MONTH', reported) AS reported_month,
 			COUNT(DISTINCT patient_id) FILTER(WHERE preg_test != 'neg') AS count
 		FROM {{ ref("useview_pregnancy") }} preg
-		LEFT JOIN contactview_chp chp ON chp.uuid =  preg.chw 
+		LEFT JOIN {{ ref("contactview_chp") }} chp ON chp.uuid =  preg.chw 
 		WHERE date_trunc('month',reported) ::DATE <= date_trunc('MONTH',end_date)::DATE
 		GROUP BY 
 			area_uuid, 
@@ -473,7 +473,7 @@ reported_month
 
 FROM {{ ref("useview_assessment") }} AS assess
 
-INNER JOIN useview_assessment_follow_up  AS follow_up 
+INNER JOIN {{ ref("useview_assessment_follow_up") }}  AS follow_up 
 ON  assess.uuid = follow_up.form_source_id
 
 WHERE 
@@ -505,7 +505,7 @@ GROUP BY
 			NULLIF(COALESCE(imm_given_2mo, imm_given_9mo, imm_given_18mo, fu.vaccines_administered), '')
 		) as num_u5_imm
 	FROM {{ ref("useview_assessment") }} imm
-	LEFT JOIN immunization_followup fu ON "inputs/source_id" = imm.uuid
+	LEFT JOIN {{ ref("immunization_followup") }} fu ON "inputs/source_id" = imm.uuid
 	WHERE 
 		patient_age_in_months < 60
 		AND (date_trunc('month', imm.reported)::DATE) >= (date_trunc('month',start_date)::DATE) 
@@ -555,7 +555,7 @@ GROUP BY
 		date_trunc('month',person.reported) AS reported_month,
 		meta.PARENT_UUID AS area_uuid
 	FROM {{ ref("contactview_person") }} person
-	LEFT JOIN contactview_metadata AS meta 
+	LEFT JOIN {{ ref("contactview_metadata") }} AS meta 
 	ON person.parent_uuid = meta.UUID
 	
 	WHERE 
