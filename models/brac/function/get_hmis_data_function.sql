@@ -1,6 +1,6 @@
 {{ config(materialized = 'raw_sql') }}  
 
-
+SET search_path TO dbt;
 
 
 CREATE OR REPLACE FUNCTION {{ this }}(start_date timestamp , end_date timestamp)
@@ -224,8 +224,8 @@ FROM
 			chp.branch_uuid,
 			chp.supervisor_uuid,
 			chp.region,	
-			generate_series(date_trunc('month',({{startDate}})::date), 
-							date_trunc('month',({{endDate}})::date), 
+			generate_series(date_trunc('month',start_date), 
+							date_trunc('month',end_date), 
 							'1 month'::interval
 							)::DATE AS date
 		FROM
@@ -238,16 +238,16 @@ LEFT JOIN
 		meta.parent_uuid as area_uuid,
 		COUNT(person.uuid) FILTER(
 			WHERE extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int BETWEEN 12 AND 52  
-			AND person.sex ='female' AND (date_trunc('hour',(person.reported)::timestamp))::date <= date_trunc('hour',({{endDate}})::date)::date
+			AND person.sex ='female' AND (date_trunc('hour',person.reported)::DATE) <= date_trunc('hour',end_date)::DATE
 		) AS tot_eligible_women,
 		COUNT(person.uuid) FILTER(
 			WHERE extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int BETWEEN 12 AND 52  
-			AND person.sex ='female' AND (date_trunc('hour',(person.reported)::timestamp))::date <= (date_trunc('hour',({{endDate}})::date)::date - INTERVAL '1 months')
+			AND person.sex ='female' AND (date_trunc('hour',person.reported)::DATE) <= (date_trunc('hour',end_date)::DATE - INTERVAL '1 months')
 		) AS tot_eligible_women_old,
 		COUNT(DISTINCT person.parent_uuid) AS total_households
 	FROM 
 		{{ ref("contactview_person") }} person
-	LEFT JOIN {{ ref("contactview_metadata") }} AS meta ON person.parent_uuid = meta.uuid
+	LEFT JOIN contactview_metadata AS meta ON person.parent_uuid = meta.uuid
 	WHERE
 		meta.type = 'clinic'
 	GROUP BY 
@@ -258,7 +258,7 @@ LEFT JOIN
 	(
 		SELECT
 			parent_uuid AS area_uuid,
-			date_trunc('month',reported::timestamp)::date AS reported_month,
+			date_trunc('month',reported) AS reported_month,
 			sum(1) AS count
 			
 			
@@ -278,14 +278,14 @@ LEFT JOIN
 	(
 		SELECT
 			fmeta.reported_by_parent AS area_uuid,
-			date_trunc('month',fmeta.reported::timestamp)::date AS reported_month,
+			date_trunc('month',fmeta.reported) AS reported_month,
 			COUNT(DISTINCT(cperson.parent_uuid)) AS count
 			
 		FROM
 			{{ ref("form_metadata") }} AS fmeta
-		INNER JOIN {{ ref("contactview_person") }} AS cperson ON (fmeta.patient_id = cperson.patient_id)
+		INNER JOIN contactview_person AS cperson ON (fmeta.patient_id = cperson.patient_id)
 		WHERE
-			fmeta.reported BETWEEN {{startDate}} AND {{endDate}} /* only pick whats necessary */
+			fmeta.reported BETWEEN start_date AND end_date /* only pick whats necessary */
 			
 		GROUP BY
 			area_uuid,
@@ -298,7 +298,7 @@ LEFT JOIN
 	SELECT  
 		chw, 
 		area_uuid, 	
-		date_trunc('month',reported::timestamp)::date  AS reported_month, 
+		date_trunc('month',reported) :: date  AS reported_month, 
 		SUM((mosquito_nets ='true')::int) AS num_of_hh_bed_nets, 
     	SUM((hygeinic_toilet ='true')::int) AS num_of_hh_latrines, 
 		SUM((COALESCE(source_of_drinking_water,'') != 'spring')::int) AS num_of_hh_safe_water
@@ -323,7 +323,7 @@ LEFT JOIN
 		ELSE  no_of_participants ::int
 		END ) AS num_of_comm_members, 
 		COUNT(xmlforms_uuid) AS num_of_health_forum,
-		date_trunc('month',reported_day::date)::date AS reported_month
+		date_trunc('month',reported_day	) AS reported_month
 	FROM {{ ref("useview_health_forum") }}
 	GROUP BY 
  		chw, 
@@ -336,11 +336,11 @@ LEFT JOIN
 	WITH preg_record AS (
 		SELECT 
 			chp.area_uuid,
-			date_trunc('MONTH', reported::timestamp) AS reported_month,
+			date_trunc('MONTH', reported) AS reported_month,
 			COUNT(DISTINCT patient_id) FILTER(WHERE preg_test != 'neg') AS count
 		FROM {{ ref("useview_pregnancy") }} preg
-		LEFT JOIN {{ ref("contactview_chp") }} chp ON chp.uuid =  preg.chw 
-		WHERE date_trunc('month',reported::timestamp)::date <= date_trunc('MONTH',({{endDate}})::timestamp)::date
+		LEFT JOIN contactview_chp chp ON chp.uuid =  preg.chw 
+		WHERE date_trunc('month',reported) ::DATE <= date_trunc('MONTH',end_date)::DATE
 		GROUP BY 
 			area_uuid, 
 			reported_month
@@ -359,11 +359,11 @@ LEFT JOIN
 		fpostnatal.reported_by_parent AS area_uuid,
 		SUM ((fpostnatal.health_facility_delivery ='yes' )::int  ) AS num_facility_deliveries,
 		SUM ((fpostnatal.health_facility_delivery ='no')::int ) AS num_home_deliveries,  /* Assumption is that home deliveries have answer no  */
-		date_trunc('month',(fpostnatal.reported::timestamp)::date)  AS reported_month
+		date_trunc('month',fpostnatal.reported)::date  AS reported_month
 	FROM 
 		{{ ref("useview_postnatal_care") }} AS fpostnatal
 	WHERE 
-		(date_trunc('month',fpostnatal.reported::timestamp)::DATE) >= (date_trunc('MONTH',({{startDate}})::date)::timestamp) AND (date_trunc('month',fpostnatal.reported::timestamp)::date) <= (date_trunc('MONTH',({{endDate}})::date)::date)
+		(date_trunc('month',fpostnatal.reported) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',fpostnatal.reported) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 	GROUP BY
 		area_uuid,
 		reported_month
@@ -374,8 +374,8 @@ LEFT JOIN
   (
   	SELECT  
 		chw, 
-		date_trunc('month', reported::timestamp)::date  AS reported_month, 
-		SUM((edd::date > date_trunc('month', reported::timestamp)::date)::int) AS num_active_pregnant,
+		date_trunc('month', reported)  AS reported_month, 
+		SUM((edd > date_trunc('month', reported))::int) AS num_active_pregnant,
 		SUM((anc_visit >= 1)::int) AS num_anc_1,
 		SUM((anc_visit >= 2)::int) AS num_anc_2,
 		SUM((anc_visit >= 3)::int) AS num_anc_3,
@@ -384,7 +384,7 @@ LEFT JOIN
 		{{ ref("useview_pregnancy") }}
 		
 	WHERE 
-		(date_trunc('month',useview_pregnancy.reported::timestamp)::DATE) >= (date_trunc('MONTH',({{startDate}})::DATE)::date) AND (date_trunc('month',useview_pregnancy.reported::timestamp)::DATE) <= (date_trunc('MONTH',({{endDate}})::DATE))
+		(date_trunc('month',useview_pregnancy.reported) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',useview_pregnancy.reported) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 	
 
 	GROUP BY 
@@ -397,7 +397,7 @@ LEFT JOIN
   SELECT 
 	
 	reported_by_parent  AS  area_uuid, 
-	date_trunc ('MONTH',reported::timestamp)::date AS reported_month, 
+	date_trunc ('MONTH',reported) AS reported_month, 
 	SUM ((COALESCE(mrdt_result,'')= 'positive')::int) AS tot_malaria_confirmed,	
 	SUM ((COALESCE(mrdt_result,'')= 'positive'  AND COALESCE (patient_age_in_months,0) >2 AND COALESCE (patient_age_in_months,0) <12  AND COALESCE(sex,'') ='male')::int) AS num_malaria_u1_male,
 	SUM ((COALESCE(mrdt_result,'')= 'positive'  AND COALESCE (patient_age_in_months,0) >2 AND COALESCE (patient_age_in_months,0) <12  AND COALESCE(sex,'') ='female')::int) AS num_malaria_u1_female,
@@ -451,7 +451,7 @@ LEFT JOIN
 FROM {{ ref("useview_assessment") }}
 
 WHERE 
-		(date_trunc('month',useview_assessment.reported::timestamp)::date) >= (date_trunc('MONTH',({{startDate}})::DATE)::date) AND (date_trunc('month',useview_assessment.reported::timestamp)::DATE) <= (date_trunc('MONTH',({{endDate}})::date)::date)
+		(date_trunc('month',useview_assessment.reported) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',useview_assessment.reported) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 	
 GROUP BY 
 area_uuid,
@@ -462,7 +462,7 @@ reported_month
  LEFT JOIN
  (
  SELECT 
-	date_trunc('MONTH',assess.reported::timestamp) reported_month, 
+	date_trunc('MONTH',assess.reported) reported_month, 
 	assess.reported_by_parent AS  area_uuid,
 	SUM ((COALESCE(assess.diagnosis_fever,'')   ~*  'malaria2|malaria1'  AND COALESCE (assess.patient_age_in_months,0) <60 AND COALESCE(assess.referral_follow_up,'') ~* 'true')::int) AS num_accute_u5_malaria,
 	SUM ((COALESCE(assess.diagnosis_diarrhea,'')   ~* 'diarrhea2|diarrhea1'  AND COALESCE (assess.patient_age_in_months,0) <60 AND COALESCE(assess.referral_follow_up,'') ~* 'true')::int) AS num_accute_u5_diarrhea,
@@ -475,11 +475,11 @@ reported_month
 
 FROM {{ ref("useview_assessment") }} AS assess
 
-INNER JOIN {{ ref("useview_assessment_follow_up") }}  AS follow_up 
+INNER JOIN useview_assessment_follow_up  AS follow_up 
 ON  assess.uuid = follow_up.form_source_id
 
 WHERE 
-		(date_trunc('month',assess.reported::timestamp)::DATE) >= (date_trunc('MONTH',({{startDate}})::DATE)::timestamp) AND (date_trunc('month',assess.reported::timestamp)::date) <= (date_trunc('MONTH',({{endDate}})::date)::date)
+		(date_trunc('month',assess.reported) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',assess.reported) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 
 	
 GROUP BY 
@@ -497,21 +497,21 @@ GROUP BY
 				vaccines_administered 
 			FROM {{ ref("formview_immunization_follow_up") }}
 			WHERE 
-			(date_trunc('month', reported::timestamp)::DATE) <= (date_trunc('MONTH',({{endDate}})::date)::date) 
+			(date_trunc('month', reported)::DATE) <= (date_trunc('month',end_date)::DATE) 
 			ORDER BY patient_id, reported DESC
 		)
 	SELECT
-		date_trunc('month', imm.reported::timestamp) reported_month,
+		date_trunc('month', imm.reported) reported_month,
 		imm.reported_by_parent AS  area_uuid,
 		COUNT(
 			NULLIF(COALESCE(imm_given_2mo, imm_given_9mo, imm_given_18mo, fu.vaccines_administered), '')
 		) as num_u5_imm
 	FROM {{ ref("useview_assessment") }} imm
-	LEFT JOIN {{ ref("immunization_followup") }} fu ON "inputs/source_id" = imm.uuid
+	LEFT JOIN immunization_followup fu ON "inputs/source_id" = imm.uuid
 	WHERE 
 		patient_age_in_months < 60
-		AND (date_trunc('month', imm.reported::timestamp)::date) >= (date_trunc('month',({{startDate}})::date)::date) 
-		AND (date_trunc('month', imm.reported)::date) <= (date_trunc('MONTH',({{endDate}})::date)::date)
+		AND (date_trunc('month', imm.reported)::DATE) >= (date_trunc('month',start_date)::DATE) 
+		AND (date_trunc('month', imm.reported)::DATE) <= (date_trunc('month',end_date)::DATE)
 	GROUP BY 
 		area_uuid, 
 		reported_month
@@ -520,13 +520,13 @@ GROUP BY
  LEFT JOIN
  (
 	SELECT
-	 	date_trunc('month', reported::timestamp)::date reported_month,
+	 	date_trunc('month', reported) reported_month,
 		reported_by_parent AS  area_uuid,
 	 	COUNT(uuid) FILTER(WHERE referred_for_fp_method IS TRUE) AS long_term_fp_referrals
 	FROM {{ ref("fp_referral_cases") }}
 	WHERE
-		(date_trunc('month', reported::timestamp)::date) >= (date_trunc('month',({{startDate}})::date)::date) 
-		AND (date_trunc('month', reported::timestamp)::date) <= (date_trunc('MONTH',({{endDate}})::date)::date)
+		(date_trunc('month', reported)::DATE) >= (date_trunc('month',start_date)::DATE) 
+		AND (date_trunc('month', reported)::DATE) <= (date_trunc('month',end_date)::DATE)
 	GROUP BY 
 		area_uuid, 
 		reported_month
@@ -535,14 +535,14 @@ GROUP BY
  LEFT JOIN
  (
 	 SELECT
-	 	date_trunc('month', reported::timestamp) reported_month,
+	 	date_trunc('month', reported) reported_month,
 		reported_by_parent AS  area_uuid,
 		COUNT(uuid) as COUNT,
 		COUNT(uuid) FILTER(WHERE patient_age_in_years < 5) AS u5_count
 	FROM {{ ref("formview_death_confirmation") }}
 	WHERE
-		(date_trunc('month', reported::timestamp)::DATE) >= (date_trunc('month',({{startDate}})::date)::date) 
-		AND (date_trunc('month', reported::timestamp)::DATE) <= (date_trunc('MONTH',({{endDate}})::date)::date)
+		(date_trunc('month', reported)::DATE) >= (date_trunc('month',start_date)::DATE) 
+		AND (date_trunc('month', reported)::DATE) <= (date_trunc('month',end_date)::DATE)
 	GROUP BY 
 		area_uuid, 
 		reported_month
@@ -554,14 +554,14 @@ GROUP BY
 		SUM ((extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int >=12 AND extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int <=52  AND COALESCE(person.sex,'') ='female')::int) AS num_eligible_women,
 		SUM ((extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int < 5 )::int) AS num_u5_children,
 		COUNT( DISTINCT(person.parent_uuid)) FILTER (WHERE extract (YEAR from age(now()::date, to_date(person.date_of_birth,'YYYY-MM-DD')))::int < 5) as num_hh_with_u5,
-		date_trunc('month',person.reported::timestamp) AS reported_month,
+		date_trunc('month',person.reported) AS reported_month,
 		meta.PARENT_UUID AS area_uuid
 	FROM {{ ref("contactview_person") }} person
-	LEFT JOIN {{ ref("contactview_metadata") }} AS meta 
+	LEFT JOIN contactview_metadata AS meta 
 	ON person.parent_uuid = meta.UUID
 	
 	WHERE 
-		(date_trunc('month',person.reported::timestamp)::DATE) >= (date_trunc('MONTH',({{startDate}})::date)::date) AND (date_trunc('month',person.reported::timestamp)::DATE) <= (date_trunc('MONTH',({{endDate}})::date)::date)
+		(date_trunc('month',person.reported) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',person.reported) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 
 
 	GROUP BY 
@@ -573,11 +573,11 @@ LEFT JOIN
 
 SELECT 
 	reported_by_parent AS area_uuid,
-	date_trunc('month',delivery_date::timestamp)::date AS reported_month,
+	date_trunc('month',delivery_date)::date AS reported_month,
 	SUM((first_visit_on_time)::int) AS pnc_visit_48_hrs
 FROM {{ ref("pncview_actual_enrollments") }}
 WHERE 
-		(date_trunc('month',delivery_date::date)::date) >= (date_trunc('MONTH',({{startDate}})::date)::date) AND (date_trunc('month',delivery_date::date)::DATE) <= (date_trunc('MONTH',({{endDate}})::DATE)::date)
+		(date_trunc('month',delivery_date) ::DATE) >= (date_trunc('MONTH',start_date)::DATE) AND (date_trunc('month',delivery_date) ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 
 
 GROUP BY 
@@ -600,7 +600,7 @@ LEFT JOIN
     			) > 0)::int ) AS num_anc_at_facility
 	FROM {{ ref("useview_pregnancy_visit") }}
     WHERE 
-	reported_month::date >= (date_trunc('MONTH',({{startDate}})::date)::date) AND (reported_month::date) <= (date_trunc('MONTH',({{endDate}})::date)::date)
+	reported_month::DATE >= (date_trunc('MONTH',start_date)::DATE) AND (reported_month ::DATE) <= (date_trunc('MONTH',end_date)::DATE)
 
 	GROUP BY 
  		reported_month, 
