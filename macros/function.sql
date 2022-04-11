@@ -10,6 +10,8 @@
     {{ sql }}
   {%- endcall %}
 
+  {{ adapter.commit() }}
+
   {{ return({'relations': [target_relation]}) }}
 
 {% endmaterialization %}
