@@ -605,8 +605,4 @@ LEFT JOIN
  		area_uuid
 ) AS visit ON ( visit. area_uuid = period_chp.area_uuid AND visit.reported_month = period_chp.date )
 $function$;
-
-REASSIGN OWNED BY current_user TO full_access;
-ALTER FUNCTION get_hmis_data(start_date timestamp , end_date timestamp) OWNER TO full_access;
-GRANT EXECUTE ON FUNCTION get_hmis_data(start_date timestamp , end_date timestamp) TO brac_access;
 	
