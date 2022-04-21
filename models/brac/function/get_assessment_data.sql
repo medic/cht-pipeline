@@ -103,7 +103,7 @@ FROM
             ) AS MONTH,
             cmeta.name AS SUPERVISOR_NAME 
         FROM 
-            useview_assessment assess
+            {{ ref("useview_assessment") }} assess
             INNER JOIN contactview_chp chp ON assess.chw = chp.uuid
             INNER JOIN contactview_branch branch ON chp.branch_uuid = branch.uuid 
             INNER JOIN contactview_metadata cmeta ON chp.supervisor_uuid = cmeta.uuid 
@@ -124,7 +124,7 @@ FROM
     LEFT JOIN (
       SELECT
           chw AS CHW_UUID,
-          to_char(useview_assessment.reported, 'YYYYMM') AS MONTH,
+          to_char(reported, 'YYYYMM') AS MONTH,
           count(*) AS assess_any,
       
           sum(CASE 
@@ -246,12 +246,12 @@ FROM
                 0
             END) AS required_follow_ups   
         FROM 
-            useview_assessment
+            {{ ref("useview_assessment") }}
         WHERE 
-            useview_assessment.reported >= (date_trunc('day',from_date))::timestamp without time zone AND
-      useview_assessment.reported < (date_trunc('day',to_date) + '1 day'::interval)::timestamp without time zone
+            reported >= (date_trunc('day',from_date))::timestamp without time zone AND
+            reported < (date_trunc('day',to_date) + '1 day'::interval)::timestamp without time zone
         GROUP BY 
-            useview_assessment.chw, 
+            chw, 
             MONTH
     ) AS ASSESS ON ASSESS.CHW_UUID = CHWLIST.CHW_UUID 
     AND ASSESS.MONTH = CHWLIST.MONTH
@@ -264,7 +264,7 @@ FROM
         count(assess.UUID) as count
     
       FROM
-        useview_assessment assess
+        {{ ref("useview_assessment") }} assess
         INNER JOIN formview_assessment_follow_up assess_fu ON (assess.UUID = assess_fu.form_source_id)
         INNER JOIN form_metadata fu_meta ON (fu_meta.uuid = assess_fu.xmlforms_uuid)
     
