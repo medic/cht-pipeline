@@ -41,7 +41,7 @@ SELECT COALESCE((regexp_split_to_array(form.doc #>> '{fields,geolocation}'::text
    ''::text AS "meta/instanceID",
    form.doc ->> '_id'::text AS xmlforms_uuid,
    '1970-01-01 00:00:00'::timestamp without time zone + ((form.doc ->> 'reported_date'::text)::bigint)::double precision * '00:00:00.001'::interval AS reported
-  FROM couchdb form
-    JOIN form_metadata fm ON fm.uuid = (form.doc ->> '_id'::text)
-    LEFT JOIN couchdb patient ON (patient.doc ->> '_id'::text) = (form.doc #>> '{fields,patient_id}'::text[])
+  FROM {{ ref("couchdb") }} form
+    JOIN {{ ref("form_metadata") }} fm ON fm.uuid = (form.doc ->> '_id'::text)
+    LEFT JOIN {{ ref("couchdb") }} patient ON (patient.doc ->> '_id'::text) = (form.doc #>> '{fields,patient_id}'::text[])
  WHERE (form.doc ->> 'form'::text) = 'assessment_follow_up'::text
