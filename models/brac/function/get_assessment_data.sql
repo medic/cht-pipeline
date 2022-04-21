@@ -104,9 +104,9 @@ FROM
             cmeta.name AS SUPERVISOR_NAME 
         FROM 
             {{ ref("useview_assessment") }} assess
-            INNER JOIN contactview_chp chp ON assess.chw = chp.uuid
-            INNER JOIN contactview_branch branch ON chp.branch_uuid = branch.uuid 
-            INNER JOIN contactview_metadata cmeta ON chp.supervisor_uuid = cmeta.uuid 
+            INNER JOIN {{ ref("contactview_chp") }} chp ON assess.chw = chp.uuid
+            INNER JOIN {{ ref("contactview_branch") }} branch ON chp.branch_uuid = branch.uuid 
+            INNER JOIN {{ ref("contactview_metadata") }} cmeta ON chp.supervisor_uuid = cmeta.uuid 
         WHERE 
        
             branch.name != 'HQ' 
@@ -265,8 +265,8 @@ FROM
     
       FROM
         {{ ref("useview_assessment") }} assess
-        INNER JOIN formview_assessment_follow_up assess_fu ON (assess.UUID = assess_fu.form_source_id)
-        INNER JOIN form_metadata fu_meta ON (fu_meta.uuid = assess_fu.xmlforms_uuid)
+        INNER JOIN {{ ref("formview_assessment_follow_up") }} assess_fu ON (assess.UUID = assess_fu.form_source_id)
+        INNER JOIN {{ ref("form_metadata") }} fu_meta ON (fu_meta.uuid = assess_fu.xmlforms_uuid)
     
       WHERE
         assess.reported >= (date_trunc('day',from_date))::timestamp without time zone AND
