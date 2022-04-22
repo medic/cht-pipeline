@@ -1,0 +1,26 @@
+SELECT 
+        doc ->> '_id'::text AS uuid,
+        doc #>> '{fields,inputs,source}'::text[] AS source,
+        doc #>> '{fields,inputs,source_id}'::text[] AS source_id,
+        doc #>> '{contact,_id}' AS reported_by,
+        doc #>> '{contact,parent,_id}' AS reported_by_parent,
+        doc #>> '{fields,inputs,contact,_id}'::text[] AS patient_id,
+        doc #>> '{fields,inputs,contact,name}'::text[] AS patient_name,
+        NULLIF(NULLIF(doc #>> '{fields,patient_age_in_years }', ''), 'NaN')::int AS patient_age_in_years,
+        doc #>> '{fields,inputs,contact,parent, _id}'::text[] AS parent_id,
+        doc #>> '{fields,group_visit,follow_up_method}'::text[] AS follow_up_method,
+        (doc #>> '{fields,follow_up_count}'::text[])::int AS followup_count,
+        doc #>> '{fields,ppe_risk }'::text[] AS ppe_risk,
+        doc #>> '{fields,is_referral_completed}'::text[] AS is_referral_completed,
+        doc #>> '{fields,follow_up,reason_not_available}'::text[] as reason_not_available,
+        doc #>> '{fields,is_hbc}'::text[] AS in_hbc,
+        doc #>> '{fields,is_referral_case}'::text[] AS is_referral_case,
+        doc #>> '{fields,is_evacuation_case}'::text[] AS is_evacuation_case,
+        NULLIF(doc #>> '{fields,patient_deisolated}'::text[], '') AS patient_deisolated,
+        doc #>> '{fields,patient_evacuated}'::text[] AS patient_evacuated,
+        doc #>> '{fields,follow_up, test_result}'::text[] AS test_result,
+        doc #>> '{fields,follow_up, hh_contact}'::text[] AS hh_contact,
+        doc #>> '{fields,self_assessment, symptoms}'::text[] AS symptoms,
+        to_timestamp((NULLIF(doc ->> 'reported_date', '')::bigint / 1000)::double precision) AS reported
+    FROM {{ ref("couchdb") }}
+    WHERE doc ->> 'form' = 'covid_referral_follow_up'
