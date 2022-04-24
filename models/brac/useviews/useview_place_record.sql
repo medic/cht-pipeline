@@ -5,6 +5,6 @@ SELECT
     doc#>>'{contact,_id}' AS reported_by,
     doc#>>'{contact,parent,_id}' AS reported_by_parent
 FROM 
-    couchdb
+    {{ ref("couchdb") }}
 WHERE 
     doc#>'{fields}' ? 'place_id'
