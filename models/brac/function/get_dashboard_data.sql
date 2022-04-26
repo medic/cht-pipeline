@@ -272,7 +272,7 @@ FROM
       {{ ref("contactview_chp") }} chp
       INNER JOIN {{ ref("contactview_metadata") }} cmeta ON (cmeta.uuid = chp.supervisor_uuid)
       INNER JOIN {{ ref("contactview_metadata") }} cm ON (cm.contact_uuid = chp.uuid)
-    WHERE NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts(to_date,'person')") }} muted
+    WHERE NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(to_date,'person') muted
           WHERE muted.contact_uuid = chp.uuid)
 
     GROUP BY
@@ -790,7 +790,7 @@ FROM
 
       WHERE
         type = 'clinic'
-        AND NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts(to_date,'clinic')") }} muted
+        AND NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(to_date,'clinic') muted
           WHERE muted.contact_uuid = family.uuid)
 
       GROUP BY
@@ -840,7 +840,7 @@ FROM
       {{ ref("contactview_metadata") }} cm ON cm.uuid = visit.place_id
     WHERE
       cm.type = 'clinic' AND
-      NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts(to_date,'clinic')") }} muted WHERE muted.contact_uuid = visit.place_id)
+      NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(to_date,'clinic') muted WHERE muted.contact_uuid = visit.place_id)
     GROUP BY
       CHW_UUID,
       interval_number
