@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'view',
+        materialized = 'incremental',
         indexes=[
             {'columns': ['contact_uuid']},
             {'columns': ['parent_uuid']},

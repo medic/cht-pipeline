@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'view',
+        materialized = 'incremental',
         unique_key='idx_useview_patient_record_reported_patient_id'
     )
 }}

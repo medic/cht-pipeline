@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'view',
+        materialized = 'incremental',
         unique_key='xmlforms_uuid',
         indexes=[
             {'columns': ['area_uuid']},

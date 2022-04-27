@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'view',
+        materialized = 'incemental',
         unique_key='useview_assessment_reported_age_uuid',
         indexes=[
             {'columns': ['reported']},
