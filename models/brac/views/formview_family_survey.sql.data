@@ -1,0 +1,12 @@
+SELECT COALESCE((regexp_split_to_array(couchdb.doc #>> '{fields,geolocation}'::text[], ' '::text))[1], couchdb.doc #>> '{fields,location,lat}'::text[]) AS "inputs/meta/location/lat",
+   COALESCE((regexp_split_to_array(couchdb.doc #>> '{fields,geolocation}'::text[], ' '::text))[2], couchdb.doc #>> '{fields,location,long}'::text[]) AS "inputs/meta/location/long",
+   couchdb.doc #>> '{fields,p_note}'::text[] AS p_note,
+   couchdb.doc #>> '{fields,place_id}'::text[] AS place_id,
+   couchdb.doc #>> '{fields,place_name}'::text[] AS place_name,
+   couchdb.doc #>> '{fields,mosquito_nets}'::text[] AS mosquito_nets,
+   couchdb.doc #>> '{fields,hygeinic_toilet}'::text[] AS hygeinic_toilet,
+   couchdb.doc #>> '{fields,family_planning_method}'::text[] AS family_planning_method,
+   couchdb.doc #>> '{fields,source_of_drinking_water}'::text[] AS source_of_drinking_water,
+   couchdb.doc ->> '_id'::text AS xmlforms_uuid
+  FROM {{ ref("couchdb") }}
+ WHERE (couchdb.doc ->> 'type'::text) = 'data_record'::text AND (couchdb.doc ->> 'form'::text) = 'family_survey'::text
