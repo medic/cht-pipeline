@@ -10,7 +10,7 @@
 }}
 
 SELECT
-{{ dbt_utils.surrogate_key('uuid') }} AS useview_family_survey_uuid,
+{{ dbt_utils.surrogate_key(['uuid']) }} AS useview_family_survey_uuid,
 *
 FROM(
     SELECT

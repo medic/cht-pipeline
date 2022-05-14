@@ -8,7 +8,7 @@
     )
 }}
 SELECT
-{{ dbt_utils.surrogate_key('chw_uuid', 'reported_day') }} AS chwview_assessment_chw_uuid_date,
+{{ dbt_utils.surrogate_key(['chw_uuid', 'reported_day']) }} AS chwview_assessment_chw_uuid_date,
 *
 FROM( 
 	SELECT 

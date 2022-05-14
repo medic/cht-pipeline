@@ -15,7 +15,7 @@
     )
 }}
 SELECT
-{{ dbt_utils.surrogate_key('follow_up_count', 'reported', 'uuid') }} AS useview_postnatal_care_count_reported_uuid,
+{{ dbt_utils.surrogate_key(['follow_up_count', 'reported', 'uuid']) }} AS useview_postnatal_care_count_reported_uuid,
 *
 FROM( 
 	SELECT
