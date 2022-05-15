@@ -1,4 +1,3 @@
-
     SELECT 
         mute_log.contact_uuid,
         contact.type,
@@ -26,5 +25,5 @@
             contact_uuid, 
             date
         ) AS mute_log
-        LEFT JOIN contactview_metadata contact
+        LEFT JOIN {{ ref("contactview_metadata") }} contact
         ON mute_log.contact_uuid = contact.uuid
