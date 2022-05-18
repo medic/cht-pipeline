@@ -4,12 +4,7 @@
         unique_key='useview_assessment_reported_age_uuid',
         indexes=[
             {'columns': ['"@timestamp"'], 'type': 'brin'},
-            {'columns': ['reported']},
-            {'columns': ['chw']},
-            {'columns': ['reported_by']},
-            {'columns': ['reported_by_parent']},
-            {'columns': ['referral_follow_up']},
-            {'columns': ['uuid']}
+            {'columns': ['"patient_id"'], 'type': 'hash'},
         ]
     )
 }}

@@ -4,13 +4,7 @@
         unique_key="uuid",
         indexes=[
             {'columns': ['"@timestamp"'], 'type': 'brin'},
-            {'columns': ['reported']},
-            {'columns': ['reported_by']},
-            {'columns': ['chw']},
-            {'columns': ['reported_by_parent']},
-            {'columns': ['patient_id']},
-            {'columns': ['form']},
-            {'columns': ['formname']}            
+            {'columns': ['"patient_id"'], 'type': 'hash'},        
         ]
     )
 }}
