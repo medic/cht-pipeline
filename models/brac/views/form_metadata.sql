@@ -15,6 +15,7 @@
 }}
 SELECT
         doc ->> '_id' AS uuid,
+        doc ->> '_rev' AS rev_id,
         doc #>> '{contact,_id}' AS reported_by,
         doc #>> '{contact,_id}' AS chw,
         doc #>> '{contact,parent,_id}' AS reported_by_parent,
@@ -31,3 +32,10 @@ SELECT
         (doc ->> 'type') = 'data_record'
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
+
+{% if is_incremental() %}
+
+  -- this filter will only be applied on an incremental run
+  where rev_id != (select rev_id from {{ this }})
+
+{% endif %}

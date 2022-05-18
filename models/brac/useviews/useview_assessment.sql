@@ -19,6 +19,7 @@ SELECT
 FROM(
     SELECT  
             form.doc ->> '_id'::text AS uuid,
+            form.doc ->> '_rev'::text AS rev_id,
             form.doc #>> '{contact,_id}'::text[] AS chw,
             form.doc #>> '{contact,_id}'::text[] AS reported_by,
             form.doc #>> '{contact,parent,_id}'::text[] AS reported_by_parent,
@@ -90,3 +91,10 @@ FROM(
         FROM {{ ref("couchdb") }} AS form
         WHERE (form.doc ->> 'form'::text) = 'assessment'::text
 ) x
+
+{% if is_incremental() %}
+
+  -- this filter will only be applied on an incremental run
+  where rev_id != (select rev_id from {{ this }})
+
+{% endif %}
