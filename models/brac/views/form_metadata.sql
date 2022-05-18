@@ -3,6 +3,7 @@
         materialized = 'incremental',
         unique_key="uuid",
         indexes=[
+            {'columns': ['"@timestamp"'], 'type': 'brin'},
             {'columns': ['reported']},
             {'columns': ['reported_by']},
             {'columns': ['chw']},
