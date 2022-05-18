@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key="uuid",
         indexes=[
             {'columns': ['"@timestamp"'], 'type': 'brin'},
             {'columns': ['"patient_id"'], 'type': 'hash'},        

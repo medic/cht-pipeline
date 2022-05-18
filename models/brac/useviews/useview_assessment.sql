@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='useview_assessment_reported_age_uuid',
         indexes=[
             {'columns': ['"@timestamp"'], 'type': 'brin'},
             {'columns': ['"patient_id"'], 'type': 'hash'},
@@ -9,10 +8,6 @@
     )
 }}
 
-SELECT
-{{ dbt_utils.surrogate_key(['reported', 'uuid']) }} AS useview_assessment_reported_age_uuid,
-*
-FROM(
     SELECT  
             form.doc ->> '_id'::text AS uuid,
             form.doc ->> '_rev'::text AS rev_id,
@@ -86,7 +81,6 @@ FROM(
             form.doc #>> '{fields,group_nutrition_assessment, has_oedema}'::text[] AS has_oedema
         FROM {{ ref("couchdb") }} AS form
         WHERE (form.doc ->> 'form'::text) = 'assessment'::text
-) x
 
 {% if is_incremental() %}
     AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
