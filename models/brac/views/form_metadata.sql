@@ -26,7 +26,7 @@ SELECT
     WHERE
         (doc ->> 'type') = 'data_record'
         AND (doc #>> '{contact,_id}') IS NOT NULL
-        AND (doc ->> 'form') IS NOT NULL;
+        AND (doc ->> 'form') IS NOT NULL
 
 {% if is_incremental() %}
     AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
