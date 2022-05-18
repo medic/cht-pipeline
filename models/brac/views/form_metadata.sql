@@ -34,8 +34,5 @@ SELECT
         AND (doc ->> 'form') IS NOT NULL
 
 {% if is_incremental() %}
-
-  -- this filter will only be applied on an incremental run
-  where rev_id != (select rev_id from {{ this }})
-
+    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
 {% endif %}
