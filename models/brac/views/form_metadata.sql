@@ -29,5 +29,5 @@ SELECT
         AND (doc ->> 'form') IS NOT NULL
 
 {% if is_incremental() %}
-    AND COALESCE({{ this }}.reported > (SELECT MAX({{ this }}.reported) FROM {{ this }}), True)
+    WHERE COALESCE({{ this }}.reported > (SELECT MAX({{ this }}.reported) FROM {{ this }}), True)
 {% endif %}
