@@ -89,5 +89,5 @@ FROM(
 ) x
 
 {% if is_incremental() %}
-    AND COALESCE(reported > (SELECT MAX(reported) FROM {{ this }}), True)
+    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
 {% endif %}
