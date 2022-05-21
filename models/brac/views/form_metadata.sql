@@ -29,5 +29,5 @@ SELECT
         AND (doc ->> 'form') IS NOT NULL
 
 {% if is_incremental() %}
-    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
+    AND COALESCE(reported > (SELECT MAX(reported) FROM {{ this }}), True)
 {% endif %}
