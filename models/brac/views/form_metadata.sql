@@ -8,6 +8,7 @@
         ]
     )
 }}
+SELECT * FROM(
 SELECT
         doc ->> '_id' AS uuid,
         doc ->> '_rev' AS rev_id,
@@ -27,7 +28,7 @@ SELECT
         (doc ->> 'type') = 'data_record'
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
-
+) x
 {% if is_incremental() %}
-    WHERE COALESCE({{ this }}.reported > (SELECT MAX({{ this }}.reported) FROM {{ this }}), True)
+    WHERE COALESCE(x.reported > (SELECT MAX(reported) FROM {{ this }}))
 {% endif %}

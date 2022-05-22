@@ -89,5 +89,5 @@ FROM(
 ) x
 
 {% if is_incremental() %}
-    WHERE COALESCE({{ this }}.reported > (SELECT MAX({{ this }}.reported) FROM {{ this }}), True)
+    WHERE COALESCE(x.reported > (SELECT MAX(reported) FROM {{ this }}))
 {% endif %}
