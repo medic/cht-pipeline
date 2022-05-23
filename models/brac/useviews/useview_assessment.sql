@@ -3,8 +3,12 @@
         materialized = 'incremental',
         unique_key='useview_assessment_reported_age_uuid',
         indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
-            {'columns': ['"patient_id"'], 'type': 'hash'},
+            {'columns': ['reported']},
+            {'columns': ['chw']},
+            {'columns': ['reported_by']},
+            {'columns': ['reported_by_parent']},
+            {'columns': ['referral_follow_up']},
+            {'columns': ['uuid']}
         ]
     )
 }}
@@ -90,4 +94,4 @@ FROM(
         {% if is_incremental() %}
             AND (couchdb.doc ->> '_rev') != (SELECT {{ this }}.rev_id FROM {{ this }} WHERE {{ this }}.uuid = (couchdb.doc ->> '_id')))
         {% endif %}
-) x
+) as x

@@ -36,4 +36,4 @@ SELECT
 {% if is_incremental() %}
     AND (couchdb.doc ->> '_rev') != (SELECT {{ this }}.rev_id FROM {{ this }} WHERE {{ this }}.uuid = (couchdb.doc ->> '_id')))
 {% endif %}
-) x
+) as x
