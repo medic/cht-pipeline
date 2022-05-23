@@ -86,8 +86,8 @@ FROM(
             form.doc #>> '{fields,group_nutrition_assessment, has_oedema}'::text[] AS has_oedema
         FROM {{ ref("couchdb") }} AS form
         WHERE (form.doc ->> 'form'::text) = 'assessment'::text
-) x
 
-{% if is_incremental() %}
-    WHERE COALESCE(x.reported > (SELECT MAX(reported) FROM {{ this }}))
-{% endif %}
+        {% if is_incremental() %}
+            AND doc ->> '_rev' != (SELECT rev_id FROM {{ this }} WHERE uuid = doc ->> '_id'))
+        {% endif %}
+) x

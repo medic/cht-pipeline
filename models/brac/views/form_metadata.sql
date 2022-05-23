@@ -29,6 +29,6 @@ SELECT
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
 {% if is_incremental() %}
-    AND COALESCE(to_timestamp((NULLIF(doc ->> 'reported_date', '')::bigint / 1000)::double precision) > (SELECT MAX(reported) FROM {{ this }}))
+    AND doc ->> '_rev' != (SELECT rev_id FROM {{ this }} WHERE uuid = doc ->> '_id'))
 {% endif %}
 ) x
