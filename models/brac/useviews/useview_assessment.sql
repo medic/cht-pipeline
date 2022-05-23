@@ -88,6 +88,6 @@ FROM(
         WHERE (form.doc ->> 'form'::text) = 'assessment'::text
 
         {% if is_incremental() %}
-            AND doc ->> '_rev' != (SELECT rev_id FROM {{ this }} WHERE uuid = doc ->> '_id'))
+            AND (couchdb.doc ->> '_rev') != (SELECT {{ this }}.rev_id FROM {{ this }} WHERE {{ this }}.uuid = (couchdb.doc ->> '_id')))
         {% endif %}
 ) x
