@@ -3,8 +3,13 @@
         materialized = 'incremental',
         unique_key="uuid",
         indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
-            {'columns': ['"patient_id"'], 'type': 'hash'},        
+            {'columns': ['reported']},
+            {'columns': ['reported_by']},
+            {'columns': ['chw']},
+            {'columns': ['reported_by_parent']},
+            {'columns': ['patient_id']},
+            {'columns': ['form']},
+            {'columns': ['formname']}            
         ]
     )
 }}
