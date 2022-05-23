@@ -5,6 +5,7 @@
         indexes=[
             {'columns': ['reported']},
             {'columns': ['reported_by']},
+            {'columns': ['rev_id']},
             {'columns': ['chw']},
             {'columns': ['reported_by_parent']},
             {'columns': ['patient_id']},
