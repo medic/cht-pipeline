@@ -28,7 +28,7 @@ SELECT
         (doc ->> 'type') = 'data_record'
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
-) x
 {% if is_incremental() %}
-    WHERE COALESCE(x.reported > (SELECT MAX(reported) FROM {{ this }}))
+    AND COALESCE(reported > (SELECT MAX(reported) FROM {{ this }}))
 {% endif %}
+) x
