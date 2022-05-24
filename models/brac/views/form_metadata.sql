@@ -35,6 +35,6 @@ SELECT
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
 {% if is_incremental() %}
-    AND (couchdb.doc ->> '_rev') != (SELECT {{ this }}.rev_id FROM {{ this }} WHERE {{ this }}.uuid = (couchdb.doc ->> '_id')))
+    AND (couchdb.doc ->> '_rev') != (SELECT {{ this }}.rev_id FROM {{ this }} WHERE {{ this }}.uuid = (couchdb.doc ->> '_id'))
 {% endif %}
 ) as x
