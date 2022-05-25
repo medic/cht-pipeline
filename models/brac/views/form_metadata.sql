@@ -11,7 +11,7 @@
             {'columns': ['patient_id']},
             {'columns': ['form']},
             {'columns': ['formname']},
-            {'columns': ['@timestamp']}              
+            {'columns': ['"@timestamp"'], 'type': 'brin'}              
         ]
     )
 }}

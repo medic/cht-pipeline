@@ -10,7 +10,7 @@
             {'columns': ['reported_by_parent']},
             {'columns': ['referral_follow_up']},
             {'columns': ['uuid']},
-            {'columns': ['@timestamp']} 
+            {'columns': ['"@timestamp"'], 'type': 'brin'}
         ]
     )
 }}
