@@ -94,7 +94,8 @@ FROM(
         FROM {{ ref("couchdb") }} AS form
         WHERE (form.doc ->> 'form'::text) = 'assessment'::text
 
-        {% if is_incremental() %}
-            AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
-        {% endif %}
 ) as x
+
+{% if is_incremental() %}
+    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
+{% endif %}
