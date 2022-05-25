@@ -10,12 +10,14 @@
             {'columns': ['reported_by_parent']},
             {'columns': ['patient_id']},
             {'columns': ['form']},
-            {'columns': ['formname']}            
+            {'columns': ['formname']},
+            {'columns': ['@timestamp']}              
         ]
     )
 }}
 SELECT * FROM(
 SELECT
+        "@timestamp"::timestamp without time zone AS "@timestamp",
         doc ->> '_id' AS uuid,
         doc ->> '_rev' AS rev_id,
         doc #>> '{contact,_id}' AS reported_by,
@@ -34,7 +36,7 @@ SELECT
         (doc ->> 'type') = 'data_record'
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
-{% if is_incremental() %}
-    AND (couchdb.doc ->> '_rev') != (SELECT {{ this }}.rev_id FROM {{ this }} WHERE {{ this }}.uuid = (couchdb.doc ->> '_id'))
-{% endif %}
+        {% if is_incremental() %}
+            AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
+        {% endif %}
 ) as x

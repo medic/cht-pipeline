@@ -9,7 +9,8 @@
             {'columns': ['reported_by']},
             {'columns': ['reported_by_parent']},
             {'columns': ['referral_follow_up']},
-            {'columns': ['uuid']}
+            {'columns': ['uuid']},
+            {'columns': ['@timestamp']} 
         ]
     )
 }}
@@ -18,7 +19,8 @@ SELECT
 {{ dbt_utils.surrogate_key(['reported', 'uuid']) }} AS useview_assessment_reported_age_uuid,
 *
 FROM(
-    SELECT  
+    SELECT
+            "@timestamp"::timestamp without time zone AS "@timestamp",  
             form.doc ->> '_id'::text AS uuid,
             form.doc ->> '_rev'::text AS rev_id,
             form.doc #>> '{contact,_id}'::text[] AS chw,
@@ -93,6 +95,6 @@ FROM(
         WHERE (form.doc ->> 'form'::text) = 'assessment'::text
 
         {% if is_incremental() %}
-            AND (couchdb.doc ->> '_rev') != (SELECT {{ this }}.rev_id FROM {{ this }} WHERE {{ this }}.uuid = (couchdb.doc ->> '_id'))
+            AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
         {% endif %}
 ) as x
