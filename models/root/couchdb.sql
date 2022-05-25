@@ -1,10 +1,12 @@
 {{
     config(
-        materialized = 'raw_sql',
+        materialized = 'view',
+        indexes=[
+            {'columns': ['"@timestamp"'], 'type': 'brin'},
+        ]
     )
 }}
 
-CREATE OR REPLACE VIEW {{ this }} AS
 SELECT
     doc->>'type' AS type,
     *
