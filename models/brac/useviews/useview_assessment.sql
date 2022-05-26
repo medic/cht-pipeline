@@ -93,9 +93,8 @@ FROM(
             form.doc #>> '{fields,group_nutrition_assessment, has_oedema}'::text[] AS has_oedema
         FROM {{ ref("couchdb") }} AS form
         WHERE (form.doc ->> 'form'::text) = 'assessment'::text
+        {% if is_incremental() %}
+            AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+        {% endif %}
 
 ) as x
-
-{% if is_incremental() %}
-    AND COALESCE(x."@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
-{% endif %}
