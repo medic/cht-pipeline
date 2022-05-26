@@ -10,7 +10,7 @@
             {'columns': ['reported_by_parent']},
             {'columns': ['referral_follow_up']},
             {'columns': ['uuid']},
-            {'columns': ['"@timestamp"'], 'type': 'brin'}
+            {'columns': ['"@timestamp"']}
         ]
     )
 }}
@@ -97,5 +97,5 @@ FROM(
 ) as x
 
 {% if is_incremental() %}
-    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
+    AND COALESCE(x."@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
 {% endif %}

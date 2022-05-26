@@ -11,7 +11,7 @@
             {'columns': ['patient_id']},
             {'columns': ['form']},
             {'columns': ['formname']},
-            {'columns': ['"@timestamp"'], 'type': 'brin'}              
+            {'columns': ['"@timestamp"']}              
         ]
     )
 }}
@@ -39,5 +39,5 @@ SELECT
 ) as x
 
 {% if is_incremental() %}
-    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
+    AND COALESCE(x."@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
 {% endif %}
