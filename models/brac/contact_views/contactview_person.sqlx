@@ -4,13 +4,15 @@
         unique_key='uuid',
         indexes=[
             {'columns': ['patient_id']},
-            {'columns': ['parent_uuid']}
+            {'columns': ['parent_uuid']},
+            {'columns': ['"@timestamp"']} 
         ]
     )
 }}
  
-
+SELECT * FROM(
 SELECT
+        "@timestamp"::timestamp without time zone AS "@timestamp",
 		doc->>'_id' AS uuid,
 		doc->>'name' AS name,
 		COALESCE(doc->>'patient_id',doc->>'_id') AS patient_id,
@@ -25,3 +27,8 @@ SELECT
 		{{ ref("couchdb") }}
 	WHERE
 		doc->>'type' = 'person'
+
+        {% if is_incremental() %}
+            AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+        {% endif %}
+) as x

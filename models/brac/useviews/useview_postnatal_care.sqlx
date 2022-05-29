@@ -11,6 +11,7 @@
             {'columns': ['patient_id']},
             {'columns': ['reported_by']},
             {'columns': ['health_facility_delivery']},
+            {'columns': ['"@timestamp"']}  
         ]
     )
 }}
@@ -19,6 +20,7 @@ SELECT
 *
 FROM( 
 	SELECT
+	        "@timestamp"::timestamp without time zone AS "@timestamp",
 			doc ->> '_id'::text AS uuid,
 			doc ->> 'form'::text AS form,
 			doc #>> '{contact,_id}'::text[] AS chw,
@@ -67,4 +69,7 @@ FROM(
 		
 		WHERE
 			doc ->> 'form' = 'postnatal_care'::text
+			{% if is_incremental() %}
+				AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+			{% endif %}
 ) x

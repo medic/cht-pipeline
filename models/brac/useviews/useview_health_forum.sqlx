@@ -8,7 +8,7 @@
     )
 }}
 
-   
+SELECT * FROM(   
 SELECT 
 	doc #>> '{contact,_id}'::text[] AS chw,
     doc #>> '{contact,parent,_id}'::text[] AS area_uuid,
@@ -27,3 +27,7 @@ SELECT
  WHERE 
 (doc ->> 'type'::text) = 'data_record'::text
 AND (doc ->> 'form'::text) = 'health_forum'::text
+{% if is_incremental() %}
+    AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+{% endif %}
+) as x

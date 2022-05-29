@@ -1,7 +1,10 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='idx_useview_patient_record_reported_patient_id'
+        unique_key='idx_useview_patient_record_reported_patient_id',
+		   indexes=[
+            {'columns': ['"@timestamp"']}              
+        ]
     )
 }}
 
@@ -10,7 +13,7 @@ SELECT
 *
 FROM(
 SELECT 
-    	
+    "@timestamp"::timestamp without time zone AS "@timestamp",	
 	to_timestamp((doc#>>'{reported_date}')::double precision/1000)::timestamp AS reported,
 	doc#>>'{fields,patient_id}' AS patient_id,
 	doc->>'form' AS form,
@@ -20,4 +23,7 @@ FROM
 	{{ ref("couchdb") }}
 WHERE 
 	doc#>'{fields}' ? 'patient_id'
+	{% if is_incremental() %}
+        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+    {% endif %}
 ) x

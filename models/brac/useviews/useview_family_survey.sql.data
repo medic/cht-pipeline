@@ -4,7 +4,8 @@
         unique_key='useview_family_survey_uuid',
         indexes=[
             {'columns': ['family_id']},
-            {'columns': ['reported']}
+            {'columns': ['reported']},
+            {'columns': ['"@timestamp"']}  
         ]
     )
 }}
@@ -14,6 +15,7 @@ SELECT
 *
 FROM(
     SELECT
+	    "@timestamp"::timestamp without time zone AS "@timestamp",
 		doc->>'_id' AS uuid,
 		doc#>>'{contact,_id}' AS chw,
 		doc#>>'{contact,parent,_id}' AS area_uuid,
@@ -32,4 +34,7 @@ FROM(
 
 	WHERE
 		 doc->>'form' = 'family_survey'
+    {% if is_incremental() %}
+            AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+    {% endif %}
 ) x

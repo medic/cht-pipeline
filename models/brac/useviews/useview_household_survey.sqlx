@@ -4,11 +4,13 @@
         unique_key="uuid",
         indexes=[
             {'columns': ['chw']},
-            {'columns': ['area_uuid']}          
+            {'columns': ['area_uuid']},
+            {'columns': ['"@timestamp"']}           
         ]
     )
 }}
 
+SELECT * FROM(
 SELECT
     doc ->> '_id'::text AS uuid,
     doc #>> '{parent,contact,_id}'::text[] AS chw,
@@ -22,3 +24,7 @@ FROM
     {{ ref("couchdb") }}
 WHERE
     (doc ->> 'type') = 'clinic'
+    {% if is_incremental() %}
+        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+    {% endif %}
+) as x

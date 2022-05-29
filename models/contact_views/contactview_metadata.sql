@@ -6,11 +6,14 @@
             {'columns': ['parent_uuid']},
             {'columns': ['type']},
             {'columns': ['uuid']},
+            {'columns': ['"@timestamp"']} 
         ]
     )
 }}
 
+SELECT * FROM(
 SELECT
+    "@timestamp"::timestamp without time zone AS "@timestamp",
     raw_contacts.doc ->> '_id'::text AS uuid,
     raw_contacts.doc ->> 'name'::text AS name,
     raw_contacts.doc ->> 'type'::text AS type,
@@ -26,3 +29,7 @@ SELECT
     (((raw_contacts.doc ->> 'reported_date'::text)::numeric) / 1000::numeric)::double precision *
     '00:00:01'::interval AS reported
 FROM {{ ref("raw_contacts") }}
+{% if is_incremental() %}
+        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+    {% endif %}
+) as x

@@ -4,12 +4,15 @@
         unique_key='xmlforms_uuid',
         indexes=[
             {'columns': ['area_uuid']},
-            {'columns': ['reported_month']}
+            {'columns': ['reported_month']},
+            {'columns': ['"@timestamp"']} 
         ]
     )
 }}
 
+SELECT * FROM(
 SELECT
+        "@timestamp"::timestamp without time zone AS "@timestamp",
 		(couchdb.doc ->> '_id') as uuid,
 		(couchdb.doc #>> '{contact,_id}') as chw,
 		to_timestamp((NULLIF(couchdb.doc ->> 'reported_date', '')::bigint / 1000)::double precision) AS reported,
@@ -46,3 +49,7 @@ SELECT
 	
 	WHERE
 		couchdb.doc ->> 'form' = 'pregnancy'
+{% if is_incremental() %}
+    AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+{% endif %}
+) as x

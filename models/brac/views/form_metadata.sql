@@ -15,6 +15,7 @@
         ]
     )
 }}
+
 SELECT * FROM(
 SELECT
         "@timestamp"::timestamp without time zone AS "@timestamp",
@@ -37,7 +38,7 @@ SELECT
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
 
-        {% if is_incremental() %}
-            AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
-        {% endif %}
+    {% if is_incremental() %}
+        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+    {% endif %}
 ) as x
