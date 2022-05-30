@@ -30,6 +30,6 @@ SELECT
     '00:00:01'::interval AS reported
 FROM {{ ref("raw_contacts") }}
 {% if is_incremental() %}
-        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+        WHERE COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
     {% endif %}
 ) as x
