@@ -16,7 +16,6 @@
     )
 }}
 
-SELECT * FROM(
 SELECT
         "@timestamp"::timestamp without time zone AS "@timestamp",
         doc ->> '_id' AS uuid,
@@ -41,4 +40,3 @@ SELECT
     {% if is_incremental() %}
         AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
     {% endif %}
-) as x
