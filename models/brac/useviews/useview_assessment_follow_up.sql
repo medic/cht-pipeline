@@ -9,6 +9,7 @@
             {'columns': ['reported_by']},
             {'columns': ['reported_by_parent']},
             {'columns': ['uuid']},
+            {'columns': ['"@timestamp"']}
         ]
     )
 }}
@@ -19,6 +20,7 @@ SELECT
 FROM(
 
 	SELECT
+	        "@timestamp"::timestamp without time zone AS "@timestamp",
 			form.doc->>'_id' as uuid,
 			form.doc->> 'form' AS form,
 			form.doc #>> '{contact,_id}' AS chw,
@@ -56,4 +58,8 @@ FROM(
 					
 		WHERE
 			form.doc ->> 'form' = 'assessment_follow_up'
+
+		  {% if is_incremental() %}
+			AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+		  {% endif %}
 ) x
