@@ -11,7 +11,6 @@
     )
 }}
 
-SELECT * FROM(
 SELECT
     "@timestamp"::timestamp without time zone AS "@timestamp",
     raw_contacts.doc ->> '_id'::text AS uuid,
@@ -32,4 +31,3 @@ FROM {{ ref("raw_contacts") }}
 {% if is_incremental() %}
         WHERE COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
     {% endif %}
-) as x

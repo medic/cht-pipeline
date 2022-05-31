@@ -10,7 +10,6 @@
     )
 }}
 
-SELECT * FROM(
 SELECT
     doc ->> '_id'::text AS uuid,
     doc #>> '{parent,contact,_id}'::text[] AS chw,
@@ -27,4 +26,3 @@ WHERE
     {% if is_incremental() %}
         AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
     {% endif %}
-) as x

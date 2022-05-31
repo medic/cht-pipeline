@@ -10,7 +10,7 @@
     )
 }}
 
-SELECT * FROM(
+
 SELECT
         "@timestamp"::timestamp without time zone AS "@timestamp",
 		(couchdb.doc ->> '_id') as uuid,
@@ -52,4 +52,3 @@ SELECT
 {% if is_incremental() %}
     AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
 {% endif %}
-) as x
