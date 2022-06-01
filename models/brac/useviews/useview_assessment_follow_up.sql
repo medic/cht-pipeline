@@ -20,7 +20,7 @@ SELECT
 FROM(
 
 	SELECT
-	        "@timestamp"::timestamp without time zone AS "@timestamp",
+	        form."@timestamp"::timestamp without time zone AS "@timestamp",
 			form.doc->>'_id' as uuid,
 			form.doc->> 'form' AS form,
 			form.doc #>> '{contact,_id}' AS chw,
@@ -60,6 +60,6 @@ FROM(
 			form.doc ->> 'form' = 'assessment_follow_up'
 
 		  {% if is_incremental() %}
-			AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+			AND COALESCE(form."@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
 		  {% endif %}
 ) x
