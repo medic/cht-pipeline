@@ -60,6 +60,6 @@ FROM(
 			form.doc ->> 'form' = 'assessment_follow_up'
 
 		  {% if is_incremental() %}
-			AND COALESCE(form."@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+			 AND COALESCE(form."@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
 		  {% endif %}
 ) x

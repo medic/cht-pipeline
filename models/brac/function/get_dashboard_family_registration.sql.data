@@ -58,7 +58,7 @@ REG_RECORDS_CTE AS (
           area_uuid,
           date_interval,
           (unmuted - muted) AS total
-        FROM {{ ref("muting") }}
+        FROM muting
       )
       UNION ALL
       (

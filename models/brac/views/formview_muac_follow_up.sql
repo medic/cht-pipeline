@@ -21,4 +21,4 @@ SELECT
     FROM {{ ref("couchdb") }}
     LEFT JOIN
         {{ ref("contactview_person") }} person ON person.uuid = doc #>> '{fields,patient_id}'::text[]
-    WHERE doc ->> 'form'::text = 'muac_follow_up'
+    WHERE couchdb.doc ->> 'form'::text = 'muac_follow_up'
