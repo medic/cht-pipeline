@@ -504,7 +504,7 @@ LEFT JOIN
   FROM
     {{ ref("useview_assessment_follow_up") }} fu
   LEFT JOIN 
-    {{ ref("contactview_person patient") }} ON patient.uuid = fu.patient_id
+    {{ ref("contactview_person") }} patient ON patient.uuid = fu.patient_id
   WHERE
     patient_age_in_months < 60 AND
     patient_age_in_months >= 2 AND
