@@ -3,14 +3,18 @@
         materialized = 'incremental',
         unique_key='xmlforms_uuid',
         indexes=[
-            {'columns': ['area_uuid']},
-            {'columns': ['reported_month']},
+            {'columns': ['patient_id']},
+            {'columns': ['chw']},
+			{'columns': ['useview_pregnancy_reported_edd_uuid']},
             {'columns': ['"@timestamp"']} 
         ]
     )
 }}
 
-
+SELECT
+{{ dbt_utils.surrogate_key(['reported', 'edd', 'uuid']) }} AS useview_pregnancy_reported_edd_uuid,
+*
+FROM(
 SELECT
         "@timestamp"::timestamp without time zone AS "@timestamp",
 		(couchdb.doc ->> '_id') as uuid,
@@ -52,3 +56,5 @@ SELECT
 {% if is_incremental() %}
     AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
 {% endif %}
+
+) x

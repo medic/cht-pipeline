@@ -30,7 +30,7 @@ FROM(
 		doc#>>'{fields,household_survey,g_improved_latrine}' AS g_improved_latrine,
 		doc#>>'{fields,household_survey,g_open_defecation_free}' AS g_open_defecation_free
 	FROM
-		couchdb
+		{{ ref("couchdb") }}
 
 	WHERE
 		 doc->>'form' = 'family_survey'
