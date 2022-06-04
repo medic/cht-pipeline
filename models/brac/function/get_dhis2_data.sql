@@ -461,7 +461,7 @@ LEFT JOIN
           OVER (PARTITION BY "inputs/source_id" ORDER BY visit.reported DESC) AS anc_visit
       FROM
         {{ ref("useview_pregnancy_visit") }} visit
-      LEFT JOIN useview_pregnancy up ON "inputs/source_id" = up.uuid
+      LEFT JOIN {{ ref("useview_pregnancy") }} up ON "inputs/source_id" = up.uuid
       WHERE
         visit.reported >= (date_trunc('day',starting_date))::date AND
         visit.reported < (date_trunc('day',ending_date) + '1 day'::interval)::date

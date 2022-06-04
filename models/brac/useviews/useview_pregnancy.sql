@@ -1,7 +1,7 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='xmlforms_uuid',
+        unique_key='useview_pregnancy_reported_edd_uuid',
         indexes=[
             {'columns': ['patient_id']},
             {'columns': ['chw']},
