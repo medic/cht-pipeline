@@ -95,7 +95,7 @@ RETURNS TABLE(
 AS $function$
 
 SELECT 
-  facility_name,
+  chp.branch_name AS facility_name,
   reporting_period,
   date(starting_date) AS interval_start,
   date(ending_date) AS interval_end,
