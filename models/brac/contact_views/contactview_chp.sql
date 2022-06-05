@@ -49,14 +49,13 @@ SELECT
     chp.doc #>> '{chp_profile, g_language, other_languages}'::text[] AS other_languages,
     chp.doc #>> '{chp_profile, g_other_details, incentives}'::text[] AS incentives,
     chp.doc #>> '{chp_profile, g_other_details, chp_services}'::text[] AS chp_services,
-    meta."@timestamp"::timestamp without time zone AS "@timestamp"
+    raw_contacts."@timestamp"::timestamp without time zone AS "@timestamp"
   FROM
     {{ ref("contactview_chw") }}
   JOIN {{ ref("raw_contacts") }} ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)
-  JOIN {{ ref("contactview_metadata") }} meta ON meta.uuid = contactview_chw.uuid
   JOIN {{ ref("contactview_branch") }} branch ON contactview_chw.branch_uuid = branch.uuid
   LEFT JOIN {{ ref("raw_contacts") }} chp ON (chp.doc ->> '_id'::text) = contactview_chw.uuid
 
     {% if is_incremental() %}
-        AND COALESCE({{ ref("contactview_metadata") }}."@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+        AND COALESCE({{ ref("raw_contacts") }}."@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
     {% endif %}
