@@ -2,7 +2,7 @@
     config(
         materialized = 'incremental',
         indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
+            {'columns': ['"@timestamp"'], 'type': 'btree'},
             {'columns': ['"patient_id"'], 'type': 'hash'},
         ]
     )

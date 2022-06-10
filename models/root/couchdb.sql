@@ -2,7 +2,7 @@
     config(
         materialized = 'view',
         indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
+            {'columns': ['"@timestamp"'], 'type': 'btree'},
         ]
     )
 }}
