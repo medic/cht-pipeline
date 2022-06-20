@@ -1,4 +1,4 @@
-SELECT 
+SELECT
         doc ->> '_id'::text AS uuid,
         doc #>> '{fields,inputs,source}'::text[] AS source,
         doc #>> '{fields,inputs,source_id}'::text[] AS source_id,
@@ -21,4 +21,4 @@ SELECT
     FROM {{ ref("couchdb") }}
     LEFT JOIN
         {{ ref("contactview_person") }} person ON person.uuid = doc #>> '{fields,patient_id}'::text[]
-    WHERE couchdb.doc ->> 'form'::text = 'muac_follow_up'
+    WHERE doc->>'type' = 'data_record' AND couchdb.doc ->> 'form'::text = 'muac_follow_up'

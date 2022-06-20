@@ -1,4 +1,4 @@
-{{ config(materialized = 'raw_sql') }}  
+{{ config(materialized = 'raw_sql') }}
 
 
 CREATE OR REPLACE FUNCTION {{ this }}(group_by text, from_date timestamp with time zone, to_date timestamp with time zone, single_interval boolean)
@@ -162,7 +162,7 @@ SELECT
 
   --TREATMENTS--
   sum(COALESCE(ASSESS.u1_malaria_treatment,0) + COALESCE(ASSESS.u1_diarrhea_treatment,0) + COALESCE(ASSESS.u1_pneumonia_treatment,0))::int AS treatments_u1,
-  
+
   sum(COALESCE(ASSESS.malaria_u1,0))::int AS malaria_u1,
   sum(COALESCE(ASSESS.diarrhea_u1,0))::int AS diarrhea_u1,
   sum(COALESCE(ASSESS.pneumonia_u1,0))::int AS pneumonia_u1,
@@ -171,7 +171,7 @@ SELECT
   sum(COALESCE(ASSESS.u5_diarrhea_treatment,0))::int AS u5_diarrhea_treatment,
   sum(COALESCE(ASSESS.u5_pneumonia_treatment,0))::int AS u5_pneumonia_treatment,
   sum(COALESCE(ASSESS.u5_malaria_treatment,0) + COALESCE(ASSESS.u5_diarrhea_treatment,0) + COALESCE(ASSESS.u5_pneumonia_treatment,0))::int AS treatments_u5,
-  
+
   sum(COALESCE(ASSESS.malaria_u5,0))::int AS malaria_u5,
   sum(COALESCE(ASSESS.diarrhea_u5,0))::int AS diarrhea_u5,
   sum(COALESCE(ASSESS.pneumonia_u5,0))::int AS pneumonia_u5,
@@ -223,7 +223,7 @@ SELECT
 
   --Whether or not CHW was active within the entire date range--
   sum(COALESCE(ACTIVE_IN_RANGE.ACTIVE,0))::int AS active_chws_in_range,
-    
+
   --Number of family surveys conducted within range--
   sum(COALESCE(FAMILY_SURVEY.COUNT,0))::int AS family_surveys,
 
@@ -246,7 +246,27 @@ FROM
 
       The data is grouped by Branch UUID and Name, CHP UUID and Name, Supervisor, and Month (for the current month and previous 3).
     */
-    SELECT
+    WITH periodCTE AS (
+      SELECT
+        interval_start::date AS interval_start,
+        interval_number
+      FROM (
+        SELECT
+          row_number() OVER (ORDER BY interval_start) as row_number,
+          interval_start
+        FROM generate_series(date_trunc('day',from_date), to_date, '1 month'::interval) AS interval_start
+      ) AS dates
+      INNER JOIN (
+        SELECT
+          row_number() OVER (ORDER BY interval_number) as row_number,
+          interval_number
+        FROM
+          generate_series(0,(12*(extract (YEAR from age(to_date,from_date)))::int) + (extract (MONTH from age(to_date,from_date)))::int,1) AS interval_number
+      ) AS intervals ON dates.row_number = intervals.row_number
+      WHERE (CASE WHEN single_interval THEN dates.row_number = 1 ELSE dates.row_number >= 1 END)
+    )
+
+   SELECT
       chp.branch_uuid AS BRANCH_UUID,
       chp.branch_name AS BRANCH_NAME,
       chp.supervisor_uuid AS SUPERVISOR_UUID,
@@ -255,23 +275,13 @@ FROM
       chp.uuid AS CHW_UUID,
       chp.name AS CHW_NAME,
       chp.phone AS CHW_PHONE,
-
-      CASE
-        WHEN single_interval
-        THEN date_trunc('day',from_date)
-        ELSE generate_series(date_trunc('day',from_date), to_date, '1 month'::interval)
-      END AS interval_start,
-
-      CASE
-        WHEN single_interval
-        THEN 0
-        ELSE generate_series(0,(12*(extract (YEAR from age(to_date,from_date)))::int) + (extract (MONTH from age(to_date,from_date)))::int,1)
-      END AS interval_number
-
+      periodCTE.interval_start,
+      periodCTE.interval_number
     FROM
       {{ ref("contactview_chp") }} chp
       INNER JOIN {{ ref("contactview_metadata") }} cmeta ON (cmeta.uuid = chp.supervisor_uuid)
       INNER JOIN {{ ref("contactview_metadata") }} cm ON (cm.contact_uuid = chp.uuid)
+      CROSS JOIN periodCTE
     WHERE NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(to_date,'person') muted
           WHERE muted.contact_uuid = chp.uuid)
 
@@ -283,8 +293,9 @@ FROM
       cmeta.name,
       chp.uuid,
       chp.name,
-      chp.phone
-
+      chp.phone,
+      interval_start,
+      interval_number
   ) as CHWLIST
 
   LEFT JOIN
@@ -324,8 +335,8 @@ FROM
       COUNT(uuid) AS COUNT,
       COUNT(uuid) FILTER(WHERE followed_up IS TRUE) as followed_up
     FROM {{ ref("fp_referral_cases") }}
-    WHERE 
-      reported >= (date_trunc('day',from_date))::timestamp without time zone 
+    WHERE
+      reported >= (date_trunc('day',from_date))::timestamp without time zone
       AND  reported < (date_trunc('day',to_date) + '1 day'::interval)::timestamp without time zone
     GROUP BY
       CHW_UUID,
@@ -352,8 +363,8 @@ FROM
       SUM(new_fp_quantity) FILTER (WHERE fp_given = 'ecp') AS ecp,
       COUNT(uuid) AS fp_visits
     FROM {{ ref("formview_fp_patient_record") }}
-    WHERE 
-      reported >= (date_trunc('day',from_date))::timestamp without time zone 
+    WHERE
+      reported >= (date_trunc('day',from_date))::timestamp without time zone
        AND reported < (date_trunc('day',to_date) + '1 day'::interval)::timestamp without time zone
     GROUP BY
       CHW_UUID,
@@ -407,11 +418,11 @@ FROM
       FROM
         {{ ref("form_metadata") }} meta
       INNER JOIN
-        ( 
+        (
           SELECT
             DISTINCT ON (patient_id, date_trunc('day',reported)) uuid,preg_test
           FROM {{ ref("useview_pregnancy") }}
-          WHERE preg_test != 'neg' /* only select positive pregnancies */ 
+          WHERE preg_test != 'neg' /* only select positive pregnancies */
         ) up ON (up.uuid = meta.uuid)
 
       WHERE
@@ -567,8 +578,8 @@ FROM
 
     (
       WITH ASSESSMENTS AS (
-        SELECT DISTINCT ON(patient_id, date_trunc('day',reported)) 
-          * 
+        SELECT DISTINCT ON(patient_id, date_trunc('day',reported))
+          *
         FROM {{ ref("useview_assessment") }}
         WHERE
             patient_age_in_months >= 2 AND
@@ -644,7 +655,7 @@ FROM
         COUNT(uuid) FILTER (WHERE patient_age_in_years::int < 5 AND diarrhea_treatment IS NOT NULL) AS u5_diarrhea_treatment,
         COUNT(uuid) FILTER (WHERE patient_age_in_years::int < 5 AND pneumonia_treatment IS NOT NULL) AS u5_pneumonia_treatment,
         COUNT(uuid) FILTER (WHERE patient_age_in_years::int < 5 AND malaria_treatment IS NOT NULL) AS u5_malaria_treatment,
-        
+
           sum(CASE
               WHEN
                 (patient_age_in_years)::int < 5 AND
@@ -746,14 +757,14 @@ FROM
 
       FROM
         {{ ref("useview_assessment") }} AS assess
-        INNER JOIN  (  
+        INNER JOIN  (
           SELECT
             DISTINCT ON (form_source_id, day)
             uuid,
             form_source_id,
             reported
           FROM(
-    
+
             SELECT
               uuid,
               form_source_id,
@@ -806,20 +817,20 @@ FROM
         record.reported,
         patient.parent_uuid AS place_id,
         reported_by
-      FROM 
+      FROM
         {{ ref("useview_patient_record") }} record
-      LEFT JOIN 
-        {{ ref("contactview_metadata") }} patient ON patient.uuid = patient_id 
+      LEFT JOIN
+        {{ ref("contactview_metadata") }} patient ON patient.uuid = patient_id
       WHERE
         record.reported >= (date_trunc('day',from_date))::timestamp without time zone AND
         record.reported < (date_trunc('day',to_date) + '1 day'::interval)::timestamp without time zone AND
         form NOT IN('mute', 'unmute')
       UNION ALL
-      SELECT 
+      SELECT
         reported,
         place_id,
         reported_by
-      FROM 
+      FROM
 	      {{ ref("useview_place_record") }}
       WHERE
         reported >= (date_trunc('day',from_date))::timestamp without time zone AND
@@ -834,9 +845,9 @@ FROM
         ELSE (12*(extract (YEAR FROM age(visit.reported,from_date)))::int) + (extract (MONTH FROM age(visit.reported,from_date)))::int
       END AS interval_number,
       COUNT(DISTINCT visit.place_id)
-    FROM 
+    FROM
       VISITS_CTE visit
-    LEFT JOIN 
+    LEFT JOIN
       {{ ref("contactview_metadata") }} cm ON cm.uuid = visit.place_id
     WHERE
       cm.type = 'clinic' AND
@@ -880,7 +891,7 @@ FROM
 
     (
 
-      WITH 
+      WITH
         pnc_cte AS (
           SELECT DISTINCT(chw)
           FROM {{ ref("useview_postnatal_care") }} pnc
@@ -959,4 +970,3 @@ GROUP BY
 
 $function$
 ;
-	

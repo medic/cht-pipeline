@@ -5,14 +5,14 @@
         indexes=[
             {'columns': ['area_uuid']},
             {'columns': ['reported_month']},
-            {'columns': ['"@timestamp"']}  
-            
+            {'columns': ['"@timestamp"']}
+
         ]
     )
 }}
 
 
-SELECT 
+SELECT
     "@timestamp"::timestamp without time zone AS "@timestamp",
     doc ->> '_id'::text AS xmlforms_uuid,
     doc #>> '{contact,_id}'::text[] AS reported_by,
@@ -29,10 +29,10 @@ SELECT
     doc #>> '{fields,weeks_since_lmp}'::text[] AS weeks_since_lmp,
     doc #>> '{fields,edd}'::text[] AS edd,
     COALESCE(doc #>> '{fields,group_tt,mother_tt}'::text[], doc #>> '{fields,g_tt,mother_tt_rcvd}'::text[], '') AS tt,
-    COALESCE(doc #>> '{fields,group_repeat,anc_visit_repeat,anc_visit_identifier}'::text[], 
+    COALESCE(doc #>> '{fields,group_repeat,anc_visit_repeat,anc_visit_identifier}'::text[],
         doc #>> '{fields,g_anc_visit,anc_visit_type}'::text[], '') AS anc_visit
    FROM {{ ref("couchdb") }} form
-  WHERE (doc ->> 'form'::text) = 'pregnancy_visit'::text 
+  WHERE doc->>'type' = 'data_record' AND (doc ->> 'form'::text) = 'pregnancy_visit'::text
 {% if is_incremental() %}
-        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
-    {% endif %}
+        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
+{% endif %}

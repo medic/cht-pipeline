@@ -5,7 +5,7 @@
         indexes=[
             {'columns': ['family_id']},
             {'columns': ['reported']},
-            {'columns': ['"@timestamp"']}  
+            {'columns': ['"@timestamp"']}
         ]
     )
 }}
@@ -33,8 +33,9 @@ FROM(
 		{{ ref("couchdb") }}
 
 	WHERE
+		 doc->>'type' = 'data_record' AND
 		 doc->>'form' = 'family_survey'
     {% if is_incremental() %}
-            AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+            AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
     {% endif %}
 ) x

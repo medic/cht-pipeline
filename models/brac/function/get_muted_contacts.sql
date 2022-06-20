@@ -1,6 +1,6 @@
-{{ config(materialized = 'raw_sql') }}  
+{{ config(materialized = 'raw_sql') }}
 
-CREATE OR REPLACE FUNCTION get_muted_contacts(to_date TIMESTAMP WITH TIME ZONE, contact_type text)
+CREATE OR REPLACE FUNCTION {{this}}(to_date TIMESTAMP WITH TIME ZONE, contact_type text)
 RETURNS TABLE(
     contact_uuid text,
     type text,
@@ -12,9 +12,9 @@ AS
 $BODY$
 (
     WITH MUTING_CTE AS (
-        SELECT 
+        SELECT
             contact_uuid,
-            "type", 
+            "type",
             parent_uuid,
             mute_status,
             "date" AS muted_on,
@@ -23,17 +23,17 @@ $BODY$
         WHERE contact_type = 'All' OR "type" = contact_type
     )
 
-    SELECT 
+    SELECT
         contact_uuid,
         "type",
         parent_uuid,
         muted_on,
         unmuted_on
-    FROM 
+    FROM
         MUTING_CTE
-    WHERE 
-        mute_status IS TRUE 
-        AND muted_on < (date_trunc('day',to_date) + '1 day'::interval) 
+    WHERE
+        mute_status IS TRUE
+        AND muted_on < (date_trunc('day',to_date) + '1 day'::interval)
         AND (unmuted_on IS NULL OR unmuted_on >= (date_trunc('day',to_date) + '1 day'::interval))
     ORDER BY contact_uuid
 )

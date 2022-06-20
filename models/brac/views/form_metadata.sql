@@ -11,7 +11,7 @@
             {'columns': ['patient_id']},
             {'columns': ['form']},
             {'columns': ['formname']},
-            {'columns': ['"@timestamp"']}              
+            {'columns': ['"@timestamp"']}
         ]
     )
 }}
@@ -28,15 +28,15 @@ SELECT
         doc ->> 'form' AS formname,
         COALESCE((doc ->> 'errors'),'[]') != '[]' AS errors,
         to_timestamp((NULLIF(doc ->> 'reported_date', '')::bigint / 1000)::double precision) AS reported
-        
+
     FROM
-        {{ ref("couchdb") }} 
-        
+        {{ ref("couchdb") }}
+
     WHERE
         (doc ->> 'type') = 'data_record'
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
 
     {% if is_incremental() %}
-        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
     {% endif %}

@@ -5,12 +5,12 @@
         indexes=[
             {'columns': ['area_uuid']},
             {'columns': ['branch_uuid']},
-            {'columns': ['supervisor_uuid']}              
+            {'columns': ['supervisor_uuid']}
         ]
     )
 }}
 
-SELECT 
+SELECT
     contactview_chw.name,
     contactview_chw.uuid,
     contactview_chw.phone,
@@ -57,5 +57,5 @@ SELECT
   LEFT JOIN {{ ref("raw_contacts") }} chp ON (chp.doc ->> '_id'::text) = contactview_chw.uuid
 
     {% if is_incremental() %}
-        AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
+        WHERE raw_contacts."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("raw_contacts")) }}
     {% endif %}
