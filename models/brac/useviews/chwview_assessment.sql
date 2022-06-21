@@ -88,4 +88,4 @@
  GROUP BY 
     "@timestamp"::timestamp without time zone,
  	form.doc #>> '{contact,_id}'::text[], 
- 	date_trunc('day'::text, '1970-01-01 00:00:00'::timestamp without time zone + ((form.doc ->> 'reported_date'::text)::bigint)::double precision * '00:00:00.001'::interval);
+ 	date_trunc('day'::text, '1970-01-01 00:00:00'::timestamp without time zone + ((form.doc ->> 'reported_date'::text)::bigint)::double precision * '00:00:00.001'::interval)
