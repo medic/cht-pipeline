@@ -4,14 +4,12 @@
         unique_key='chwview_assessment_chw_uuid_date',
         indexes=[
             {'columns': ['chw_uuid']},
-            {'columns': ['"@timestamp"']} 
+            {'columns': ['"@timestamp"']},
+            {'columns': ['chw_uuid', 'reported_day'], 'type': 'hash'} 
         ]
     )
 }}
-SELECT
-{{ dbt_utils.surrogate_key(['chw_uuid', 'reported_day']) }} AS chwview_assessment_chw_uuid_date,
-*
-FROM( 
+
 	SELECT 
     "@timestamp"::timestamp without time zone AS "@timestamp",
 	form.doc #>> '{contact,_id}'::text[] AS chw_uuid,
@@ -82,13 +80,11 @@ FROM(
            WHEN ((form.doc #>> '{fields,patient_age_in_years}'::text[])::integer) < 5 AND (form.doc #>> '{fields,referral_follow_up}'::text[]) = 'true'::text THEN 1
            ELSE 0
        END) AS required_follow_ups
-  FROM {{ ref("couchdb") } form
+  FROM {{ ref("couchdb") }} form
  WHERE (form.doc ->> 'type'::text) = 'data_record'::text AND form.doc ? 'form'::text AND (form.doc ->> 'form'::text) = 'assessment'::text
  {% if is_incremental() %}
-            AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+            AND "@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }})
 {% endif %}
  GROUP BY 
  	form.doc #>> '{contact,_id}'::text[], 
  	date_trunc('day'::text, '1970-01-01 00:00:00'::timestamp without time zone + ((form.doc ->> 'reported_date'::text)::bigint)::double precision * '00:00:00.001'::interval);
- 	
-) x
