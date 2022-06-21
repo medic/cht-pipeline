@@ -81,7 +81,7 @@
            ELSE 0
        END) AS required_follow_ups
   FROM {{ ref("couchdb") }} form
- WHERE (form.doc ->> 'type'::text) = 'data_record'::text AND form.doc ? 'form'::text AND (form.doc ->> 'form'::text) = 'assessment'::text
+ WHERE (form.doc ->> 'type'::text) = 'data_record'::text AND (form.doc ->> 'form'::text) = 'assessment'::text
  {% if is_incremental() %}
             AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
