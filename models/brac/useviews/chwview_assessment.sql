@@ -83,8 +83,9 @@
   FROM {{ ref("couchdb") }} form
  WHERE (form.doc ->> 'type'::text) = 'data_record'::text AND form.doc ? 'form'::text AND (form.doc ->> 'form'::text) = 'assessment'::text
  {% if is_incremental() %}
-            AND "@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }})
+            AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
  GROUP BY 
+    "@timestamp"::timestamp without time zone,
  	form.doc #>> '{contact,_id}'::text[], 
  	date_trunc('day'::text, '1970-01-01 00:00:00'::timestamp without time zone + ((form.doc ->> 'reported_date'::text)::bigint)::double precision * '00:00:00.001'::interval);
