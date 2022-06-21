@@ -148,6 +148,27 @@ FROM
 
       The data is grouped by Branch UUID and Name, CHP UUID and Name, Supervisor, and Month (for the current month and previous 3).
     */
+
+    WITH periodCTE AS (
+      SELECT
+        interval_start::date AS interval_start,
+        interval_number
+      FROM (
+        SELECT
+          row_number() OVER (ORDER BY interval_start) as row_number,
+          interval_start
+        FROM generate_series(date_trunc('day',from_date), to_date, '1 month'::interval) AS interval_start
+      ) AS dates
+      INNER JOIN (
+        SELECT
+          row_number() OVER (ORDER BY interval_number) as row_number,
+          interval_number
+        FROM
+          generate_series(0,(12*(extract (YEAR from age(to_date,from_date)))::int) + (extract (MONTH from age(to_date,from_date)))::int,1) AS interval_number
+      ) AS intervals ON dates.row_number = intervals.row_number
+      WHERE (CASE WHEN single_interval THEN dates.row_number = 1 ELSE dates.row_number >= 1 END)
+    )
+
     SELECT
       chp.branch_uuid AS BRANCH_UUID,
       chp.branch_name AS BRANCH_NAME,
@@ -157,18 +178,8 @@ FROM
       chp.uuid AS CHW_UUID,
       chp.name AS CHW_NAME,
       chp.phone AS CHW_PHONE,
-
-      CASE
-        WHEN single_interval
-        THEN date_trunc('day',from_date)
-        ELSE generate_series(date_trunc('day',from_date), to_date, '1 month'::interval)
-      END AS interval_start,
-
-      CASE
-        WHEN single_interval
-        THEN 0
-        ELSE generate_series(0,(12*(extract (YEAR from age(to_date,from_date)))::int) + (extract (MONTH from age(to_date,from_date)))::int,1)
-      END AS interval_number
+      periodCTE.interval_start,
+      periodCTE.interval_number
 
     FROM
       {{ ref("contactview_chp") }} chp
