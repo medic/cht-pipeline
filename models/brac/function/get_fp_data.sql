@@ -197,7 +197,9 @@ FROM
       cmeta.name,
       chp.uuid,
       chp.name,
-      chp.phone
+      chp.phone,
+      interval_start,
+      interval_number
 
   ) as CHWLIST
 
