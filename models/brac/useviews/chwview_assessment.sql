@@ -1,9 +1,7 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='chwview_assessment_chw_uuid_date',
         indexes=[
-            {'columns': ['chw_uuid']},
             {'columns': ['"@timestamp"']},
             {'columns': ['chw_uuid', 'reported_day'], 'type': 'hash'} 
         ]
