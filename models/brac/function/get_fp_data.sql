@@ -185,6 +185,7 @@ FROM
       {{ ref("contactview_chp") }} chp
       INNER JOIN {{ ref("contactview_metadata") }} cmeta ON (cmeta.uuid = chp.supervisor_uuid)
       INNER JOIN {{ ref("contactview_metadata") }} cm ON (cm.contact_uuid = chp.uuid)
+      CROSS JOIN periodCTE
     WHERE NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(to_date,'person') muted
           WHERE muted.contact_uuid = chp.uuid)
 
