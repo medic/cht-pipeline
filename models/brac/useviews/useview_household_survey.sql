@@ -24,5 +24,5 @@ FROM
 WHERE
     (doc ->> 'type') = 'clinic'
     {% if is_incremental() %}
-        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
     {% endif %}

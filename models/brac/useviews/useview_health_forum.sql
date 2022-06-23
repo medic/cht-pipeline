@@ -9,6 +9,7 @@
 }}
  
 SELECT 
+    doc ->> '_id'::text AS xmlforms_uuid,
 	doc #>> '{contact,_id}'::text[] AS chw,
     doc #>> '{contact,parent,_id}'::text[] AS area_uuid,
 	doc #>> '{fields,health_forum_general,health_forum_place}'::text[] AS health_forum_place,
@@ -20,12 +21,11 @@ SELECT
     doc #>> '{fields,health_forum_sales,sales}'::text[] AS sales,
     doc #>> '{fields,health_forum_sales,sales_cummulative}'::text[] AS sales_cummulative,
     to_timestamp((NULLIF(doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision) AS reported, 
-    date_trunc('day',to_timestamp((NULLIF(doc ->> 'reported_date', '')::bigint / 1000)::double precision))::date AS reported_day,
-	doc ->> '_id'::text AS xmlforms_uuid
+    date_trunc('day',to_timestamp((NULLIF(doc ->> 'reported_date', '')::bigint / 1000)::double precision))::date AS reported_day
  FROM {{ ref("couchdb") }}
  WHERE 
 (doc ->> 'type'::text) = 'data_record'::text
 AND (doc ->> 'form'::text) = 'health_forum'::text
 {% if is_incremental() %}
-    AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+    AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
