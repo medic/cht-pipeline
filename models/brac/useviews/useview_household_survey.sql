@@ -11,6 +11,7 @@
 }}
 
 SELECT
+    "@timestamp"::timestamp without time zone AS "@timestamp",
     doc ->> '_id'::text AS uuid,
     doc #>> '{parent,contact,_id}'::text[] AS chw,
     doc #>> '{parent,_id}'::text[] AS area_uuid,

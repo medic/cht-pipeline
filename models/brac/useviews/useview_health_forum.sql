@@ -9,6 +9,7 @@
 }}
  
 SELECT 
+    "@timestamp"::timestamp without time zone AS "@timestamp",
     doc ->> '_id'::text AS xmlforms_uuid,
 	doc #>> '{contact,_id}'::text[] AS chw,
     doc #>> '{contact,parent,_id}'::text[] AS area_uuid,

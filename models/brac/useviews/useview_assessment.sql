@@ -15,10 +15,7 @@
     )
 }}
 
-SELECT
-{{ dbt_utils.surrogate_key(['reported', 'uuid']) }} AS useview_assessment_reported_age_uuid,
-*
-FROM(
+
     SELECT
             "@timestamp"::timestamp without time zone AS "@timestamp",
             doc ->> '_id'::text AS uuid,
@@ -96,5 +93,3 @@ FROM(
         {% if is_incremental() %}
             AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
         {% endif %}
-
-) as x
