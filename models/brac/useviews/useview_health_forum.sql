@@ -1,7 +1,7 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key="uuid",
+        unique_key="xmlforms_uuid",
         indexes=[
             {'columns': ['xmlforms_uuid']}         
         ]
