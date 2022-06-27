@@ -4,7 +4,6 @@
         indexes=[
             {'columns': ['reported']},
             {'columns': ['chw']},
-            {'columns': ['rev_id']},
             {'columns': ['reported_by']},
             {'columns': ['reported_by_parent']},
             {'columns': ['referral_follow_up']},
