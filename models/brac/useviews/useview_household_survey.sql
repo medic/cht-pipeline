@@ -11,6 +11,7 @@
 }}
 
 SELECT
+    "@timestamp"::timestamp without time zone AS "@timestamp",
     doc ->> '_id'::text AS uuid,
     doc #>> '{parent,contact,_id}'::text[] AS chw,
     doc #>> '{parent,_id}'::text[] AS area_uuid,
@@ -24,5 +25,5 @@ FROM
 WHERE
     (doc ->> 'type') = 'clinic'
     {% if is_incremental() %}
-        AND COALESCE("@timestamp" > (SELECT MAX({{ this }}."@timestamp") FROM {{ this }}), True)
+        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
     {% endif %}
