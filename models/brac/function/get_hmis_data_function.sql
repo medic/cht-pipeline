@@ -331,18 +331,7 @@ LEFT JOIN
 ) AS health_forum ON (period_chp.date = health_forum. reported_month AND period_chp.area_uuid = health_forum.area_uuid )
 LEFT JOIN 
 (
-	WITH preg_record AS (
-		SELECT 
-			chp.area_uuid,
-			date_trunc('MONTH', reported) AS reported_month,
-			COUNT(DISTINCT patient_id) FILTER(WHERE preg_test != 'neg') AS count
-		FROM {{ ref("useview_pregnancy") }} preg
-		LEFT JOIN {{ ref("contactview_chp") }} chp ON chp.uuid =  preg.chw 
-		WHERE reported::DATE <= date_trunc('MONTH',end_date)::DATE
-		GROUP BY 
-			area_uuid, 
-			reported_month
-	)
+
 	SELECT
 		area_uuid,
 		reported_month,
@@ -488,16 +477,6 @@ GROUP BY
  ) AS follow_Up ON ( follow_Up. area_uuid = period_chp.area_uuid AND follow_Up.reported_month = period_chp.date )
 
  LEFT JOIN (
-	WITH immunization_followup 
-	AS	(
-			SELECT DISTINCT ON (patient_id)
-				"inputs/source_id",
-				vaccines_administered 
-			FROM {{ ref("formview_immunization_follow_up") }}
-			WHERE 
-			(date_trunc('month',end_date)::DATE) >= (date_trunc('month', reported)::DATE)
-			ORDER BY patient_id, reported DESC
-		)
 	SELECT
 		date_trunc('month', imm.reported) reported_month,
 		imm.reported_by_parent AS  area_uuid,
