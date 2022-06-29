@@ -1,6 +1,6 @@
 {{ config(materialized = 'raw_sql') }}  
 
-CREATE TABLE configuration IF NOT EXISTS (key TEXT, value JSONB);
+CREATE TABLE IF NOT EXISTS configuration (key TEXT, value JSONB);
 
 INSERT INTO configuration VALUES
 	
