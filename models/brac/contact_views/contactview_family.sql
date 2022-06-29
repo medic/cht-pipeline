@@ -8,4 +8,4 @@ SELECT
   contactview_family_survey.family_planning_method,
   contactview_family_survey.source_of_drinking_water
 FROM {{ ref("contactview_clinic") }}
-LEFT JOIN {{ ref("contactview_family_survey") }} ON contactview_clinic.uuid = contactview_family_survey.uuid;
+LEFT JOIN {{ ref("contactview_family_survey") }} ON contactview_clinic.uuid = contactview_family_survey.uuid
