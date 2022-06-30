@@ -62,7 +62,6 @@ RETURNS TABLE(
 		count_ax_with_immediate_tx_rec numeric
 					
 	)
-	 )
 	LANGUAGE sql
 	STABLE
 AS $BODY$
