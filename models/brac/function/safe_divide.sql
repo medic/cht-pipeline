@@ -1,4 +1,6 @@
-CREATE FUNCTION {{this}}(numerator NUMERIC, denominator NUMERIC, round_dec INT) RETURNS FLOAT AS $$
+{{ config(materialized = 'raw_sql') }}  
+
+CREATE OR REPLACE FUNCTION {{this}}(numerator NUMERIC, denominator NUMERIC, round_dec INT) RETURNS FLOAT AS $$
     SELECT
     	CASE
     		WHEN denominator = 0 THEN 0
