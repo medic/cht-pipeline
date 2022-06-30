@@ -1,6 +1,6 @@
 {{ config(materialized = 'raw_sql') }}  
 
-CREATE TABLE IF NOT EXISTS {{ env_var('DBT_POSTGRES_SCHEMA') }} . configuration (key TEXT, value JSONB);
+CREATE TABLE IF NOT EXISTS {{ this }} (key TEXT, value JSONB);
 
 INSERT INTO configuration VALUES
 	
