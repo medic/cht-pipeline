@@ -66,7 +66,7 @@ REG_RECORDS_CTE AS (
           chw.area_uuid,
           date_trunc('month',family_contact.created) AS date_interval,
           COUNT(family_contact.uuid) AS total
-        FROM {{ ref("contactview_family") }} family_contact
+        FROM {{ ref("contactview_clinic") }} family_contact
         LEFT JOIN CHPS_CTE chw 
         ON family_contact.chw_uuid = chw.uuid
         GROUP BY 
