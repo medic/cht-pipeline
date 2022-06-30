@@ -2,7 +2,7 @@
 
 CREATE TABLE IF NOT EXISTS {{ this }} (key TEXT, value JSONB);
 
-INSERT INTO configuration VALUES
+INSERT INTO {{ this }} VALUES
 	
 	/* General */
 
