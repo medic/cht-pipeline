@@ -203,23 +203,23 @@ SELECT
 	SUM(COALESCE(assess_count.count_ax_with_fu_tx_complete,0)) AS count_ax_with_fu_tx_complete,
 	SUM(COALESCE(assess_count.count_ax_with_fu_tx_given_during_ax,0)) AS count_ax_with_fu_tx_given_during_ax,
 	
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_with_fu_complete,0)),SUM(COALESCE(assess_count.count_ax_with_fu_rec,0)),2) AS percent_ax_with_fu_complete,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_with_fu_complete_on_time,0)),SUM(COALESCE(assess_count.count_ax_with_fu_rec,0)),2) AS percent_ax_with_fu_complete_on_time,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_with_fu_complete_patient_improved,0)),SUM(COALESCE(assess_count.count_ax_with_fu_complete_patient_status_checked,0)),2) AS percent_ax_with_fu_complete_patient_improved,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_with_fu_ref_complete,0)),SUM(COALESCE(assess_count.count_ax_with_fu_ref_rec,0)),2) AS percent_ax_with_fu_ref_complete,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_with_fu_ref_complete_attend_hf,0)),SUM(COALESCE(assess_count.count_ax_with_fu_ref_complete,0)),2) AS percent_ax_with_fu_ref_complete_attend_hf,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_with_fu_tx_complete,0)),SUM(COALESCE(assess_count.count_ax_with_fu_tx_rec,0)),2) AS percent_ax_with_fu_tx_complete,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_with_fu_tx_given_during_ax,0)),SUM(COALESCE(assess_count.count_ax_with_immediate_tx_rec,0)),2) AS percent_ax_with_fu_tx_given_during_ax,	
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_with_fu_complete,0)),SUM(COALESCE(assess_count.count_ax_with_fu_rec,0)),2) AS percent_ax_with_fu_complete,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_with_fu_complete_on_time,0)),SUM(COALESCE(assess_count.count_ax_with_fu_rec,0)),2) AS percent_ax_with_fu_complete_on_time,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_with_fu_complete_patient_improved,0)),SUM(COALESCE(assess_count.count_ax_with_fu_complete_patient_status_checked,0)),2) AS percent_ax_with_fu_complete_patient_improved,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_with_fu_ref_complete,0)),SUM(COALESCE(assess_count.count_ax_with_fu_ref_rec,0)),2) AS percent_ax_with_fu_ref_complete,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_with_fu_ref_complete_attend_hf,0)),SUM(COALESCE(assess_count.count_ax_with_fu_ref_complete,0)),2) AS percent_ax_with_fu_ref_complete_attend_hf,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_with_fu_tx_complete,0)),SUM(COALESCE(assess_count.count_ax_with_fu_tx_rec,0)),2) AS percent_ax_with_fu_tx_complete,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_with_fu_tx_given_during_ax,0)),SUM(COALESCE(assess_count.count_ax_with_immediate_tx_rec,0)),2) AS percent_ax_with_fu_tx_given_during_ax,	
 	
 	SUM(COALESCE(assess_count.count_ax_within_24,0)) AS count_ax_within_24,
 	SUM(COALESCE(assess_count.count_ax_within_48,0)) AS count_ax_within_48,
 	SUM(COALESCE(assess_count.count_ax_within_72,0)) AS count_ax_within_72,
 	SUM(COALESCE(assess_count.count_ax_beyond_72,0)) AS count_ax_beyond_72,
 	
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_within_24,0)),SUM(COALESCE(assess_count.count_u1_ax,0)),2) AS percent_ax_within_24,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_within_48,0)),SUM(COALESCE(assess_count.count_u1_ax,0)),2) AS percent_ax_within_48,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_within_72,0)),SUM(COALESCE(assess_count.count_u1_ax,0)),2) AS percent_ax_within_72,
-	{{ ref("SAFE_DIVIDE") }} (SUM(COALESCE(assess_count.count_ax_beyond_72,0)),SUM(COALESCE(assess_count.count_u1_ax,0)),2) AS percent_ax_beyond_72,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_within_24,0)),SUM(COALESCE(assess_count.count_u1_ax,0)),2) AS percent_ax_within_24,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_within_48,0)),SUM(COALESCE(assess_count.count_u1_ax,0)),2) AS percent_ax_within_48,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_within_72,0)),SUM(COALESCE(assess_count.count_u1_ax,0)),2) AS percent_ax_within_72,
+	{{ ref("safe_divide") }} (SUM(COALESCE(assess_count.count_ax_beyond_72,0)),SUM(COALESCE(assess_count.count_u1_ax,0)),2) AS percent_ax_beyond_72,
 
 	/* COUNT FROM u1_iccmview_assessment_follow_up */
 
