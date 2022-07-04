@@ -61,9 +61,10 @@ RETURNS TABLE(
 		count_fu numeric,
 		count_ax_with_immediate_tx_rec numeric
 					
-	) AS
-
-$BODY$
+	)
+		LANGUAGE sql
+	STABLE	
+AS $BODY$
 
 
 WITH period_CTE AS
