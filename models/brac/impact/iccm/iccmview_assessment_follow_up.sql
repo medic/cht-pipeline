@@ -33,7 +33,7 @@ SELECT
 FROM
 	{{ ref("useview_assessment_follow_up") }}  AS fu
 	/* restrict so that it is only coming from symptomatic assessments */
-	INNER JOIN iccmview_assessment AS source ON (fu.form_source_id = source.uuid)
+	INNER JOIN {{ ref("iccmview_assessment") }} AS source ON (fu.form_source_id = source.uuid)
 	
 WHERE
 	/* restrict patient age */
