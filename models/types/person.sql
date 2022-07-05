@@ -2,7 +2,7 @@
     config(
         materialized = 'incremental',
         indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
+            {'columns': ['"@timestamp"'], 'type': 'btree'},
             {'columns': ['"patient_id"'], 'type': 'hash'},
         ]
     )
@@ -21,5 +21,5 @@ WHERE
     doc->>'type' = 'person'
 
 {% if is_incremental() %}
-    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
+    AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
