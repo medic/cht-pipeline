@@ -12,7 +12,7 @@
                 COUNT(uuid) FILTER (WHERE patient_age_in_months::int < 12 AND diarrhea_treatment IS NOT NULL) AS u1_diarrhea_treatment,
                 COUNT(uuid) FILTER (WHERE patient_age_in_months::int < 12 AND pneumonia_treatment IS NOT NULL) AS u1_pneumonia_treatment                
             FROM 
-             public.useview_assessment
+             {{ ref("useview_assessment") }}
             WHERE
              /* restrict patient age */
              patient_age_in_months >=2
@@ -64,19 +64,19 @@
         hh.hh_visit AS unique_households_visited,
         hh.percent_hh_visit AS percent_hh_visit
     FROM
-        get_dashboard_data_anc_impact('health_center','12','month','true') anc
-        LEFT JOIN contactview_chp chp 
+        {{ ref("get_dashboard_data_anc_impact" ) }}('health_center','12','month','true') anc
+        LEFT JOIN {{ ref("contactview_chp") }} chp 
         ON
         anc.health_center_uuid = chp.area_uuid 
-        LEFT JOIN get_dashboard_data_iccm_impact('health_center','12','month','true') iccm
+        LEFT JOIN {{ ref("get_dashboard_data_iccm_impact") }}('health_center','12','month','true') iccm
         ON
         anc.health_center_uuid=iccm.health_center_uuid 
         AND anc.period_start = iccm.period_start
-        LEFT JOIN get_dashboard_data_iccm_impact_u1('health_center','12','month','true') u1_iccm
+        LEFT JOIN {{ ref("get_dashboard_data_iccm_impact_u1") }}('health_center','12','month','true') u1_iccm
         ON 
         anc.health_center_uuid=u1_iccm.health_center_uuid 
         AND anc.period_start = u1_iccm.period_start
-        LEFT JOIN get_dashboard_data_hh_brac('health_center','12','month','true') hh
+        LEFT JOIN {{ ref("get_dashboard_data_hh_brac") }}('health_center','12','month','true') hh
         ON 
         anc.health_center_uuid=hh.health_center_uuid 
         AND anc.period_start = hh.period_start
