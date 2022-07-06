@@ -3,14 +3,7 @@
         materialized = 'incremental',
         unique_key='uuid',
         indexes=[
-            {'columns': ['uuid']},
-            {'columns': ['patient_id']},
-            {'columns': ['reported']},
-            {'columns': ['reported_by']},
-            {'columns': ['reported_by_parent']},
             {'columns': ['visit_type']},
-            {'columns': ['source_id']},
-            {'columns': ['reported']},
             {'columns': ['"@timestamp"']}
 
         ]
