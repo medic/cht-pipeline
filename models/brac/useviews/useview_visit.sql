@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='uuid',
         indexes=[
             {'columns': ['visit_type']},
             {'columns': ['"@timestamp"']}

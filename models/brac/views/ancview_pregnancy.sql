@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='uuid',
         indexes=[
             {'columns': ['uuid']},
             {'columns': ['danger_sign_at_reg']},

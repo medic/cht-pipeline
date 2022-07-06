@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='useview_assessment_follow_up_source_date_uuid',
         indexes=[
             {'columns': ['reported']},
             {'columns': ['form_source_id']},

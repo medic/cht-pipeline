@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='useview_postnatal_care_count_reported_uuid',
         indexes=[
             {'columns': ['pregnancy_outcome']},
             {'columns': ['reported']},

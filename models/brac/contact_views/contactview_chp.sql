@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key="uuid",
         indexes=[
             {'columns': ['area_uuid']},
             {'columns': ['branch_uuid']},

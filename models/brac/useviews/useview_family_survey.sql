@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='useview_family_survey_uuid',
         indexes=[
             {'columns': ['family_id']},
             {'columns': ['reported']},
