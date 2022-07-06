@@ -22,7 +22,7 @@
               reported,
               uuid
             FROM
-              {{ ref("ancview_pregnancy") }}
+              {{ ref("ancview_pregnancy") }} AS preg
             ORDER BY
               patient_id,
               reported DESC

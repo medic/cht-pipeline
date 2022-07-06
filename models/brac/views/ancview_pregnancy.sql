@@ -3,15 +3,9 @@
         materialized = 'incremental',
         unique_key='uuid',
         indexes=[
+            {'columns': ['uuid']},
             {'columns': ['danger_sign_at_reg']},
-            {'columns': ['early_reg']},
-            {'columns': ['mdd']},
-            {'columns': ['patient_id']},
             {'columns': ['reported']},
-            {'columns': ['reported_by']},
-            {'columns': ['reported_by_parent']},
-            {'columns': ['has_risk_factor']},
-            {'columns': ['second_tri_end']},
             {'columns': ['"@timestamp"']}
 
         ]
