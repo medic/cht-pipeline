@@ -1,6 +1,6 @@
 {{ config(materialized = 'raw_sql') }}  
 
-CREATE FUNCTION {{ this }}
+CREATE OR REPLACE FUNCTION {{ this }}
 (
 	param_facility_group_by text, 
 	param_num_units text default '12', 

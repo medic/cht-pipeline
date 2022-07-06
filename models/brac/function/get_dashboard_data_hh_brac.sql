@@ -1,6 +1,6 @@
 {{ config(materialized = 'raw_sql') }} 
 
-CREATE FUNCTION {{ this }} (param_facility_group_by text DEFAULT 'All'::text, param_num_units text DEFAULT '12'::text, param_interval_unit text DEFAULT 'Months'::text, param_include_current boolean DEFAULT true)
+CREATE OR REPLACE FUNCTION {{ this }} (param_facility_group_by text DEFAULT 'All'::text, param_num_units text DEFAULT '12'::text, param_interval_unit text DEFAULT 'Months'::text, param_include_current boolean DEFAULT true)
  RETURNS TABLE(district_hospital_uuid text, district_hospital_name text, health_center_uuid text, health_center_name text, clinic_uuid text, clinic_name text, period_start date, period_start_epoch numeric, facility_join_field text, hh_registered numeric, total_hh_registered numeric, hh_total_visit NUMERIC, hh_visit numeric, percent_hh_visit double precision)
  LANGUAGE sql
  STABLE
@@ -157,7 +157,7 @@ AS $function$
 		total_hh_registered,
         hh_total_visit,
 		hh_visit,
-		safe_divide(hh_visit,total_hh_registered,2) AS percent_hh_visit
+		{{ ref("safe_divide") }}(hh_visit,total_hh_registered,2) AS percent_hh_visit
 	FROM
 		hh_data
 	WHERE

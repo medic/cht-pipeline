@@ -24,7 +24,7 @@
         WHERE key = 'anc'::text AND value ? 'lmp_calcs'::text
         )
     SELECT 
-        "@timestamp"::timestamp without time zone AS "@timestamp",
+        preg."@timestamp"::timestamp without time zone AS "@timestamp",
         preg.uuid AS uuid,
         'pregnancy'::text AS form,
         preg.lmp <> '' AS has_lmp,

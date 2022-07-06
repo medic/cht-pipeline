@@ -1,5 +1,5 @@
 {{ config(materialized = 'raw_sql') }}  
-CREATE FUNCTION {{ this }} (param_facility_group_by text, param_num_units text default '12', param_interval_unit text default 'month', param_include_current boolean default 'true')
+CREATE OR REPLACE FUNCTION {{ this }} (param_facility_group_by text, param_num_units text default '12', param_interval_unit text default 'month', param_include_current boolean default 'true')
 
 	RETURNS TABLE(
 				district_hospital_uuid text,
