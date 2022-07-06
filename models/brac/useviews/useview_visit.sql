@@ -37,9 +37,6 @@ SELECT
 	FROM
 		 {{ ref("couchdb") }}
 			
-	WHERE
-		doc ->> 'form' = 'pregnancy_visit' 
-		OR doc ->> 'form' = 'postnatal_care'
-		OR (doc ->> 'form' = 'assessment' AND (doc #>> '{fields,patient_age_in_years}')::int <= 5)
-		OR doc ->> 'form' = 'immunization_follow_up'
+	WHERE doc ->> 'form'::text = ANY (ARRAY ['pregnancy_visit'::text, 'postnatal_care'::text, 'immunization_follow_up'::text])
+		OR (doc ->> 'form' = 'assessment' AND (doc #>> '{fields,patient_age_in_years}')::int <= 5);
 
