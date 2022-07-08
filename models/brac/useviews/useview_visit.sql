@@ -31,6 +31,10 @@ SELECT
 			
 	WHERE doc ->> 'form' IN ('pregnancy_visit', 'postnatal_care', 'immunization_follow_up')
 
+	{% if is_incremental() %}
+        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
+	{% endif %}
+
 UNION ALL 
 
 SELECT
@@ -53,7 +57,7 @@ SELECT
 	FROM
 		 {{ ref("couchdb") }}
 			
-	WHERE (doc ->> 'form' = 'assessment' AND (nullif(doc #>> '{fields,patient_age_in_years}', ''))::int <= 5)
+	WHERE (doc ->> 'form' = 'assessment' AND (doc #>> '{fields,patient_age_in_years}') != '' AND (nullif(doc #>> '{fields,patient_age_in_years}', ''))::int <= 5)
 
 {% if is_incremental() %}
         AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
