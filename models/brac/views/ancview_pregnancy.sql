@@ -39,3 +39,7 @@
     FROM config_cte config,
         {{ ref("useview_pregnancy") }} preg
     INNER JOIN {{ ref("contactview_metadata") }} contact ON contact.uuid = preg.chw
+
+    {% if is_incremental() %}
+        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
+{% endif %}
