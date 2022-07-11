@@ -42,7 +42,7 @@
         anc.percent_preg_early_reg_by_reg AS percent_anc_first_trim,
         iccm.count_u5_ax AS count_u5_assessments,
         ASSESSMENTS.count_all_assessments AS count_all_assessments,
-        safe_divide(iccm.count_u5_ax,COALESCE(ASSESSMENTS.count_all_assessments,0),3) AS percent_assessments,
+        {{ ref("safe_divide") }} (iccm.count_u5_ax,COALESCE(ASSESSMENTS.count_all_assessments,0),3) AS percent_assessments,
         iccm.count_ax_within_24 AS count_assessments_within_24,
         iccm.count_ax_with_fu_ref_complete_attend_hf AS count_assessments_with_fu_ref_complete_attend_hf,
         iccm.count_malaria_dx AS u5_malaria_diagnoses,
