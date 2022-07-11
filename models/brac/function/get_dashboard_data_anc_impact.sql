@@ -504,7 +504,7 @@ FROM /*combination of hierarchy level and time-periods we are grouping by (last 
 					
 					FROM 
 						anc_active_config_CTE AS config,
-						form_metadata AS fm
+						{{ ref("form_metadata") }} AS fm
 											
 					WHERE
 						config.anc_forms @> format('"%s"',form)::jsonb
