@@ -1,67 +1,67 @@
 {{ config(materialized = 'raw_sql') }}  
 CREATE OR REPLACE FUNCTION {{ this }} (param_facility_group_by text, param_num_units text default '12', param_interval_unit text default 'month', param_include_current boolean default 'true')
 
-	RETURNS TABLE(
-				district_hospital_uuid text,
-				district_hospital_name text,
-				health_center_uuid text,
-				health_center_name text,
-				clinic_uuid text,
-				clinic_name text,
-				period_start date,
-				period_start_epoch numeric,
-				facility_join_field text,
-				
-				count_new_person_by_reg numeric,
-				count_preg_by_reg numeric,
-				count_preg_with_lmp_by_reg numeric,
-				count_preg_without_lmp_by_reg numeric,
-				count_preg_early_reg_by_reg numeric,
-				count_deliv_by_reg numeric,
-				count_danger_sign_by_reg numeric,
-				count_pregnancy_visit_by_reg numeric,
-				percent_preg_early_reg_by_reg double precision,
-				
-				count_preg_by_mdd numeric,
-				count_preg_with_lmp_by_mdd numeric,
-				count_preg_without_lmp_by_mdd numeric,
-				count_preg_confirmed_deliv_by_mdd numeric,
-				count_preg_1plus_visit_by_mdd numeric,
-				count_preg_4plus_visit_by_mdd numeric,
-				count_preg_early_reg_by_mdd numeric,
-				count_preg_early_reg_4plus_visit_by_mdd numeric,
-				count_preg_danger_sign_by_mdd numeric,
-				count_preg_danger_sign_4plus_visit_by_mdd numeric,
-				percent_deliv_confirmed_by_mdd double precision,
-				percent_preg_1plus_visit_by_mdd double precision,
-				percent_preg_4plus_visit_by_mdd double precision,
-				percent_preg_early_reg_4plus_visits_by_mdd double precision,
-				percent_preg_danger_sign_4plus_visits_by_mdd double precision,
-				
-				count_preg_by_2nd_tri_end numeric,
-				count_preg_1plus_visits_by_2nd_tri_end numeric,
-				count_preg_2plus_visits_by_2nd_tri_end numeric,
-				count_preg_3plus_visits_by_2nd_tri_end numeric,
-				percent_preg_1plus_visits_by_2nd_tri_end double precision,
-				percent_preg_2plus_visits_by_2nd_tri_end double precision,
-				percent_preg_3plus_visits_by_2nd_tri_end double precision,
-				
-				count_deliv_by_deliv_date numeric,
-				count_deliv_health_facility_by_deliv_date numeric,
-				count_deliv_skilled_care_by_deliv_date numeric,
-				count_deliv_early_reg_by_deliv_date numeric,
-				count_deliv_health_facility_early_reg_by_deliv_date numeric,
-				count_deliv_danger_sign_by_deliv_date numeric,
-				count_deliv_health_facility_danger_sign_by_deliv_date numeric,
-				percent_deliv_health_facility_by_deliv_date double precision,
-				percent_deliv_skilled_care_by_deliv_date double precision,
-				percent_deliv_early_reg_health_facility_by_deliv_date double precision,
-				percent_deliv_danger_sign_health_facility_by_deliv_date double precision,
-				
-				count_reported_by numeric
-	) 
-	LANGUAGE sql
-	STABLE	
+RETURNS TABLE(
+	district_hospital_uuid text,
+	district_hospital_name text,
+	health_center_uuid text,
+	health_center_name text,
+	clinic_uuid text,
+	clinic_name text,
+	period_start date,
+	period_start_epoch numeric,
+	facility_join_field text,
+	
+	count_new_person_by_reg numeric,
+	count_preg_by_reg numeric,
+	count_preg_with_lmp_by_reg numeric,
+	count_preg_without_lmp_by_reg numeric,
+	count_preg_early_reg_by_reg numeric,
+	count_deliv_by_reg numeric,
+	count_danger_sign_by_reg numeric,
+	count_pregnancy_visit_by_reg numeric,
+	percent_preg_early_reg_by_reg double precision,
+	
+	count_preg_by_mdd numeric,
+	count_preg_with_lmp_by_mdd numeric,
+	count_preg_without_lmp_by_mdd numeric,
+	count_preg_confirmed_deliv_by_mdd numeric,
+	count_preg_1plus_visit_by_mdd numeric,
+	count_preg_4plus_visit_by_mdd numeric,
+	count_preg_early_reg_by_mdd numeric,
+	count_preg_early_reg_4plus_visit_by_mdd numeric,
+	count_preg_danger_sign_by_mdd numeric,
+	count_preg_danger_sign_4plus_visit_by_mdd numeric,
+	percent_deliv_confirmed_by_mdd double precision,
+	percent_preg_1plus_visit_by_mdd double precision,
+	percent_preg_4plus_visit_by_mdd double precision,
+	percent_preg_early_reg_4plus_visits_by_mdd double precision,
+	percent_preg_danger_sign_4plus_visits_by_mdd double precision,
+	
+	count_preg_by_2nd_tri_end numeric,
+	count_preg_1plus_visits_by_2nd_tri_end numeric,
+	count_preg_2plus_visits_by_2nd_tri_end numeric,
+	count_preg_3plus_visits_by_2nd_tri_end numeric,
+	percent_preg_1plus_visits_by_2nd_tri_end double precision,
+	percent_preg_2plus_visits_by_2nd_tri_end double precision,
+	percent_preg_3plus_visits_by_2nd_tri_end double precision,
+	
+	count_deliv_by_deliv_date numeric,
+	count_deliv_health_facility_by_deliv_date numeric,
+	count_deliv_skilled_care_by_deliv_date numeric,
+	count_deliv_early_reg_by_deliv_date numeric,
+	count_deliv_health_facility_early_reg_by_deliv_date numeric,
+	count_deliv_danger_sign_by_deliv_date numeric,
+	count_deliv_health_facility_danger_sign_by_deliv_date numeric,
+	percent_deliv_health_facility_by_deliv_date double precision,
+	percent_deliv_skilled_care_by_deliv_date double precision,
+	percent_deliv_early_reg_health_facility_by_deliv_date double precision,
+	percent_deliv_danger_sign_health_facility_by_deliv_date double precision,
+	
+	count_reported_by numeric
+) 
+LANGUAGE sql
+STABLE	
 	
 AS
 $BODY$
