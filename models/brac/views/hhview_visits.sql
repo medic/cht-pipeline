@@ -23,5 +23,5 @@ FROM
 	{{ ref("contactview_metadata") }} 
 WHERE 
 	type='clinic'
-)
+) x
 GROUP BY reported, reported_by_parent, household_id

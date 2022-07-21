@@ -4,7 +4,6 @@
         indexes=[
             {'columns': ['patient_id']},
             {'columns': ['chw']},
-			{'columns': ['useview_pregnancy_reported_edd_uuid']},
             {'columns': ['"@timestamp"']}
         ]
     )
@@ -12,10 +11,6 @@
 
 
 SELECT
-		{{ dbt_utils.surrogate_key(['reported', 'edd', 'uuid']) }} AS useview_pregnancy_reported_edd_uuid,
-		*
-FROM (
-	SELECT
 
         "@timestamp"::timestamp without time zone AS "@timestamp",
 		(couchdb.doc ->> '_id') as uuid,
@@ -58,4 +53,3 @@ FROM (
 {% if is_incremental() %}
     AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
-) x
