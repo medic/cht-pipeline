@@ -282,7 +282,7 @@ LEFT JOIN
 
   WHERE
     type = 'clinic'
-    AND NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(now(),'clinic') muted
+    AND NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(ending_date,'clinic') muted
       WHERE muted.contact_uuid = family.uuid)
 
   GROUP BY
