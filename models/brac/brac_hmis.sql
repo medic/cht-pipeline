@@ -22,7 +22,7 @@ FROM
 			chp.name,
 			date_trunc('month',now() - '1 month'::INTERVAL)::date AS date
 		FROM
-			contactview_chp AS chp
+			{{ ref("contactview_chp") }} AS chp
 	
 	) AS period_chp
 	
@@ -34,7 +34,7 @@ LEFT JOIN
 			sum(1) AS count
 			
 		FROM
-			contactview_metadata
+			{{ ref("contactview_metadata") }}
 			
 		WHERE
 			type = 'clinic'
@@ -53,8 +53,8 @@ LEFT JOIN
 			COUNT(DISTINCT(cperson.parent_uuid)) AS count
 			
 		FROM
-			form_metadata AS fmeta
-			INNER JOIN contactview_person AS cperson ON (fmeta.patient_id = cperson.patient_id)
+			{{ ref("form_metadata") }} AS fmeta
+			INNER JOIN {{ ref("contactview_person") }} AS cperson ON (fmeta.patient_id = cperson.patient_id)
 			
 		GROUP BY
 			area_uuid,
@@ -71,7 +71,7 @@ LEFT JOIN
 		SUM((mosquito_nets ='true')::int) AS num_of_hh_bed_nets, 
     	SUM((hygeinic_toilet ='true')::int) AS num_of_hh_latrines, 
 		SUM((source_of_drinking_water !='spring')::int) AS num_of_hh_safe_water
-	FROM public.useview_household_survey
+	FROM {{ ref("useview_household_survey") }}
 
 	GROUP BY 
 		chw, 
@@ -89,7 +89,7 @@ LEFT JOIN
 		SUM(no_of_participants::bigint) AS num_of_comm_members, 
 		COUNT(xmlforms_uuid) AS num_of_health_forum,
 		date_trunc('month',reported_day	) AS reported_month
-	FROM public.formview_health_forum
+	FROM {{ ref("formview_health_forum") }}
 	GROUP BY 
  		chw, 
  		area_uuid,
@@ -106,7 +106,7 @@ LEFT JOIN
 			SUM((fmeta.reported >= (date_trunc('MONTH',now()::date - '1 month'::INTERVAL)::DATE))::int) AS identified
 			
 		FROM
-			form_metadata AS fmeta
+			{{ ref("form_metadata") }} AS fmeta
 		WHERE 
 			fmeta.form='pregnancy'  
 			
@@ -122,7 +122,7 @@ LEFT JOIN
 		SUM ((fpostnatal.health_facility_delivery ='no')::int ) AS num_home_deliveries,  /* Assumption is that home deliveries have answer no  */
 		date_trunc('month',fpostnatal.reported)::date  AS reported_month
 	FROM 
-		public.useview_postnatal_care AS fpostnatal
+		{{ ref("useview_postnatal_care") }} AS fpostnatal
 	WHERE 
 		(date_trunc('month',fpostnatal.reported) ::DATE) = (date_trunc('MONTH',now()::date - '1 month'::INTERVAL)::DATE)
 	GROUP BY
