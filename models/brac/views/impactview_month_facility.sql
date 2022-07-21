@@ -4,7 +4,7 @@ WITH facilities_CTE AS
 			uuid AS facility_join_field,
 			name AS facility_name
 		FROM
-			contactview_metadata
+			{{ ref("contactview_metadata") }}
 		WHERE
 			type = 'district_hospital'
 			AND name <> 'HQ'
@@ -19,7 +19,7 @@ WITH facilities_CTE AS
 		facility_name
 		
 	FROM
-		impactview_month
+		{{ ref("impactview_month") }}
 		CROSS JOIN facilities_CTE
 	
 	ORDER BY 
