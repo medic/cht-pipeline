@@ -84,9 +84,15 @@ WITH follow_up_activity_cte AS (
                 END) AS referral_fu_confirmed_health_facility
            FROM (({{ ref("useview_assessment") }} assess
              JOIN {{ ref("impactview_chw_facility") }} chw_facility ON ((assess.chw = chw_facility.chw_uuid)))
-             LEFT JOIN {{ ref("follow_up_deduped_cte") }} follow_up ON ((assess.uuid = follow_up.form_source_id)))
+             LEFT JOIN follow_up_deduped_cte follow_up ON ((assess.uuid = follow_up.form_source_id)))
           WHERE (assess.patient_age_in_years < 5)
           GROUP BY (date_trunc('month'::text, assess.reported))::date, chw_facility.facility_join_field
+        ), impactview_month_facility_cte AS (
+            SELECT 
+                generate_series(date_trunc('month', now() - '1 year'::interval), now(), '1 mon'::interval)::date AS month,
+                date_part('epoch', generate_series(date_trunc('month', now() - '1 year'::interval), now(), '1 mon'::interval)::date) AS epoch
+            ORDER BY
+                epoch
         )
  SELECT month_facility.month,
     month_facility.epoch,
@@ -107,7 +113,7 @@ WITH follow_up_activity_cte AS (
     COALESCE(assessment_and_fu_cte.referral_fu_confirmed, (0)::bigint) AS referral_fu_confirmed,
     COALESCE(assessment_and_fu_cte.referral_fu_confirmed_on_time, (0)::bigint) AS referral_fu_confirmed_on_time,
     COALESCE(assessment_and_fu_cte.referral_fu_confirmed_health_facility, (0)::bigint) AS referral_fu_confirmed_health_facility
-   FROM (({{ ref("impactview_month_facility") }} month_facility
-     LEFT JOIN {{ ref("assessment_and_fu_cte") }} ON (((month_facility.facility_join_field = assessment_and_fu_cte.facility_join_field) AND (month_facility.month = assessment_and_fu_cte.reported_month))))
-     LEFT JOIN {{ ref("follow_up_activity_cte") }} ON (((month_facility.facility_join_field = follow_up_activity_cte.facility_join_field) AND (month_facility.month = follow_up_activity_cte.reported_month))))
+   FROM ((impactview_month_facility_cte month_facility
+     LEFT JOIN assessment_and_fu_cte ON (((month_facility.facility_join_field = assessment_and_fu_cte.facility_join_field) AND (month_facility.month = assessment_and_fu_cte.reported_month))))
+     LEFT JOIN follow_up_activity_cte ON (((month_facility.facility_join_field = follow_up_activity_cte.facility_join_field) AND (month_facility.month = follow_up_activity_cte.reported_month))))
   ORDER BY month_facility.month, month_facility.facility_name
