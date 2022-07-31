@@ -182,7 +182,7 @@ SELECT
         CASE
             WHEN SUM(COALESCE(count_preg_by_reg,0)) = 0
             THEN 0::float
-            ELSE (({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_early_reg_by_reg,0)), SUM(COALESCE(count_preg_by_reg,0))))* 100)            
+            ELSE (({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_early_reg_by_reg,0)), SUM(COALESCE(count_preg_by_reg,0))))* 100)            
         END AS percent_preg_early_reg_by_reg,
         
         /* By MDD */
@@ -201,31 +201,31 @@ SELECT
         CASE
             WHEN SUM(COALESCE(count_preg_by_mdd,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_confirmed_deliv_by_mdd,0)), SUM(COALESCE(count_preg_by_mdd,0))) * 100)          
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_confirmed_deliv_by_mdd,0)), SUM(COALESCE(count_preg_by_mdd,0))) * 100)          
         END AS percent_deliv_confirmed_by_mdd,
     
         CASE
             WHEN SUM(COALESCE(count_preg_by_mdd,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_1plus_visit_by_mdd,0)) / SUM(COALESCE(count_preg_by_mdd,0))) * 100)          
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_1plus_visit_by_mdd,0)) / SUM(COALESCE(count_preg_by_mdd,0))) * 100)          
         END AS percent_preg_1plus_visit_by_mdd,
     
         CASE
             WHEN SUM(COALESCE(count_preg_by_mdd,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_4plus_visit_by_mdd,0)) / SUM(COALESCE(count_preg_by_mdd,0))) * 100)          
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_4plus_visit_by_mdd,0)) / SUM(COALESCE(count_preg_by_mdd,0))) * 100)          
         END AS percent_preg_4plus_visit_by_mdd,
     
         CASE
             WHEN SUM(COALESCE(count_preg_early_reg_by_mdd,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_early_reg_4plus_visit_by_mdd,0)) / SUM(COALESCE(count_preg_early_reg_by_mdd,0))) * 100)          
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_early_reg_4plus_visit_by_mdd,0)) / SUM(COALESCE(count_preg_early_reg_by_mdd,0))) * 100)          
         END AS percent_preg_early_reg_4plus_visits_by_mdd,
     
         CASE
             WHEN SUM(COALESCE(count_preg_danger_sign_by_mdd,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_danger_sign_4plus_visit_by_mdd,0)) / SUM(COALESCE(count_preg_danger_sign_by_mdd,0))) * 100)          
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_danger_sign_4plus_visit_by_mdd,0)) / SUM(COALESCE(count_preg_danger_sign_by_mdd,0))) * 100)          
         END AS percent_preg_danger_sign_4plus_visits_by_mdd,
             
         /* By 2nd Trimester End */
@@ -238,19 +238,19 @@ SELECT
         CASE
             WHEN SUM(COALESCE(count_preg_by_2nd_tri_end,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_1plus_visits_by_2nd_tri_end,0)) / SUM(COALESCE(count_preg_by_2nd_tri_end,0))) * 100)         
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_1plus_visits_by_2nd_tri_end,0)) / SUM(COALESCE(count_preg_by_2nd_tri_end,0))) * 100)         
         END AS percent_preg_1plus_visits_by_2nd_tri_end,
     
         CASE
             WHEN SUM(COALESCE(count_preg_by_2nd_tri_end,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_2plus_visits_by_2nd_tri_end,0)) / SUM(COALESCE(count_preg_by_2nd_tri_end,0))) * 100)         
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_2plus_visits_by_2nd_tri_end,0)) / SUM(COALESCE(count_preg_by_2nd_tri_end,0))) * 100)         
         END AS percent_preg_2plus_visits_by_2nd_tri_end,
     
         CASE
             WHEN SUM(COALESCE(count_preg_by_2nd_tri_end,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_preg_3plus_visits_by_2nd_tri_end,0)) / SUM(COALESCE(count_preg_by_2nd_tri_end,0))) * 100)         
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_preg_3plus_visits_by_2nd_tri_end,0)) / SUM(COALESCE(count_preg_by_2nd_tri_end,0))) * 100)         
         END AS percent_preg_3plus_visits_by_2nd_tri_end,    
         
         /* By Delivery Date */
@@ -266,25 +266,25 @@ SELECT
         CASE
             WHEN SUM(COALESCE(count_deliv_by_deliv_date,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_deliv_health_facility_by_deliv_date,0)) / SUM(COALESCE(count_deliv_by_deliv_date,0))) * 100)          
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_deliv_health_facility_by_deliv_date,0)) / SUM(COALESCE(count_deliv_by_deliv_date,0))) * 100)          
         END AS percent_deliv_health_facility_by_deliv_date, 
         
         CASE
             WHEN SUM(COALESCE(count_deliv_by_deliv_date,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_deliv_skilled_care_by_deliv_date,0)) / SUM(COALESCE(count_deliv_by_deliv_date,0))) * 100)         
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_deliv_skilled_care_by_deliv_date,0)) / SUM(COALESCE(count_deliv_by_deliv_date,0))) * 100)         
         END AS percent_deliv_skilled_care_by_deliv_date,    
         
         CASE
             WHEN SUM(COALESCE(count_deliv_early_reg_by_deliv_date,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_deliv_health_facility_early_reg_by_deliv_date,0)) / SUM(COALESCE(count_deliv_early_reg_by_deliv_date,0))) * 100)            
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_deliv_health_facility_early_reg_by_deliv_date,0)) / SUM(COALESCE(count_deliv_early_reg_by_deliv_date,0))) * 100)            
         END AS percent_deliv_early_reg_health_facility_by_deliv_date,   
         
         CASE
             WHEN SUM(COALESCE(count_deliv_danger_sign_by_deliv_date,0)) = 0
             THEN 0::float
-            ELSE ({{ ref("safe_divide") }}(SUM(COALESCE(count_deliv_health_facility_danger_sign_by_deliv_date,0)) / SUM(COALESCE(count_deliv_danger_sign_by_deliv_date,0))) * 100)          
+            ELSE ({{ ref('safe_divide') }}(SUM(COALESCE(count_deliv_health_facility_danger_sign_by_deliv_date,0)) / SUM(COALESCE(count_deliv_danger_sign_by_deliv_date,0))) * 100)          
         END AS percent_deliv_danger_sign_health_facility_by_deliv_date,
         
         SUM(COALESCE(health_center.count_reported_by,0)) AS count_reported_by
