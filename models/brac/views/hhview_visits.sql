@@ -7,7 +7,9 @@ SELECT
 FROM 
 	{{ ref("useview_patient_record") }} AS upr
 INNER JOIN {{ ref("contactview_person") }} cvp ON (upr.patient_id=cvp.patient_id)
+
 UNION ALL
+
 SELECT 
 	reported,
 	reported_by_parent,
