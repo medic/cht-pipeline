@@ -11,14 +11,14 @@ WITH facilities_CTE AS
 		AND name <> 'HQ OVC'		
 )
 	
-	SELECT 
-		month,
-		epoch,
-		facility_join_field,
-		facility_name	
-	FROM
-		{{ ref("impactview_month") }}
-		CROSS JOIN facilities_CTE
-	ORDER BY 
-		epoch,
-		facility_name
+SELECT 
+	month,
+	epoch,
+	facility_join_field,
+	facility_name	
+FROM
+	{{ ref("impactview_month") }}
+	CROSS JOIN facilities_CTE
+ORDER BY 
+	epoch,
+	facility_name
