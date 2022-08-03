@@ -266,7 +266,7 @@ LEFT JOIN
 	LEFT JOIN {{ ref("contactview_metadata") }} AS family ON person.parent_uuid = family.uuid
 	WHERE
 		family.type = 'clinic'
-        AND NOT EXISTS (SELECT NULL FROM get_muted_contacts(ending_date,'person') muted
+        AND NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(ending_date,'person') muted
           WHERE muted.contact_uuid = person.uuid)
 	GROUP BY 
 		family.parent_uuid
@@ -282,7 +282,7 @@ LEFT JOIN
 
   WHERE
     type = 'clinic'
-    AND NOT EXISTS (SELECT NULL FROM get_muted_contacts(now(),'clinic') muted
+    AND NOT EXISTS (SELECT NULL FROM {{ ref("get_muted_contacts") }}(ending_date,'clinic') muted
       WHERE muted.contact_uuid = family.uuid)
 
   GROUP BY

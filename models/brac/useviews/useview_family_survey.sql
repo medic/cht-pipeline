@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='useview_family_survey_uuid',
         indexes=[
             {'columns': ['family_id']},
             {'columns': ['reported']},
@@ -10,11 +9,8 @@
     )
 }}
 
+
 SELECT
-{{ dbt_utils.surrogate_key(['uuid']) }} AS useview_family_survey_uuid,
-*
-FROM(
-    SELECT
 	    "@timestamp"::timestamp without time zone AS "@timestamp",
 		doc->>'_id' AS uuid,
 		doc#>>'{contact,_id}' AS chw,
@@ -38,4 +34,3 @@ FROM(
     {% if is_incremental() %}
             AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
     {% endif %}
-) x

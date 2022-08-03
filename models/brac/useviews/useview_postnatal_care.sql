@@ -1,7 +1,6 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key='useview_postnatal_care_count_reported_uuid',
         indexes=[
             {'columns': ['pregnancy_outcome']},
             {'columns': ['reported']},
@@ -15,10 +14,7 @@
         ]
     )
 }}
-SELECT
-{{ dbt_utils.surrogate_key(['follow_up_count', 'reported', 'uuid']) }} AS useview_postnatal_care_count_reported_uuid,
-*
-FROM(
+
 	SELECT
 	        "@timestamp"::timestamp without time zone AS "@timestamp",
 			doc ->> '_id'::text AS uuid,
@@ -73,4 +69,3 @@ FROM(
 			{% if is_incremental() %}
 				AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
 			{% endif %}
-) x
