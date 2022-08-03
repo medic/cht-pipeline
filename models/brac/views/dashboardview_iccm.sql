@@ -108,6 +108,6 @@ WITH follow_up_activity_cte AS (
     COALESCE(assessment_and_fu_cte.referral_fu_confirmed_on_time, (0)::bigint) AS referral_fu_confirmed_on_time,
     COALESCE(assessment_and_fu_cte.referral_fu_confirmed_health_facility, (0)::bigint) AS referral_fu_confirmed_health_facility
    FROM (({{ ref("impactview_month_facility") }} month_facility
-     LEFT JOIN assessment_and_fu_cte ON (((month_facility.facility_join_field = assessment_and_fu_cte.facility_join_field) AND (month_facility.month = assessment_and_fu_cte.reported_month))))
-     LEFT JOIN follow_up_activity_cte ON (((month_facility.facility_join_field = follow_up_activity_cte.facility_join_field) AND (month_facility.month = follow_up_activity_cte.reported_month))))
+     LEFT JOIN assessment_and_fu_cte ON (month_facility.facility_join_field = assessment_and_fu_cte.facility_join_field) AND (month_facility.month = assessment_and_fu_cte.reported_month))
+     LEFT JOIN follow_up_activity_cte ON (month_facility.facility_join_field = follow_up_activity_cte.facility_join_field) AND (month_facility.month = follow_up_activity_cte.reported_month))
   ORDER BY month_facility.month, month_facility.facility_name
