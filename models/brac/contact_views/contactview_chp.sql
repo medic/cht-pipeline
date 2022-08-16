@@ -48,7 +48,7 @@ SELECT
     chp.doc #>> '{chp_profile, g_language, other_languages}'::text[] AS other_languages,
     chp.doc #>> '{chp_profile, g_other_details, incentives}'::text[] AS incentives,
     chp.doc #>> '{chp_profile, g_other_details, chp_services}'::text[] AS chp_services,
-    raw_contacts."@timestamp"::timestamp without time zone AS "@timestamp"
+    contactview_chw."@timestamp" AS "@timestamp"
   FROM
     {{ ref("contactview_chw") }}
   JOIN {{ ref("raw_contacts") }} ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)
@@ -56,5 +56,5 @@ SELECT
   JOIN {{ ref("raw_contacts") }} chp ON (chp.doc ->> '_id'::text) = contactview_chw.uuid
 
     {% if is_incremental() %}
-        WHERE raw_contacts."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("raw_contacts")) }}
+        WHERE contactview_chw."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("contactview_chw")) }}
     {% endif %}
