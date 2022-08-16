@@ -53,7 +53,7 @@ SELECT
     {{ ref("contactview_chw") }}
   JOIN {{ ref("raw_contacts") }} ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)
   JOIN {{ ref("contactview_branch") }} branch ON contactview_chw.branch_uuid = branch.uuid
-  LEFT JOIN {{ ref("raw_contacts") }} chp ON (chp.doc ->> '_id'::text) = contactview_chw.uuid
+  JOIN {{ ref("raw_contacts") }} chp ON (chp.doc ->> '_id'::text) = contactview_chw.uuid
 
     {% if is_incremental() %}
         WHERE raw_contacts."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("raw_contacts")) }}
