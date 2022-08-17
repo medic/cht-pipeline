@@ -6,7 +6,7 @@ SELECT chw.name,
     pplfields.parent_type,
     chwarea.uuid AS area_uuid,
     chwarea.parent_uuid AS branch_uuid,
-    contactview_person_fields."@timestamp" AS "@timestamp"
+    pplfields."@timestamp" AS "@timestamp"
 FROM {{ ref("contactview_person_fields") }} pplfields
     JOIN {{ ref("contactview_metadata") }} chw ON chw.uuid = pplfields.uuid
     JOIN {{ ref("contactview_metadata") }} chwarea ON chw.parent_uuid = chwarea.uuid
