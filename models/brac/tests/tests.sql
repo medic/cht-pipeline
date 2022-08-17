@@ -1,4 +1,4 @@
-{{ config(materialized='table') }}
+{{ config(materialized='raw_sql') }}
 
 SELECT i.col1,
         i.col2
