@@ -1,15 +1,10 @@
 {{ config(materialized='raw_sql') }}
 
-SELECT i.col1,
-        i.col2
+SELECT i.uuid
         FROM dblink('dbname=brac-ug-dev port=5432 host=localhost user=brac_ug_dblink password=Bc5Tty14vQaxAbw', 
                                 'SELECT 
-                                a.col1, 
-                                a.col2
-                                from 
-                                (SELECT 
-                                    col1,col2
-                                 FROM 
-                                    public.tableName) a
+                                uuid 
+                                FROM v1.couchdb
+                                LIMIT 1
                                 ') 
-i (col1 integer, col2 varchar(20))
+i (uuid TEXT)
