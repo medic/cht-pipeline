@@ -2,7 +2,7 @@
 
 SELECT i.col1,
         i.col2
-        FROM dblink('dbname=brac-ug-dev port=5432 hostaddr=localhost user=brac_ug_dblink password=Bc5Tty14vQaxAbw', 
+        FROM dblink('dbname=brac-ug-dev port=5432 host=localhost user=brac_ug_dblink password=Bc5Tty14vQaxAbw', 
                                 'SELECT 
                                 a.col1, 
                                 a.col2
