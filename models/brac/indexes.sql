@@ -1,4 +1,7 @@
-{{ config(schema='v1', materialized = 'raw_sql') }} 
+{{ config(schema='v1', materialized = 'raw_sql'), 
+"post-hook" : [
+      after_commit("vacuum {{this.schema}}.couchdb")
+ }} 
 
 CREATE INDEX IF NOT EXISTS couchdb_doc_id ON {{ env_var('ROOT_POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} ((doc ->> '_id'::text) text_ops);
 CREATE INDEX IF NOT EXISTS couchdb_doc_type ON {{ env_var('ROOT_POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}((doc ->> 'type'::text) text_ops);
