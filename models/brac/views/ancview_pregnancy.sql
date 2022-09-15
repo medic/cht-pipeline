@@ -41,5 +41,5 @@
     INNER JOIN {{ ref("contactview_metadata") }} contact ON contact.uuid = preg.chw
 
     {% if is_incremental() %}
-        AND preg . "@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("useview_pregnancy")) }}
+        WHERE preg . "@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("useview_pregnancy")) }}
 {% endif %}
