@@ -25,4 +25,4 @@ SELECT
     '1970-01-01 03:00:00+03'::timestamp with time zone +
     (((raw_contacts.doc ->> 'reported_date'::text)::numeric) / 1000::numeric)::double precision *
     '00:00:01'::interval AS reported
-FROM {{ ref("raw_contacts") }};
+FROM {{ ref("raw_contacts") }}
