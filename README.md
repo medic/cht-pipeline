@@ -4,7 +4,7 @@ CHT Pipeline
 CHT Pipeline is a tool used to define data models for transforming the raw data we get from Couch DB into models that can then be queried to build dashboards
 
 # Installation
-This project canbe run in one of two ways:
+This project can be run in one of two ways:
 1. Using the docker image and passed as an argument to [cht-sync](https://github.com/medic/cht-sync)
 2. Using the local installation of DBT
 
