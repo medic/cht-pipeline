@@ -11,7 +11,7 @@ This project canbe run in one of two ways:
 ## Docker
 1. Follow the instructions in [cht-sync](https://github.com/medic/cht-sync) to set up the required environment variables
 1. Add the path to your pipeline branch to the [docker-compose.postgres.yml](https://github.com/medic/cht-sync/blob/main/docker-compose.postgres.yml#L13) file in the cht-sync project
-1. Run docker-compose up to run the pipeline
+1. Run `docker-compose up` to run the pipeline
 
 ## Local DBT
 1. Follow the [DBT] (https://docs.getdbt.com/docs/get-started/installation) installation instructions
