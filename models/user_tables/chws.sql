@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'table',
         indexes=[
             {'columns': ['"@timestamp"'], 'type': 'brin'},
             {'columns': ['"patient_id"'], 'type': 'hash'},
@@ -19,7 +19,3 @@ SELECT
 FROM {{ ref('couchdb') }}
 WHERE
     doc->>'type' = 'person'
-
-{% if is_incremental() %}
-    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
-{% endif %}

@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'table',
     )
 }}
 
@@ -13,7 +13,3 @@ SELECT
     couchdb.doc #>> '{contact,_id}'::text[] AS contact_uuid
 FROM {{ ref("couchdb") }}
 WHERE (couchdb.doc ->> 'type'::text) = 'data_record'
-
-{% if is_incremental() %}
-    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
-{% endif %}
