@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: couchdb
+    columns:
+      - name: _id
+        tests:
+          - not_null
+          - unique
+      - name: _rev
+        tests:
+          - not_null
+          - unique
