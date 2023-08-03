@@ -5,8 +5,8 @@ default:
       threads: 1
       host: localhost
       port: 5432
-      user: dbt_user
-      pass: supercoolpassword
-      dbname: data
-      schema: dbt
+      user: "{{ env_var('DBT_POSTGRES_USER') }}"
+      pass: "{{ env_var('DBT_POSTGRES_PASSWORD') }}"
+      dbname: "{{ env_var('POSTGRES_DB') }}"
+      schema: "{{ env_var('DBT_POSTGRES_SCHEMA') }}"
   target: dev
