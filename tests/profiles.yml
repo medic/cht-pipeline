@@ -1,0 +1,12 @@
+default:
+  outputs:
+    dev:
+      type: postgres
+      threads: 1
+      host: localhost
+      port: 5432
+      user: dbt_user
+      pass: supercoolpassword
+      dbname: data
+      schema: dbt
+  target: dev
