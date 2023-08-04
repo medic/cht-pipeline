@@ -1,2 +1,2 @@
-docker stop pgdev
-docker rm pgdev
+docker stop pgtest
+docker rm pgtest
