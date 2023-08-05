@@ -1,6 +1,6 @@
 default:
   outputs:
-    dev:
+    env:
       type: postgres
       threads: 1
       host: localhost
@@ -9,4 +9,4 @@ default:
       pass: "{{ env_var('DBT_POSTGRES_PASSWORD') }}"
       dbname: "{{ env_var('POSTGRES_DB') }}"
       schema: "{{ env_var('DBT_POSTGRES_SCHEMA') }}"
-  target: dev
+  target: env
