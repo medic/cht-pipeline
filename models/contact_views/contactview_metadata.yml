@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: contactview_metadata
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+      - name: type
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                [contact, clinic, district_hospital, health_center, person]

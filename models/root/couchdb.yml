@@ -6,8 +6,11 @@ models:
       - name: _id
         tests:
           - not_null
-          - unique
       - name: _rev
         tests:
           - not_null
-          - unique
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - _id
+            - _rev

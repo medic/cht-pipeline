@@ -9,11 +9,13 @@ export DBT_POSTGRES_HOST=postgres
 export ROOT_POSTGRES_SCHEMA=v1
 
 export DBT_PROFILES_DIR=$PWD
-
+cd ..
+echo Install dbt dependencies ...
+dbt deps
 echo Seeding test data ...
 dbt seed --full-refresh
 echo Running dbt ...
-dbt run
+dbt run --vars 'unit_testing:true'
 echo Running tests ...
 dbt test
 
