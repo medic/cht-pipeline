@@ -12,3 +12,8 @@ models:
           - accepted_values:
               values:
                 [contact, clinic, district_hospital, health_center, person]
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: ref('raw_contacts')
+      - dbt_utils.fewer_rows_than:
+          compare_model: ref('couchdb')

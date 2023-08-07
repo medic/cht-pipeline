@@ -1,3 +1,7 @@
+{% set import_couchdb_data = select_table(source('couchdb','couchdb'), ref('couchdb_test_data')) %}
+
+{{ print("import_couchdb_data: " ~ import_couchdb_data) }}
+
 {{
     config(
         materialized = 'view',
@@ -10,4 +14,4 @@
 SELECT
     doc->>'type' AS type,
     *
-FROM {{ env_var('ROOT_POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
+FROM {{ import_couchdb_data }}

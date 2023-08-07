@@ -1,5 +1,11 @@
 version: 2
 
+sources:
+  - name: couchdb
+    database: data
+    schema: v1
+    tables:
+      - name: couchdb
 models:
   - name: couchdb
     columns:
