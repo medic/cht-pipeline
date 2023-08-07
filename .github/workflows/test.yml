@@ -22,8 +22,8 @@ jobs:
         if: steps.get-docker-hub-username.outputs.dockerhub_username
       - name: Install PostgreSQL client
         run: |
-          apt-get update
-          apt-get install --yes postgresql-client
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
