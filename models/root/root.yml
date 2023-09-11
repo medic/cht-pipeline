@@ -1,13 +1,13 @@
 version: 2
 
 sources:
-  - name: couchdb
+  - name: medic
     database: data
     schema: v1
     tables:
-      - name: couchdb
+      - name: medic
 models:
-  - name: couchdb
+  - name: medic
     columns:
       - name: _id
         tests:
