@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: couchdb
+    database: data
+    schema: v1
+    tables:
+      - name: couchdb
+models:
+  - name: couchdb
+    columns:
+      - name: _id
+        tests:
+          - not_null
+      - name: _rev
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - _id
+            - _rev
