@@ -41,4 +41,4 @@ WITH pnc_visits AS (
 -- Model: pncview_visits
 SELECT
     *
-FROM pnc_visits;
+FROM pnc_visits

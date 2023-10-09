@@ -36,4 +36,4 @@ LEFT JOIN preg ON (pnc.reported > preg.reported AND pnc.reported < (preg.reporte
 WHERE
   pnc.follow_up_count = '1'
   AND (pnc.pregnancy_outcome IN (VALUES ('healthy'), ('still_birth')))
-  AND pnc.patient_id IS NOT NULL AND pnc.patient_id <> '';
+  AND pnc.patient_id IS NOT NULL AND pnc.patient_id <> ''
