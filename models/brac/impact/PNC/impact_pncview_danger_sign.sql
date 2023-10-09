@@ -28,4 +28,4 @@ WITH pnc_danger_signs AS (
 -- Model: pncview_danger_sign
 SELECT
     *
-FROM pnc_danger_signs;
+FROM pnc_danger_signs
