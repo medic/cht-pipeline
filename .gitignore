@@ -6,3 +6,4 @@ logs/
 */.env
 */dbt_packages/
 tests/.user.yml
+dbt-env/*
