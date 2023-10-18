@@ -13,6 +13,45 @@ models:
       - name: patient_id
         tests:
           - not_null
+  - name: contactview_person_fields
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+    tests:
+      - dbt_utils.fewer_rows_than:
+          compare_model: ref('contactview_metadata')
+  - name: contactview_chw
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+    tests:
+      - dbt_utils.fewer_rows_than:
+          compare_model: ref('contactview_metadata')
+      - dbt_utils.fewer_rows_than:
+          compare_model: ref('contactview_person_fields')
+  - name: contactview_chp
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+      - name: branch_uuid
+        tests:
+          - not_null
+          - unique
+      - name: supervisor_uuid
+        tests:
+          - not_null
+          - unique
+    tests:
+      - dbt_utils.fewer_rows_than:
+          compare_model: ref('contactview_metadata')
+      - dbt_utils.fewer_rows_than:
+          compare_model: ref('contactview_person_fields')
   - name: contactview_muted
     columns:
       - name: contact_uuid
@@ -43,9 +82,31 @@ models:
     tests:
       - dbt_utils.fewer_rows_than:
           compare_model: ref('contactview_metadata')
+  - name: contactview_hierarchy
+    columns:
+      - name: branch_uuid
+        tests:
+          - not_null
+      - name: chw_uuid
+        tests:
+          - not_null
+      - name: chw_area_uuid
+        tests:
+          - not_null
   - name: contactview_branch
     columns:
       - name: uuid
         tests:
           - not_null
           - unique
+  - name: contactview_clinic
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+      - name: chw_uuid
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.fewer_rows_than:
+          compare_model: ref('contactview_metadata')
