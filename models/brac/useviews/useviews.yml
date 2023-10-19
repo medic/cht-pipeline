@@ -78,21 +78,6 @@ models:
       - name: form
         tests:
           - not_null
-      - name: patient_age_in_days
-        tests:
-          - not_null
-      - name: patient_age_in_months
-        tests:
-          - not_null
-      - name: coughing_duration
-        tests:
-          - not_null
-      - name: diarrhea_duration
-        tests:
-          - not_null
-      - name: fever_duration
-        tests:
-          - not_null
   - name: formview_fp_patient_record
     columns:
       - name: uuid
@@ -104,20 +89,5 @@ models:
         tests:
           - not_null
       - name: form
-        tests:
-          - not_null
-      - name: patient_age_in_days
-        tests:
-          - not_null
-      - name: patient_age_in_months
-        tests:
-          - not_null
-      - name: coughing_duration
-        tests:
-          - not_null
-      - name: diarrhea_duration
-        tests:
-          - not_null
-      - name: fever_duration
         tests:
           - not_null
