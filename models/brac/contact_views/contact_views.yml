@@ -7,6 +7,9 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
       - name: name
         tests:
           - not_null
@@ -19,6 +22,9 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('contactview_metadata')
+              field: uuid
     tests:
       - dbt_utils.fewer_rows_than:
           compare_model: ref('contactview_metadata')
@@ -28,6 +34,9 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('contactview_person_fields')
+              field: uuid
     tests:
       - dbt_utils.fewer_rows_than:
           compare_model: ref('contactview_metadata')
@@ -39,14 +48,15 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('contactview_chw')
+              field: uuid
       - name: branch_uuid
         tests:
           - not_null
-          - unique
       - name: supervisor_uuid
         tests:
           - not_null
-          - unique
     tests:
       - dbt_utils.fewer_rows_than:
           compare_model: ref('contactview_metadata')
@@ -58,6 +68,9 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('contactview_metadata')
+              field: uuid
       - name: type
         tests:
           - not_null
@@ -79,6 +92,9 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('contactview_metadata')
+              field: uuid
     tests:
       - dbt_utils.fewer_rows_than:
           compare_model: ref('contactview_metadata')
@@ -87,9 +103,15 @@ models:
       - name: branch_uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('contactview_branch')
+              field: uuid
       - name: chw_uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('contactview_chp')
+              field: uuid
       - name: chw_area_uuid
         tests:
           - not_null
@@ -99,14 +121,23 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('contactview_hospital')
+              field: uuid
   - name: contactview_clinic
     columns:
       - name: uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('contactview_metadata')
+              field: uuid
       - name: chw_uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('contactview_chw')
+              field: uuid
     tests:
       - dbt_utils.fewer_rows_than:
           compare_model: ref('contactview_metadata')
