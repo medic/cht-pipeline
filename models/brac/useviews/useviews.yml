@@ -30,6 +30,12 @@ models:
       - name: chw
         tests:
           - not_null
+  - name: useview_pregnancy_visit
+    columns:
+      - name: xmlforms_uuid
+        tests:
+          - not_null
+          - unique
   - name: useview_postnatal_care
     columns:
       - name: uuid
@@ -90,5 +96,28 @@ models:
   - name: formview_fp_patient_record
     columns:
       - name: uuid
+        tests:
+          - not_null
+  - name: useview_assessment_follow_up
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+      - name: form
+        tests:
+          - not_null
+      - name: patient_age_in_days
+        tests:
+          - not_null
+      - name: patient_age_in_months
+        tests:
+          - not_null
+      - name: coughing_duration
+        tests:
+          - not_null
+      - name: diarrhea_duration
+        tests:
+          - not_null
+      - name: fever_duration
         tests:
           - not_null
