@@ -7,6 +7,9 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('contactview_chp')
+              field: uuid
       - name: households_registered
         tests:
           - not_null
@@ -45,7 +48,9 @@ models:
       - name: chp_uuid
         tests:
           - not_null
-          - unique
+          - relationships:
+              to: ref('contactview_chp')
+              field: uuid
       - name: count_all_assessments
         tests:
           - not_null
