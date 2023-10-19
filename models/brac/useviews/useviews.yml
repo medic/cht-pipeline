@@ -7,6 +7,9 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
       - name: form
         tests:
           - not_null
@@ -27,6 +30,9 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
       - name: chw
         tests:
           - not_null
@@ -36,12 +42,18 @@ models:
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
   - name: useview_postnatal_care
     columns:
       - name: uuid
         tests:
           - not_null
           - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
       - name: form
         tests:
           - not_null
@@ -50,31 +62,49 @@ models:
       - name: place_id
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc#>>'{fields,place_id}'
   - name: useview_patient_record
     columns:
       - name: patient_id
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc#>>'{fields,patient_id}'
   - name: useview_household_survey
     columns:
       - name: uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
   - name: useview_health_forum
     columns:
       - name: xmlforms_uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
   - name: useview_family_survey
     columns:
       - name: uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
   - name: useview_assessment
     columns:
       - name: uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
       - name: form
         tests:
           - not_null
@@ -83,11 +113,31 @@ models:
       - name: uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
+      - name: form
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'family_planning',
+                  'fp_follow_up_long_term',
+                  'fp_follow_up_refill',
+                  'fp_follow_up_prospective',
+                  'fp_follow_up_short_term',
+                ]
   - name: useview_assessment_follow_up
     columns:
       - name: uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
       - name: form
         tests:
           - not_null
+          - accepted_values:
+              values: ['assessment_follow_up']
