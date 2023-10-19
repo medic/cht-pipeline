@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: brac_hmis
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+      - name: households_registered
+        tests:
+          - not_null
+      - name: num_of_hh_visited
+        tests:
+          - not_null
+      - name: num_of_hh_bed_nets
+        tests:
+          - not_null
+      - name: num_of_hh_latrines
+        tests:
+          - not_null
+      - name: num_of_hh_safe_water
+        tests:
+          - not_null
+      - name: num_of_comm_members
+        tests:
+          - not_null
+      - name: num_of_health_forum
+        tests:
+          - not_null
+      - name: num_pregnant_care
+        tests:
+          - not_null
+      - name: num_pregnant_identified
+        tests:
+          - not_null
+      - name: num_facility_deliveries
+        tests:
+          - not_null
+      - name: num_home_deliveries
+        tests:
+          - not_null
+  - name: brac_kpis
+    columns:
+      - name: chp_uuid
+        tests:
+          - not_null
+          - unique
+      - name: count_all_assessments
+        tests:
+          - not_null
+      - name: u5_malaria_treatment
+        tests:
+          - not_null
+      - name: u5_diarrhea_treatment
+        tests:
+          - not_null
+      - name: u5_pneumonia_treatment
+        tests:
+          - not_null
+      - name: u1_malaria_treatment
+        tests:
+          - not_null
+      - name: u1_diarrhea_treatment
+        tests:
+          - not_null
+      - name: u1_pneumonia_treatment
+        tests:
+          - not_null
