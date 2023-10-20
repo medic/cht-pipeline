@@ -39,11 +39,6 @@ models:
       - name: formname
         tests:
           - not_null
-  - name: impactview_chw_facility
-    columns:
-      - name: chw_uuid
-        tests:
-          - not_null
   - name: impactview_month
     columns:
       - name: month
@@ -52,3 +47,12 @@ models:
       - name: epoch
         tests:
           - not_null
+  - name: formview_immunization_follow_up
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
