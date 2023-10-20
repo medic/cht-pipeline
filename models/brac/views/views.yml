@@ -10,3 +10,11 @@ models:
           - relationships:
               to: ref('useview_pregnancy')
               field: uuid
+      - name: reported_by
+        tests:
+          - not_null
+      - name: form
+        tests:
+          - not_null
+          - accepted_values:
+              values: [pregnancy]
