@@ -18,8 +18,24 @@ models:
           - not_null
           - accepted_values:
               values: [pregnancy]
-  - name: pncview_actual_enrollments
+  - name: form_metadata
     columns:
-      - name: patient_id
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
+      - name: reported_by
+        tests:
+          - not_null
+      - name: chw
+        tests:
+          - not_null
+      - name: form
+        tests:
+          - not_null
+      - name: formname
         tests:
           - not_null
