@@ -11,3 +11,13 @@ models:
       - name: form
         tests:
           - not_null
+  - name: impact_ancview_delivery
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+  - name: impact_ancview_pregnancy_visit
+    columns:
+      - name: uuid
+        tests:
+          - not_null
