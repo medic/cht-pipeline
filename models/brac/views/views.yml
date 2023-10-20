@@ -137,18 +137,6 @@ models:
           - relationships:
               to: ref('couchdb')
               field: doc ->> '_id'
-  - name: ancview_pregnancy
-    columns:
-      - name: uuid
-        tests:
-          - not_null
-          - unique
-          - relationships:
-              to: ref('useview_pregnancy')
-              field: uuid
-      - name: reported_by
-        tests:
-          - not_null
   - name: ancview_pregnancy_visit
     columns:
       - name: uuid
@@ -158,3 +146,21 @@ models:
           - relationships:
               to: ref('useview_pregnancy_visit')
               field: uuid
+  - name: ancview_delivery
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+      - name: pregnancy_outcome
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['healthy', 'still_birth']
+  - name: ancview_danger_sign
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+      - name: form
+        tests:
+          - not_null
