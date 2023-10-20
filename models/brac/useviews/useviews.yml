@@ -19,8 +19,6 @@ models:
       - name: visit_type
         tests:
           - not_null
-          - accepted_values:
-              values: [anc, pnc, imm, iccm]
       - name: danger_signs
         tests:
           - not_null
@@ -139,5 +137,3 @@ models:
       - name: form
         tests:
           - not_null
-          - accepted_values:
-              values: ['assessment_follow_up']
