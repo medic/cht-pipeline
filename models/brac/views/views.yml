@@ -75,3 +75,53 @@ models:
           - not_null
           - accepted_values:
               values: [muac_follow_up]
+  - name: formview_health_forum
+    columns:
+      - name: xmlforms_uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
+  - name: formview_death_confirmation
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
+      - name: form
+        tests:
+          - not_null
+          - accepted_values:
+              values: [death_confirmation]
+  - name: formview_covid_referral_follow_up
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
+  - name: formview_covid_evacuation_follow_up
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
+  - name: formview_assessment_follow_up
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
