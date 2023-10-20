@@ -43,7 +43,7 @@ models:
       - name: num_home_deliveries
         tests:
           - not_null
-  - name: brac_kpis
+  - name: brac-kpis
     columns:
       - name: chp_uuid
         tests:
