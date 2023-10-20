@@ -1,6 +1,18 @@
 version: 2
 
 models:
+  - name: pncview_actual_enrollments
+    columns:
+      - name: delivery_id
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_postnatal_care')
+              field: uuid
+      - name: patient_id
+        tests:
+          - not_null
   - name: ancview_pregnancy
     columns:
       - name: uuid
@@ -40,6 +52,14 @@ models:
         tests:
           - not_null
   - name: impactview_month
+    columns:
+      - name: month
+        tests:
+          - not_null
+      - name: epoch
+        tests:
+          - not_null
+  - name: impactview_month_facility
     columns:
       - name: month
         tests:
@@ -137,3 +157,113 @@ models:
           - relationships:
               to: ref('couchdb')
               field: doc ->> '_id'
+  - name: impactview_chw_facility
+    columns:
+      - name: chw_uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('contactview_chp')
+              field: uuid
+  - name: impactview_active
+    columns:
+      - name: month
+        tests:
+          - not_null
+      - name: epoch
+        tests:
+          - not_null
+  - name: iccmview_active
+    columns:
+      - name: month
+        tests:
+          - not_null
+      - name: epoch
+        tests:
+          - not_null
+  - name: fp_referral_cases
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('formview_fp_patient_record')
+              field: uuid
+      - name: form
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'family_planning',
+                  'fp_follow_up_long_term',
+                  'fp_follow_up_refill',
+                  'fp_follow_up_prospective',
+                  'fp_follow_up_short_term',
+                ]
+      - name: is_referral_case
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true]
+  - name: ancview_danger_sign
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+      - name: form
+        tests:
+          - not_null
+  - name: ancview_delivery
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_postnatal_care')
+              field: uuid
+      - name: form
+        tests:
+          - not_null
+      - name: pregnancy_outcome
+        tests:
+          - not_null
+          - accepted_values:
+              values: [healthy, still_birth]
+  - name: ancview_pregnancy_visit
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_visit')
+              field: uuid
+      - name: pregnancy_id
+        tests:
+          - not_null
+      - name: form
+        tests:
+          - not_null
+      - name: visit_with_danger_sign
+        tests:
+          - not_null
+  - name: dashboardview_iccm
+    columns:
+      - name: month
+        tests:
+          - not_null
+      - name: epoch
+        tests:
+          - not_null
+  - name: dashboardview_iccm_active
+    columns:
+      - name: month
+        tests:
+          - not_null
+      - name: epoch
+        tests:
+          - not_null
