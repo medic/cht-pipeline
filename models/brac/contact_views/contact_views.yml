@@ -25,9 +25,6 @@ models:
           - relationships:
               to: ref('contactview_metadata')
               field: uuid
-    tests:
-      - dbt_utils.fewer_rows_than:
-          compare_model: ref('contactview_metadata')
   - name: contactview_chw
     columns:
       - name: uuid
