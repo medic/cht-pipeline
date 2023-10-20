@@ -56,3 +56,8 @@ models:
           - relationships:
               to: ref('couchdb')
               field: doc ->> '_id'
+  - name: formview_assessment_follow_up
+    columns:
+      - name: xmlforms_uuid
+        tests:
+          - not_null
