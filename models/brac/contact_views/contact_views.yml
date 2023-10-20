@@ -16,15 +16,6 @@ models:
       - name: patient_id
         tests:
           - not_null
-  - name: contactview_chw
-    columns:
-      - name: uuid
-        tests:
-          - not_null
-          - unique
-          - relationships:
-              to: ref('contactview_person_fields')
-              field: uuid
   - name: contactview_muted
     columns:
       - name: contact_uuid
