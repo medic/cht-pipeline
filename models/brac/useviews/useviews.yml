@@ -1,15 +1,6 @@
 version: 2
 
 models:
-  - name: useview_pregnancy_visit
-    columns:
-      - name: xmlforms_uuid
-        tests:
-          - not_null
-          - unique
-          - relationships:
-              to: ref('couchdb')
-              field: doc ->> '_id'
   - name: useview_pregnancy
     columns:
       - name: uuid
