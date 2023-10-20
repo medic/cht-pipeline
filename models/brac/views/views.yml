@@ -61,3 +61,17 @@ models:
       - name: xmlforms_uuid
         tests:
           - not_null
+  - name: formview_muac_follow_up
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
+      - name: form
+        tests:
+          - not_null
+          - accepted_values:
+              values: [muac_follow_up]
