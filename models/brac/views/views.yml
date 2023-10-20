@@ -61,6 +61,9 @@ models:
       - name: xmlforms_uuid
         tests:
           - not_null
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
   - name: formview_muac_follow_up
     columns:
       - name: uuid
@@ -108,15 +111,6 @@ models:
               to: ref('couchdb')
               field: doc ->> '_id'
   - name: formview_covid_evacuation_follow_up
-    columns:
-      - name: uuid
-        tests:
-          - not_null
-          - unique
-          - relationships:
-              to: ref('couchdb')
-              field: doc ->> '_id'
-  - name: formview_assessment_follow_up
     columns:
       - name: uuid
         tests:
