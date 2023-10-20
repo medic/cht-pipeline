@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: ancview_pregnancy
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_pregnancy')
+              field: uuid
