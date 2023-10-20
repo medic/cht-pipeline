@@ -96,11 +96,6 @@ models:
           - relationships:
               to: ref('couchdb')
               field: doc ->> '_id'
-      - name: form
-        tests:
-          - not_null
-          - accepted_values:
-              values: [death_confirmation]
   - name: formview_covid_referral_follow_up
     columns:
       - name: uuid
@@ -119,3 +114,47 @@ models:
           - relationships:
               to: ref('couchdb')
               field: doc ->> '_id'
+  - name: followup
+    columns:
+      - name: form
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'family_planning',
+                  'fp_follow_up_long_term',
+                  'fp_follow_up_refill',
+                  'fp_follow_up_prospective',
+                  'fp_follow_up_short_term',
+                ]
+  - name: contactview_family_survey
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('couchdb')
+              field: doc ->> '_id'
+  - name: ancview_pregnancy
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_pregnancy')
+              field: uuid
+      - name: reported_by
+        tests:
+          - not_null
+  - name: ancview_pregnancy_visit
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_pregnancy_visit')
+              field: uuid
