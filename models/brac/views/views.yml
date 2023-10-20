@@ -39,3 +39,16 @@ models:
       - name: formname
         tests:
           - not_null
+  - name: impactview_chw_facility
+    columns:
+      - name: chw_uuid
+        tests:
+          - not_null
+  - name: impactview_month
+    columns:
+      - name: month
+        tests:
+          - not_null
+      - name: epoch
+        tests:
+          - not_null
