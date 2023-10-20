@@ -1,0 +1,13 @@
+models:
+  - name: impact_ancview_danger_sign
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+      - name: reported_by
+        tests:
+          - not_null
+      - name: form
+        tests:
+          - not_null
