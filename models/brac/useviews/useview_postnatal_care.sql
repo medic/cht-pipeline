@@ -17,9 +17,9 @@
 
 	SELECT
 	        "@timestamp"::timestamp without time zone AS "@timestamp",
-			doc ->> '_id'::text AS uuid,
+			(couchdb.doc ->> '_id') as uuid,
 			doc ->> 'form'::text AS form,
-			doc #>> '{contact,_id}'::text[] AS chw,
+		  (couchdb.doc #>> '{contact,_id}') as chw,
 			doc #>> '{contact,_id}'::text[] AS reported_by,
 			doc #>> '{contact,parent,_id}'::text[] AS reported_by_parent,
 			COALESCE(doc #>> '{fields,inputs,meta,location,lat}'::text[], ''::text) AS latitude,
