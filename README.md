@@ -26,7 +26,7 @@ Run `docker-compose up` in the `cht-sync` directory to run the pipeline. Please 
 ./setup.sh
 ```
 
-1. Run the `dbt` tests:
+3. Run the `dbt` tests:
 
 ```sh
 # set environment variables, install dbt dependencies, seed data, run dbt, run test
