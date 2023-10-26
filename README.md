@@ -19,7 +19,7 @@ Run `docker-compose up` in the `cht-sync` directory to run the pipeline. Please 
 ## Run dbt models unit tests locally
 
 1. Navigate to `tests` folder.
-1. Run the `setup` script:
+2. Run the `setup` script:
 
 ```sh
 # Set environment variables, create postgres database, schema and user:
