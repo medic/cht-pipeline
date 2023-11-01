@@ -43,4 +43,4 @@ SELECT
   reported_by_parent,
   reported
 FROM
-  danger_sign_CTE;
+  danger_sign_CTE

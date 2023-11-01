@@ -1,0 +1,128 @@
+models:
+  - name: impact_ancview_danger_sign
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+      - name: reported_by
+        tests:
+          - not_null
+      - name: form
+        tests:
+          - not_null
+  - name: impact_ancview_delivery
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+  - name: impact_ancview_pregnancy_visit
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+  - name: iccmview_assessment_follow_up
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_assessment_follow_up')
+              field: uuid
+      - name: form
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['assessment_follow_up']
+  - name: iccmview_assessment
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - relationships:
+              to: ref('useview_assessment')
+              field: uuid
+      - name: form
+        tests:
+          - not_null
+  - name: u1_iccmview_assessment_follow_up
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_assessment_follow_up')
+              field: uuid
+      - name: form
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['assessment_follow_up']
+  - name: u1_iccmview_assessment
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - relationships:
+              to: ref('useview_assessment')
+              field: uuid
+      - name: form
+        tests:
+          - not_null
+  - name: impact_pncview_actual_enrollments
+    columns:
+      - name: delivery_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('useview_postnatal_care')
+              field: uuid
+      - name: patient_id
+        tests:
+          - not_null
+  - name: impact_pncview_danger_sign
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - relationships:
+              to: ref('useview_postnatal_care')
+              field: uuid
+      - name: date_of_event
+        tests:
+          - not_null
+      - name: patient_id
+        tests:
+          - not_null
+  - name: impact_pncview_expected_enrollments
+    columns:
+      - name: pregnancy_id
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('ancview_pregnancy')
+              field: uuid
+      - name: patient_id
+        tests:
+          - not_null
+      - name: reported_by
+        tests:
+          - not_null
+  - name: impact_pncview_visit
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('useview_postnatal_care')
+              field: uuid
+      - name: form
+        tests:
+          - not_null
+      - name: patient_id
+        tests:
+          - not_null

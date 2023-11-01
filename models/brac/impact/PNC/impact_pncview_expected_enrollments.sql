@@ -33,4 +33,4 @@ WITH pnc_expected_enrollments AS (
 -- Model: pncview_expected_enrollments
 SELECT
     *
-FROM pnc_expected_enrollments;
+FROM pnc_expected_enrollments

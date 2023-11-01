@@ -53,4 +53,4 @@ SELECT
             AND (first_pnc_visit_date::DATE - delivery_date::DATE)::INT <= 3::INT THEN TRUE
         ELSE FALSE
     END AS first_visit_on_time
-FROM confirmed_deliveries_CTE;
+FROM confirmed_deliveries_CTE

@@ -15,4 +15,4 @@ SELECT
 FROM
   {{ ref('useview_visit') }}
 WHERE
-  visit_type = 'anc';
+  visit_type = 'anc'

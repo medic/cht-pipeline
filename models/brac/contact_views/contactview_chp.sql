@@ -47,8 +47,7 @@ SELECT
     chp.doc #>> '{chp_profile, g_language, mother_tongue}'::text[] AS mother_tongue,
     chp.doc #>> '{chp_profile, g_language, other_languages}'::text[] AS other_languages,
     chp.doc #>> '{chp_profile, g_other_details, incentives}'::text[] AS incentives,
-    chp.doc #>> '{chp_profile, g_other_details, chp_services}'::text[] AS chp_services,
-    contactview_chw."@timestamp" AS "@timestamp"
+    chp.doc #>> '{chp_profile, g_other_details, chp_services}'::text[] AS chp_services
   FROM
     {{ ref("contactview_chw") }}
   JOIN {{ ref("raw_contacts") }} ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)

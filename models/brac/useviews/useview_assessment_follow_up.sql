@@ -14,7 +14,7 @@
 }}
 
 SELECT
-{{ dbt_utils.surrogate_key(['form_source_id', 'reported', 'uuid']) }} AS useview_assessment_follow_up_source_date_uuid,
+{{ dbt_utils.generate_surrogate_key(['form_source_id', 'reported', 'uuid']) }} AS useview_assessment_follow_up_source_date_uuid,
 *
 FROM(
 
