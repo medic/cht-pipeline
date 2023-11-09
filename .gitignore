@@ -5,4 +5,7 @@ dbt_packages/
 logs/
 */.env
 */dbt_packages/
+tests/.user.yml
+dbt-env/*
+.user.yml
 dbt-env/*
