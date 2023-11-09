@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: medic
     database: "{{ env_var('POSTGRES_DB') }}"
-    schema: v2
+    schema: "{{ env_var('DBT_POSTGRES_SCHEMA') }}"
     tables:
       - name: medic
 models:
