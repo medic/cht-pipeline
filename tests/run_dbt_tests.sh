@@ -3,6 +3,8 @@ set -e
 export POSTGRES_DB=data
 export POSTGRES_USER=root
 export POSTGRES_TABLE=couchdb
+export POSTGRES_PASSWORD=supercoolpassword
+export POSTGRES_SCHEMA=v1
 export DBT_POSTGRES_USER=dbt_user
 export DBT_POSTGRES_PASSWORD=supercoolpassword
 export DBT_POSTGRES_SCHEMA=dbt
