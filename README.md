@@ -33,7 +33,14 @@ Run `docker-compose up` in the `cht-sync` directory to run the pipeline. Please 
 ./run_dbt_tests.sh
 ```
 
-4. Clean up:
+4. Check for test coverage:
+
+```sh
+# Run dbt run-operation required_tests command
+./check_tests_coverage.sh
+```
+
+5. Clean up:
 ```sh
 ./tear_down.sh
 ```

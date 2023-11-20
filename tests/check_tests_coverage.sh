@@ -9,8 +9,6 @@ export DBT_POSTGRES_HOST=postgres
 export ROOT_POSTGRES_SCHEMA=v1
 
 export DBT_PROFILES_DIR=$PWD
-echo Install dbt dependencies ...
-dbt deps
 echo Check test coverage ...
 dbt run-operation required_tests
 
