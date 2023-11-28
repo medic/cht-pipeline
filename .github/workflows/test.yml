@@ -38,6 +38,9 @@ jobs:
       - name: Run dbt and tests
         run: ./run_dbt_tests.sh
         working-directory: ./tests
-      - name: Cleanup
+      - name: Check test coverage
+        run: ./check_tests_coverage.sh
+        working-directory: ./tests
+      - name: Cleanup after tests
         run: ./tear_down.sh
         working-directory: ./tests
