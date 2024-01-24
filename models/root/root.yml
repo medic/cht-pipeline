@@ -1,13 +1,13 @@
 version: 2
 
 sources:
-  - name: couchdb
-    database: data
-    schema: v1
+  - name: medic
+    database: "{{ env_var('POSTGRES_DB') }}"
+    schema: "v1"
     tables:
-      - name: couchdb
+      - name: medic
 models:
-  - name: couchdb
+  - name: medic
     columns:
       - name: _id
         tests:
