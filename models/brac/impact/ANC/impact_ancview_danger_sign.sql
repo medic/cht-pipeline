@@ -1,5 +1,5 @@
 {{ config(
-  materialized='view',
+  materialized='incremental',
   description='ANC Danger Signs view for Brac Uganda'
 ) }}
 
@@ -44,3 +44,9 @@ SELECT
   reported
 FROM
   danger_sign_CTE
+
+{% if is_incremental() %}
+
+  where reported > (select max(reported) from {{ this }})
+
+{% endif %}
