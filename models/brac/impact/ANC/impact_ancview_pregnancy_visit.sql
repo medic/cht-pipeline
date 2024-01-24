@@ -1,5 +1,5 @@
 {{ config(
-  materialized='view',
+  materialized='incremental',
   description='ANC Pregnancy Visit view for Brac Uganda'
 ) }}
 
@@ -16,3 +16,9 @@ FROM
   {{ ref('useview_visit') }}
 WHERE
   visit_type = 'anc'
+
+{% if is_incremental() %}
+
+  where reported > (select max(reported) from {{ this }})
+
+{% endif %}
