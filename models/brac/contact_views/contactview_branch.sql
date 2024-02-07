@@ -20,4 +20,6 @@ FROM
 
     {% if is_incremental() %}
         WHERE contactview_branch."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("couchdb")) }}
+    {% else %}
+        WHERE 1=1
     {% endif %}
