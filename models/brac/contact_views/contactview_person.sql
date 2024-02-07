@@ -27,5 +27,5 @@ SELECT
 		doc->>'type' = 'person'
 
         {% if is_incremental() %}
-			AND "@timestamp" > {{ coalesce(max_existing_timestamp('"@timestamp"'), '1970-01-01 00:00:00'::timestamp) }}
+			AND "@timestamp" > COALESCE({{ max_existing_timestamp('"@timestamp"', target_ref=ref("couchdb")) }}, '1970-01-01 00:00:00'::timestamp)
 		{% endif %}
