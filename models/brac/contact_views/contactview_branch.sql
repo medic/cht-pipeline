@@ -13,7 +13,7 @@ SELECT
     contactview_hospital.name,
     couchdb.doc->>'area' AS area,
     couchdb.doc->>'region' AS region,
-    "couchdb.@timestamp"::timestamp without time zone AS "@timestamp"
+    "@timestamp"::timestamp without time zone AS "@timestamp"
 FROM
     {{ ref("contactview_hospital") }}
     INNER JOIN {{ ref("couchdb") }} ON (couchdb.doc ->> '_id'::text = contactview_hospital.uuid AND couchdb.doc ->> 'type' = 'district_hospital')
