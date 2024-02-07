@@ -29,5 +29,5 @@ FROM (
 WHERE 
     row_num = 1
     {% if is_incremental() %}
-        AND "timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("couchdb")) }}
+        AND timestamp_column > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("couchdb")) }}
     {% endif %}
