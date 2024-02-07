@@ -12,7 +12,7 @@ SELECT
     contactview_hospital.uuid,
     contactview_hospital.name,
     couchdb.doc->>'area' AS area,
-    couchdb.doc->>'region' AS region
+    couchdb.doc->>'region' AS region,
     couchdb.doc->>'"@timestamp' AS @timestamp
 FROM
     {{ ref("contactview_hospital") }}
