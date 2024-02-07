@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['xmlforms_uuid']}         
         ]
@@ -26,6 +26,3 @@ SELECT
  WHERE 
 (doc ->> 'type'::text) = 'data_record'::text
 AND (doc ->> 'form'::text) = 'health_forum'::text
-{% if is_incremental() %}
-    AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-{% endif %}

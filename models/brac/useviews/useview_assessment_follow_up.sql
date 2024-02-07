@@ -58,4 +58,4 @@ FROM(
 		WHERE
 		  doc->>'type' = 'data_record' AND
 			doc ->> 'form' = 'assessment_follow_up'
-)
+) x
