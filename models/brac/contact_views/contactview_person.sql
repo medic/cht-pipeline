@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['patient_id']},
             {'columns': ['parent_uuid']},
@@ -25,7 +25,3 @@ SELECT
 		{{ ref("couchdb") }}
 	WHERE
 		doc->>'type' = 'person'
-
-        {% if is_incremental() %}
-			AND "@timestamp" > COALESCE({{ max_existing_timestamp('"@timestamp"', target_ref=ref("couchdb")) }}, '1970-01-01 00:00:00'::timestamp)
-		{% endif %}
