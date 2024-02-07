@@ -27,12 +27,5 @@ SELECT
 		doc->>'type' = 'person'
 
         {% if is_incremental() %}
-    		AND (
-        		"@timestamp" > 
-				{% if max_existing_timestamp('"@timestamp"') == none %}
-					'1970-01-01 00:00:00'::timestamp
-				{% else %}
-					{{ max_existing_timestamp('"@timestamp"') }}
-				{% endif %}
-			)
+			AND "@timestamp" > {{ coalesce(max_existing_timestamp('"@timestamp"'), '1970-01-01 00:00:00'::timestamp) }}
 		{% endif %}
