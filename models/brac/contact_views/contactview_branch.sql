@@ -9,17 +9,25 @@
 }}
 
 SELECT
-    contactview_hospital.uuid,
-    contactview_hospital.name,
-    couchdb.doc->>'area' AS area,
-    couchdb.doc->>'region' AS region,
-    "@timestamp"::timestamp without time zone AS "@timestamp"
-FROM
-    {{ ref("contactview_hospital") }}
-    INNER JOIN {{ ref("couchdb") }} ON (couchdb.doc ->> '_id'::text = contactview_hospital.uuid AND couchdb.doc ->> 'type' = 'district_hospital')
-
+    uuid,
+    name,
+    area,
+    region,
+    "timestamp"
+FROM (
+    SELECT
+        contactview_hospital.uuid,
+        contactview_hospital.name,
+        couchdb.doc->>'area' AS area,
+        couchdb.doc->>'region' AS region,
+        "@timestamp"::timestamp without time zone AS "timestamp",
+        ROW_NUMBER() OVER (PARTITION BY contactview_hospital.uuid ORDER BY contactview_hospital."@timestamp" DESC) AS row_num
+    FROM
+        {{ ref("contactview_hospital") }} contactview_hospital
+        INNER JOIN {{ ref("couchdb") }} couchdb ON (couchdb.doc ->> '_id' = contactview_hospital.uuid AND couchdb.doc ->> 'type' = 'district_hospital')
+) AS subquery
+WHERE 
+    row_num = 1
     {% if is_incremental() %}
-        WHERE contactview_branch."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("couchdb")) }}
-    {% else %}
-        WHERE 1=1
+        AND "timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("couchdb")) }}
     {% endif %}
