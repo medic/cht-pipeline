@@ -19,5 +19,5 @@ FROM
     INNER JOIN {{ ref("couchdb") }} ON (couchdb.doc ->> '_id'::text = contactview_hospital.uuid AND couchdb.doc ->> 'type' = 'district_hospital')
 
     {% if is_incremental() %}
-        WHERE contactview_branch."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("contactview_chw")) }}
+        WHERE contactview_branch."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("couchdb")) }}
     {% endif %}
