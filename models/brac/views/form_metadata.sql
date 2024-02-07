@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['reported']},
             {'columns': ['reported_by']},
@@ -35,7 +35,3 @@ SELECT
         (doc ->> 'type') = 'data_record'
         AND (doc #>> '{contact,_id}') IS NOT NULL
         AND (doc ->> 'form') IS NOT NULL
-
-    {% if is_incremental() %}
-        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-    {% endif %}
