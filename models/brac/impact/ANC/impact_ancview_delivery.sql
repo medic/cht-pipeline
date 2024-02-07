@@ -40,6 +40,6 @@ WHERE
 
 {% if is_incremental() %}
 
-  where reported > (select max(reported) from {{ this }})
+  AND reported > (select max(reported) from {{ this }})
 
 {% endif %}
