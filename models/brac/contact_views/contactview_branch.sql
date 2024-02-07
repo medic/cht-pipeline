@@ -21,7 +21,7 @@ FROM (
         couchdb.doc->>'area' AS area,
         couchdb.doc->>'region' AS region,
         "@timestamp"::timestamp without time zone AS "timestamp",
-        ROW_NUMBER() OVER (PARTITION BY contactview_hospital.uuid ORDER BY contactview_hospital."@timestamp" DESC) AS row_num
+        ROW_NUMBER() OVER (PARTITION BY contactview_hospital.uuid ORDER BY couchdb."@timestamp" DESC) AS row_num
     FROM
         {{ ref("contactview_hospital") }} contactview_hospital
         INNER JOIN {{ ref("couchdb") }} couchdb ON (couchdb.doc ->> '_id' = contactview_hospital.uuid AND couchdb.doc ->> 'type' = 'district_hospital')
