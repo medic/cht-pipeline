@@ -40,6 +40,6 @@ WHERE
 
 {% if is_incremental() %}
 
-  AND reported > (select max(reported) from {{ this }})
+  AND pnc.reported > (select max(reported) from {{ this }})
 
 {% endif %}

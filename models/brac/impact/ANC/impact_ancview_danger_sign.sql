@@ -47,6 +47,6 @@ FROM
 
 {% if is_incremental() %}
 
-  AND reported > (select max(reported) from {{ this }})
+  WHERE reported > (select max(reported) from {{ this }})
 
 {% endif %}
