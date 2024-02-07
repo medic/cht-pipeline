@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['reported']},
             {'columns': ['form_source_id']},
@@ -58,8 +58,4 @@ FROM(
 		WHERE
 		  doc->>'type' = 'data_record' AND
 			doc ->> 'form' = 'assessment_follow_up'
-
-		  {% if is_incremental() %}
-			 AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-		  {% endif %}
-) x
+)

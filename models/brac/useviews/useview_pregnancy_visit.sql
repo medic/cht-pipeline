@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['area_uuid']},
             {'columns': ['reported_month']},
@@ -32,6 +32,3 @@ SELECT
         doc #>> '{fields,g_anc_visit,anc_visit_type}'::text[], '') AS anc_visit
    FROM {{ ref("couchdb") }} form
   WHERE doc->>'type' = 'data_record' AND (doc ->> 'form'::text) = 'pregnancy_visit'::text
-{% if is_incremental() %}
-        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-{% endif %}
