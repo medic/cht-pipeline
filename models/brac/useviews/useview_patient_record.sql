@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
 		   indexes=[
             {'columns': ['"@timestamp"']}
         ]
@@ -19,6 +19,3 @@ FROM
 WHERE
     doc->>'type' = 'data_record' AND
 	doc#>>'{fields,patient_id}' IS NOT NULL
-	{% if is_incremental() %}
-        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-    {% endif %}

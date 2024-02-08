@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['visit_type']},
             {'columns': ['"@timestamp"']}
@@ -52,7 +52,3 @@ SELECT
             
     FROM {{ ref("couchdb") }}	
     WHERE (doc ->> 'form' = 'assessment' AND (doc #>> '{fields,patient_age_in_years}') != '' AND (nullif(doc #>> '{fields,patient_age_in_years}', ''))::int <= 5)
-
-{% if is_incremental() %}
-    AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-{% endif %}

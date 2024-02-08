@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['family_id']},
             {'columns': ['reported']},
@@ -31,6 +31,3 @@ SELECT
 	WHERE
 		 doc->>'type' = 'data_record' AND
 		 doc->>'form' = 'family_survey'
-    {% if is_incremental() %}
-            AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-    {% endif %}

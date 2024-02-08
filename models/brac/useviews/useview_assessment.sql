@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['reported']},
             {'columns': ['chw']},
@@ -88,6 +88,3 @@
             doc #>> '{fields,group_nutrition_assessment, has_oedema}'::text[] AS has_oedema
         FROM {{ ref("couchdb") }} AS form
         WHERE  doc->>'type' = 'data_record' AND (doc ->> 'form'::text) = 'assessment'::text
-        {% if is_incremental() %}
-            AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-        {% endif %}

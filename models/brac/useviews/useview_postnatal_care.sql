@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['pregnancy_outcome']},
             {'columns': ['reported']},
@@ -66,6 +66,3 @@
 		WHERE
 			doc->>'type' = 'data_record' AND
 			doc ->> 'form' = 'postnatal_care'::text
-			{% if is_incremental() %}
-				AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-			{% endif %}

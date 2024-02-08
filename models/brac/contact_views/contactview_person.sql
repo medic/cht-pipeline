@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['patient_id']},
             {'columns': ['parent_uuid']},
@@ -25,7 +25,3 @@ SELECT
 		{{ ref("couchdb") }}
 	WHERE
 		doc->>'type' = 'person'
-
-        {% if is_incremental() %}
-            AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-        {% endif %}
