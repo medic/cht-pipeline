@@ -61,11 +61,16 @@
 			to_timestamp((NULLIF(doc ->> 'reported_date', '')::bigint / 1000)::double precision) AS reported
 
 		FROM
-			{{ ref("couchdb") }}
+			{{ ref("couchdb") }} as form
 
 		WHERE
 			doc->>'type' = 'data_record' AND
 			doc ->> 'form' = 'postnatal_care'::text
 			{% if is_incremental() %}
-				AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-			{% endif %}
+        and exists (
+          select null
+            from {{ this }} as this
+            where this.uuid = form._id
+            and form."@timestamp" > this."@timestamp"
+        )
+      {% endif %}

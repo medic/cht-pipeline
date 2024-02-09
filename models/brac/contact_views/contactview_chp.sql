@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['area_uuid']},
             {'columns': ['branch_uuid']},
@@ -53,7 +53,3 @@ SELECT
   JOIN {{ ref("raw_contacts") }} ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)
   JOIN {{ ref("contactview_branch") }} branch ON contactview_chw.branch_uuid = branch.uuid
   JOIN {{ ref("raw_contacts") }} chp ON (chp.doc ->> '_id'::text) = contactview_chw.uuid
-
-    {% if is_incremental() %}
-        WHERE contactview_chw."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("contactview_chw")) }}
-    {% endif %}

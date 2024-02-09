@@ -60,6 +60,11 @@ FROM(
 			doc ->> 'form' = 'assessment_follow_up'
 
 		  {% if is_incremental() %}
-			 AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-		  {% endif %}
+        and exists (
+          select null
+            from {{ this }} as this
+            where this.uuid = form._id
+            and form."@timestamp" > this."@timestamp"
+        )
+      {% endif %}
 ) x

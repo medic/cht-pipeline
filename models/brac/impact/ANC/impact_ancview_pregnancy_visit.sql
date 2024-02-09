@@ -13,12 +13,9 @@ SELECT
   danger_signs AS visit_with_danger_sign,
   reported
 FROM
-  {{ ref('useview_visit') }}
+  {{ ref('useview_visit') }} as visit
 WHERE
   visit_type = 'anc'
-
-{% if is_incremental() %}
-
-  where reported > (select max(reported) from {{ this }})
-
-{% endif %}
+  {% if is_incremental() %}
+    and visit.reported > (select max(reported) from {{ this }})
+  {% endif %}
