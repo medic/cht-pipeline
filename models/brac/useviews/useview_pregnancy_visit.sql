@@ -30,8 +30,13 @@ SELECT
     COALESCE(doc #>> '{fields,group_tt,mother_tt}'::text[], doc #>> '{fields,g_tt,mother_tt_rcvd}'::text[], '') AS tt,
     COALESCE(doc #>> '{fields,group_repeat,anc_visit_repeat,anc_visit_identifier}'::text[],
         doc #>> '{fields,g_anc_visit,anc_visit_type}'::text[], '') AS anc_visit
-   FROM {{ ref("couchdb") }} form
+   FROM {{ ref("couchdb") }} as form
   WHERE doc->>'type' = 'data_record' AND (doc ->> 'form'::text) = 'pregnancy_visit'::text
-{% if is_incremental() %}
-        AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
-{% endif %}
+  {% if is_incremental() %}
+    and exists (
+      select null
+        from {{ this }} as this
+        where this.xmlforms_uuid = form._id
+        and form."@timestamp" > this."@timestamp"
+    )
+  {% endif %}

@@ -26,11 +26,16 @@ SELECT
 		doc#>>'{fields,household_survey,g_improved_latrine}' AS g_improved_latrine,
 		doc#>>'{fields,household_survey,g_open_defecation_free}' AS g_open_defecation_free
 	FROM
-		{{ ref("couchdb") }}
+		{{ ref("couchdb") }} as form
 
 	WHERE
 		 doc->>'type' = 'data_record' AND
 		 doc->>'form' = 'family_survey'
     {% if is_incremental() %}
-            AND "@timestamp" > {{ max_existing_timestamp('"@timestamp"') }}
+      and exists (
+        select null
+          from {{ this }} as this
+          where this.uuid = form._id
+          and form."@timestamp" > this."@timestamp"
+      )
     {% endif %}

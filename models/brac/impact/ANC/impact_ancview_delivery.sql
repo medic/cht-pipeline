@@ -37,9 +37,6 @@ WHERE
   pnc.follow_up_count = '1'
   AND (pnc.pregnancy_outcome IN (VALUES ('healthy'), ('still_birth')))
   AND pnc.patient_id IS NOT NULL AND pnc.patient_id <> ''
-
-{% if is_incremental() %}
-
-  where reported > (select max(reported) from {{ this }})
-
-{% endif %}
+  {% if is_incremental() %}
+    and pnc.reported > (select max(reported) from {{ this }})
+  {% endif %}

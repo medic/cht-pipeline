@@ -18,6 +18,7 @@ SELECT
     contactview_chw.parent_type,
     contactview_chw.area_uuid,
     contactview_chw.branch_uuid,
+    contactview_chw.reported,
     branch.name AS branch_name,
     branch.region,
     COALESCE(NULLIF(raw_contacts.doc ->> 'supervisor'::text, ''::text), '563649afa0e2a13740a1982abc0a2d0d'::text) AS supervisor_uuid,
@@ -49,11 +50,16 @@ SELECT
     chp.doc #>> '{chp_profile, g_other_details, incentives}'::text[] AS incentives,
     chp.doc #>> '{chp_profile, g_other_details, chp_services}'::text[] AS chp_services
   FROM
-    {{ ref("contactview_chw") }}
+    {{ ref("contactview_chw") }} contactview_chw
   JOIN {{ ref("raw_contacts") }} ON contactview_chw.area_uuid = (raw_contacts.doc ->> '_id'::text)
   JOIN {{ ref("contactview_branch") }} branch ON contactview_chw.branch_uuid = branch.uuid
   JOIN {{ ref("raw_contacts") }} chp ON (chp.doc ->> '_id'::text) = contactview_chw.uuid
 
-    {% if is_incremental() %}
-        WHERE contactview_chw."@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("contactview_chw")) }}
-    {% endif %}
+  {% if is_incremental() %}
+    where exists (
+      select null
+        from {{ this }} as this
+        where this.uuid = contactview_chw.uuid
+        and contactview_chw.reported > this.reported
+    )
+  {% endif %}
