@@ -1,4 +1,4 @@
-{% set import_couchdb_data = select_table(source('couchdb','couchdb'), ref('couchdb_test_data')) %}
+{% set import_couchdb_data = select_table(source('medic','medic'), ref('medic_test_data')) %}
 
 {{
     config(
