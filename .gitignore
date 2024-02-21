@@ -6,4 +6,4 @@ logs/
 */.env
 */dbt_packages/
 .idea
-.env
+
