@@ -1,9 +1,0 @@
-version: 2
-
-seeds:
-  - name: couchdb_test_data
-    config:
-      column_types:
-        "@version": text
-        "@timestamp": timestamp without time zone
-        doc: jsonb
