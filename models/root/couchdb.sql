@@ -1,5 +1,3 @@
-{% set import_couchdb_data = select_table(source('medic','medic'), ref('medic_test_data')) %}
-
 {{
     config(
         materialized = 'view',
@@ -12,4 +10,4 @@
 SELECT
     doc->>'type' AS type,
     *
-FROM {{ import_couchdb_data }}
+FROM v1.{{ env_var('POSTGRES_TABLE') }}
