@@ -7,3 +7,4 @@ logs/
 */dbt_packages/
 .idea
 tests/.user.yml
+.DS_Store

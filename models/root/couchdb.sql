@@ -10,4 +10,4 @@
 SELECT
     doc->>'type' AS type,
     *
-FROM v1.{{ env_var('POSTGRES_TABLE') }}
+FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
