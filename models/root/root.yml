@@ -2,10 +2,10 @@ version: 2
 
 sources:
   - name: couchdb
-    database: data
-    schema: v1
+    database: "{{ env_var('POSTGRES_DB') }}"
+    schema: "{{ env_var('POSTGRES_SCHEMA') }}"
     tables:
-      - name: couchdb
+      - name: "{{ env_var('POSTGRES_TABLE') }}"
 models:
   - name: couchdb
     columns:

@@ -6,3 +6,5 @@ logs/
 */.env
 */dbt_packages/
 .idea
+tests/.user.yml
+.DS_Store
