@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['uuid']},
             {'columns': ['danger_sign_at_reg']},
@@ -39,7 +39,3 @@
     FROM config_cte config,
         {{ ref("useview_pregnancy") }} preg
     INNER JOIN {{ ref("contactview_metadata") }} contact ON contact.uuid = preg.chw
-
-    {% if is_incremental() %}
-        WHERE preg . "@timestamp" > {{ max_existing_timestamp('"@timestamp"', target_ref=ref("useview_pregnancy")) }}
-{% endif %}
