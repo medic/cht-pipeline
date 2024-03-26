@@ -1,6 +1,7 @@
 {{ config(
   materialized='incremental',
-  description='ANC Pregnancy Visit view for Brac Uganda'
+  description='ANC Pregnancy Visit view for Brac Uganda',
+  unique_key='uuid'
 ) }}
 
 SELECT
