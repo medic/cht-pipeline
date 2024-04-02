@@ -1,20 +1,9 @@
 # CHT Pipeline
 
-CHT Pipeline is a tool used to define data models for transforming the raw data we get from Couch DB into models that can then be queried to build dashboards.
+CHT Pipeline is a tool used to define `dbt` data models for transforming the raw data we get from CouchDB into models that can then be queried to build dashboards.
 
-## Dev installation instructions
-
-### Prerequisites
-- `Docker`
-- `PostgreSQL client`
-- `dbt-postgres`
-- `Python`
-
-### Setup environment variables
-Follow the instructions in [cht-sync](https://github.com/medic/cht-sync) to set up the required environment variables.
-
-### Run the pipeline
-Run `docker-compose up` in the `cht-sync` directory to run the pipeline. Please ensure the `DATAEMON_INITAL_PACKAGE` env variable is set to your preferred branch of the `cht-pipeline` repo.
+## Local Setup
+Follow the instructions in [the Local CHT Sync Setup documentation](https://docs.communityhealthtoolkit.org/apps/guides/data/analytics/setup/) to set up CHT Sync with CHT Pipeline locally.
 
 ## Run dbt models unit tests locally
 
