@@ -1,6 +1,6 @@
 # CHT Pipeline
 
-CHT Pipeline is a tool used to define `dbt` data models for transforming the raw data we get from CouchDB into models that can then be queried to build dashboards.
+CHT Pipeline is a tool used to define `dbt` data models for transforming the raw data we get from CouchDB into models that can be queried in PostgreSQL to build dashboards.
 
 ## Local Setup
 Follow the instructions in [the Local CHT Sync Setup documentation](https://docs.communityhealthtoolkit.org/apps/guides/data/analytics/setup/) to set up CHT Sync with CHT Pipeline locally.
