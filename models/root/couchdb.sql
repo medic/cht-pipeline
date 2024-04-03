@@ -10,5 +10,5 @@ SELECT
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 
 {% if is_incremental() %}
-    AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
+    WHERE "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
 {% endif %}
