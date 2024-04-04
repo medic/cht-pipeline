@@ -5,7 +5,7 @@
  }}
 
 SELECT
-      "doc"
+      couchdb.doc
       "@timestamp"
 FROM {{ ref("couchdb") }}
 WHERE (couchdb.doc ->> 'type'::text) = ANY
