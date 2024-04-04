@@ -5,7 +5,6 @@ dbt_packages/
 logs/
 */.env
 */dbt_packages/
+.idea
 tests/.user.yml
-dbt-env/*
-.user.yml
-dbt-env/*
+.DS_Store

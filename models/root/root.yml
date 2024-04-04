@@ -1,11 +1,11 @@
 version: 2
 
 sources:
-  - name: medic
+  - name: "{{ env_var('POSTGRES_TABLE') }"
     database: "{{ env_var('POSTGRES_DB') }}"
-    schema: "v1"
+    schema: "{{ env_var('POSTGRES_SCHEMA') }}"
     tables:
-      - name: medic
+      - name: "{{ env_var('POSTGRES_TABLE') }}"
 models:
   - name: medic
     columns:
