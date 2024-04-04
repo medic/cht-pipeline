@@ -12,5 +12,5 @@ WHERE (couchdb.doc ->> 'type'::text) = ANY
       (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
 
 {% if is_incremental() %}
-  WHERE "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
+  WHERE couchdb."@timestamp" >= (SELECT MAX(couchdb."@timestamp") FROM {{ this }})
 {% endif %}
