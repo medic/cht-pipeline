@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: "{{ env_var('POSTGRES_TABLE') }"
+  - name: couchdb
     database: "{{ env_var('POSTGRES_DB') }}"
     schema: "{{ env_var('POSTGRES_SCHEMA') }}"
     tables:
