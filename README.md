@@ -7,6 +7,12 @@ Follow the instructions in [the Local CHT Sync Setup documentation](https://docs
 
 ## Run dbt models unit tests locally
 
+### Prerequisites
+- `Docker`
+- (Optional) `PostgreSQL Client`
+
+### Run the tests
+
 1. Navigate to `tests` folder.
 2. Run the `setup` script:
 
