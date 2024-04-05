@@ -13,8 +13,8 @@ WITH recent_data AS (
 )
 
 SELECT
-  couchdb.doc,
-  couchdb."@timestamp"
+  recent_data.doc,
+  recent_data."@timestamp"
 FROM recent_data 
 WHERE (couchdb.doc ->> 'type'::text) = ANY
   (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
