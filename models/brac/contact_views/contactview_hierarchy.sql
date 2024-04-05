@@ -34,5 +34,6 @@ GROUP BY
   chp.uuid,
   chp.name,
   chp.phone,
+  chp."@timestamp",
   branch.area,
   branch.region
