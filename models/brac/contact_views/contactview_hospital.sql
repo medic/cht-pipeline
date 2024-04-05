@@ -12,5 +12,5 @@ FROM {{ ref("contactview_metadata") }} cmd
 WHERE cmd.type = 'district_hospital'::text
 
 {% if is_incremental() %}
-  WHERE "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
+  AND "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
 {% endif %}
