@@ -22,5 +22,5 @@ FROM
 WHERE pplfields.parent_type = 'health_center'::text
 
 {% if is_incremental() %}
-  AND "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
+  AND pplfields."@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
 {% endif %}
