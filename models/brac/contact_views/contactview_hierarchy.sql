@@ -22,7 +22,7 @@ FROM
   JOIN {{ ref("contactview_metadata") }} AS cmeta ON cmeta.uuid = chp.supervisor_uuid
 
 {% if is_incremental() %}
-  WHERE "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
+  WHERE chp."@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
 {% endif %}
 
 GROUP BY
