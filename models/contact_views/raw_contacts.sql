@@ -4,11 +4,15 @@
   )
  }}
 
-WITH recent_data AS (
-  SELECT *
+WITH max_timestamp AS (
+  SELECT MAX(couchdb."@timestamp") AS max_timestamp
   FROM {{ ref("couchdb") }}
+),
+recent_data AS (
+  SELECT *
+  FROM {{ ref("couchdb") }} c
   {% if is_incremental() %}
-    WHERE couchdb."@timestamp" >= (SELECT MAX(couchdb."@timestamp") FROM {{ this }})
+    JOIN max_timestamp mt on c."@timetamp" >= mt.max_timestamp
   {% endif %}
 )
 
