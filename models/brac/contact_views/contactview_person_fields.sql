@@ -17,5 +17,5 @@ LEFT JOIN {{ ref("contactview_metadata") }} parent ON person.parent_uuid = paren
 WHERE person.type = 'person'::text
 
 {% if is_incremental() %}
-  AND contactview_metadata."@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
+  AND person."@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
 {% endif %}
