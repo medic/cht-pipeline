@@ -6,7 +6,6 @@
 
 SELECT
     doc->>'type' AS type,
-    doc->>'reported_date' AS reported_date,
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 
