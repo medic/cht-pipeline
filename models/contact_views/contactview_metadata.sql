@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'view',
+        materialized = 'incremental',
         indexes=[
             {'columns': ['contact_uuid']},
             {'columns': ['parent_uuid']},
@@ -24,5 +24,10 @@ SELECT
     raw_contacts.doc ->> 'notes'::text AS notes,
     '1970-01-01 03:00:00+03'::timestamp with time zone +
     (((raw_contacts.doc ->> 'reported_date'::text)::numeric) / 1000::numeric)::double precision *
-    '00:00:01'::interval AS reported
+    '00:00:01'::interval AS reported,
+    raw_contacts."@timestamp" AS "@timestamp"
 FROM {{ ref("raw_contacts") }}
+
+{% if is_incremental() %}
+    WHERE "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
+{% endif %}
