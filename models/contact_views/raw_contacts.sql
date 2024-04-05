@@ -12,7 +12,7 @@ recent_data AS (
   SELECT *
   FROM {{ ref("couchdb") }} c
   {% if is_incremental() %}
-    JOIN max_timestamp mt on c."@timetamp" >= mt.max_timestamp
+    JOIN max_timestamp mt on c."@timestamp" >= mt.max_timestamp
   {% endif %}
 )
 
