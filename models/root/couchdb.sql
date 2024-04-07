@@ -3,8 +3,7 @@
         materialized = 'incremental',
         unique_key=['_id','_rev'],
         indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
-            {'columns': ['"type"'], 'type': 'hash'},
+            {'columns': ['type'], 'type': 'hash'},
         ]
     )
 }}
