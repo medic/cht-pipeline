@@ -1,6 +1,7 @@
 {{
     config(
-        materialized = 'view',
+        materialized = 'incremental',
+        unique_key=['_id','_rev']
     )
 }}
 
@@ -8,7 +9,6 @@ SELECT
     doc->>'type' AS type,
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
-
 {% if is_incremental() %}
-    WHERE "reported_date" >= (SELECT MAX("reported_date") FROM {{ this }})
+    WHERE "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
 {% endif %}
