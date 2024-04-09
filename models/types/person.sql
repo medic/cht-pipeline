@@ -18,7 +18,7 @@ SELECT
     *
 FROM {{ ref('couchdb') }}
 WHERE
-    doc->>'type' = 'person'
+    type = 'person'
 
 {% if is_incremental() %}
     AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
