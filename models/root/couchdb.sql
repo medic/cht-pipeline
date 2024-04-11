@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         unique_key = ['_id', '_rev'],
         indexes=[
             {'columns': ['type'], 'type': 'hash'},
