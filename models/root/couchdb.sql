@@ -1,7 +1,11 @@
 {{
     config(
         materialized = 'incremental',
-        unique_key = ['_id', '_rev']
+        indexes=[
+            {'columns': ['type'], 'type': 'hash'},
+            {'columns': ['"@timestamp"'], 'type': 'brin'},
+            {'columns': ['_id', '_rev'], 'unique': True}
+        ]
     )
 }}
 
