@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'view',
+        materialized = 'incremental',
         indexes=[
             {'columns': ['type'], 'type': 'hash'},
             {'columns': ['"@timestamp"'], 'type': 'brin'},
