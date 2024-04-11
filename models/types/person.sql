@@ -19,7 +19,6 @@ SELECT
 FROM {{ ref('couchdb') }}
 WHERE
     type = 'person'
-
 {% if is_incremental() %}
     AND COALESCE("@timestamp" > (SELECT MAX("@timestamp") FROM {{ this }}), True)
 {% endif %}
