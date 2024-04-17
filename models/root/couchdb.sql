@@ -11,6 +11,8 @@
 
 SELECT
     doc->>'type' AS type,
+    doc->>'_id' AS '_id',
+    doc->>'_rev' AS '_rev',
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 {% if is_incremental() %}
