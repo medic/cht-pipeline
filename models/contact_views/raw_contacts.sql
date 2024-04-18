@@ -20,5 +20,5 @@ SELECT
   recent_data.doc,
   recent_data."@timestamp"
 FROM recent_data 
-WHERE (recent_data.'type'::text) = ANY
+WHERE (recent_data.type::text) = ANY
   (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
