@@ -13,9 +13,9 @@ SELECT
     doc->>'type' AS type,
     doc->>'_id' AS _id,
     doc->>'_rev' AS _rev,
-    '@timestamp',
-    '@version',
-    doc
+    "@timestamp",
+    "@version",
+    doc,
     doc_as_upsert 
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 {% if is_incremental() %}
