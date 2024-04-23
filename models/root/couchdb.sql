@@ -1,8 +1,9 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['type'], 'type': 'hash'},
+            {'columns': ['form'], 'form': 'hash'},
             {'columns': ['"@timestamp"'], 'type': 'brin'},
             {'columns': ['_id', '_rev'], 'unique': True},
         ]
@@ -11,6 +12,7 @@
 
 SELECT
     doc->>'type' AS type,
+    doc->>'form' AS form,
     doc->>'_id' AS _id,
     doc->>'_rev' AS _rev,
     "@timestamp",
