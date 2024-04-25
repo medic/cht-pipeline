@@ -9,10 +9,15 @@
 }}
 
 SELECT
-    doc->>'form' AS form,
     doc->>'reported_date' AS reported_date,
     doc->>'patient_id' AS patient_id,
-    *
+    type,
+    form,
+    _id,
+    _rev,
+    doc,
+    "@timestamp",
+    "@version"
 FROM {{ ref('couchdb') }}
 WHERE
     type = 'data_record'
