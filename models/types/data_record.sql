@@ -16,6 +16,7 @@ SELECT
     _id,
     _rev,
     doc,
+    doc_as_upsert,
     "@timestamp",
     "@version"
 FROM {{ ref('couchdb') }}
