@@ -1,5 +1,5 @@
 {{ config(
-  materialized='incremental',
+  materialized='view',
   description='ANC Danger Signs view for Brac Uganda'
 ) }}
 

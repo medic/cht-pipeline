@@ -1,5 +1,5 @@
 {{ config(
-  materialized='incremental',
+  materialized='view',
   description='ANC Delivery view for Brac Uganda'
 ) }}
 
