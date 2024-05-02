@@ -1,24 +1,20 @@
-{{ 
+{{
   config(
-    materialized='incremental',
+    materialized = 'view',
+    indexes=[
+      {'columns': ['type'], 'type': 'hash'},
+      {'columns': ['"@timestamp"'], 'type': 'brin'},
+      {'columns': ['_id', '_rev'], 'unique': True},
+    ]
   )
- }}
-
-WITH max_timestamp AS (
-  SELECT MAX(couchdb."@timestamp") AS max_timestamp
-  FROM {{ ref("couchdb") }}
-),
-recent_data AS (
-  SELECT *
-  FROM {{ ref("couchdb") }} c
-  {% if is_incremental() %}
-    JOIN max_timestamp mt on c."@timestamp" >= mt.max_timestamp
-  {% endif %}
-)
+}}
 
 SELECT
-  recent_data.doc,
-  recent_data."@timestamp"
-FROM recent_data 
-WHERE (recent_data.type::text) = ANY
-  (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
+  c.type,
+  c._id,
+  c._rev,
+  c."@timestamp",
+  c."@version",
+  c.doc,
+  c.doc_as_upsert
+FROM {{ ref("couchdb") }} c
