@@ -18,3 +18,5 @@ SELECT
   c.doc,
   c.doc_as_upsert
 FROM {{ ref("couchdb") }} c
+WHERE (c.type::text) = ANY
+  (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
