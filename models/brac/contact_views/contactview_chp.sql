@@ -12,7 +12,7 @@
       {'columns': ['sub_county'], 'type': 'hash'},
       {'columns': ['dob'], 'type': 'hash'}
     ]
-  ),
+  )
 }}
 
 SELECT

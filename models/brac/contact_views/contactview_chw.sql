@@ -11,7 +11,7 @@
       {'columns': ['branch_uuid'], 'type': 'hash'},
       {'columns': ['_id', '_rev'], 'unique': True}
     ]
-  ),
+  )
 }}
 
 SELECT
