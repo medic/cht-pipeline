@@ -2,9 +2,7 @@
   config(
     materialized = 'view',
     indexes = [
-      {'columns': ['uuid'], 'type': 'hash'},
-      {'columns': ['name'], 'type': 'hash'},
-      {'columns': ['"@timestamp"'], 'type': 'brin'}
+      {'columns': ['uuid'], 'type': 'hash'}
     ]
   ),
 }}
