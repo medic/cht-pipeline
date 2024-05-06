@@ -5,7 +5,7 @@
       {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['date_of_birth'], 'type': 'hash'},
       {'columns': ['parent_type'], 'type': 'hash'},
-      {'columns': ['reported'], 'form': 'hash'},
+      {'columns': ['reported'], 'type': 'hash'},
       {'columns': ['"@timestamp"'], 'type': 'brin'},
       {'columns': ['area_uuid'], 'type': 'hash'},
       {'columns': ['branch_uuid'], 'type': 'hash'},
@@ -25,7 +25,7 @@ SELECT
   pplfields."@timestamp",
   chwarea.uuid AS area_uuid,
   chwarea.parent_uuid AS branch_uuid
-FROM 
+FROM
   {{ ref("contactview_person_fields") }} pplfields
   JOIN {{ ref("contactview_metadata") }} chw ON chw.uuid = pplfields.uuid
   JOIN {{ ref("contactview_metadata") }} chwarea ON chw.parent_uuid = chwarea.uuid
