@@ -1,14 +1,14 @@
 {{
   config(
     materialized = 'view',
+    indexes=[
+      {'columns': ['uuid'], 'type': 'hash'},
+      {'columns': ['type'], 'type': 'hash'},
+      {'columns': ['reported'], 'form': 'hash'},
+      {'columns': ['"@timestamp"'], 'type': 'brin'},
+      {'columns': ['_id', '_rev'], 'unique': True},
+    ]
   ),
-  indexes=[
-    {'columns': ['uuid'], 'type': 'hash'},
-    {'columns': ['type'], 'type': 'hash'},
-    {'columns': ['reported'], 'form': 'hash'},
-    {'columns': ['"@timestamp"'], 'type': 'brin'},
-    {'columns': ['_id', '_rev'], 'unique': True},
-  ]
 }}
 
 SELECT

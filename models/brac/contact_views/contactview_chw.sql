@@ -1,17 +1,17 @@
 {{
   config(
     materialized = 'view',
+    indexes=[
+      {'columns': ['uuid'], 'type': 'hash'},
+      {'columns': ['date_of_birth'], 'type': 'hash'},
+      {'columns': ['parent_type'], 'type': 'hash'},
+      {'columns': ['reported'], 'form': 'hash'},
+      {'columns': ['"@timestamp"'], 'type': 'brin'},
+      {'columns': ['area_uuid'], 'type': 'hash'},
+      {'columns': ['branch_uuid'], 'type': 'hash'},
+      {'columns': ['_id', '_rev'], 'unique': True}
+    ]
   ),
-  indexes=[
-    {'columns': ['uuid'], 'type': 'hash'},
-    {'columns': ['date_of_birth'], 'type': 'hash'},
-    {'columns': ['parent_type'], 'type': 'hash'},
-    {'columns': ['reported'], 'form': 'hash'},
-    {'columns': ['"@timestamp"'], 'type': 'brin'},
-    {'columns': ['area_uuid'], 'type': 'hash'},
-    {'columns': ['branch_uuid'], 'type': 'hash'},
-    {'columns': ['_id', '_rev'], 'unique': True},
-  ]
 }}
 
 SELECT

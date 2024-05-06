@@ -1,18 +1,18 @@
 {{
   config(
     materialized = 'incremental',
+    indexes = [
+      {'columns': ['uuid'], 'type': 'hash'},
+      {'columns': ['branch_uuid'], 'type': 'hash'},
+      {'columns': ['area_uuid'], 'type': 'hash'},
+      {'columns': ['parent_type'], 'type': 'hash'},
+      {'columns': ['supervisor_uuid'], 'type': 'hash'},
+      {'columns': ['district_of_residence'], 'type': 'hash'},
+      {'columns': ['county'], 'type': 'hash'},
+      {'columns': ['sub_county'], 'type': 'hash'},
+      {'columns': ['dob'], 'type': 'hash'}
+    ]
   ),
-  indexes = [
-    {'columns': ['uuid'], 'type': 'hash'},
-    {'columns': ['branch_uuid'], 'type': 'hash'},
-    {'columns': ['area_uuid'], 'type': 'hash'},
-    {'columns': ['parent_type'], 'type': 'hash'},
-    {'columns': ['supervisor_uuid'], 'type': 'hash'},
-    {'columns': ['district_of_residence'], 'type': 'hash'},
-    {'columns': ['county'], 'type': 'hash'},
-    {'columns': ['sub_county'], 'type': 'hash'},
-    {'columns': ['dob'], 'type': 'hash'},
-  ]
 }}
 
 SELECT
