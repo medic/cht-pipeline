@@ -1,9 +1,6 @@
 {{
   config(
     materialized = 'view',
-    indexes = [
-      {'columns': ['uuid'], 'type': 'hash'}
-    ]
   ),
 }}
 
