@@ -1,6 +1,6 @@
 {{
     config(
-        materialized = 'incremental',
+        materialized = 'view',
         indexes=[
             {'columns': ['type'], 'type': 'hash'},
             {'columns': ['form'], 'type': 'hash'},
