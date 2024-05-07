@@ -1,0 +1,71 @@
+[
+  {
+    "Plan": {
+      "Node Type": "Limit",
+      "Parallel Aware": false,
+      "Startup Cost": 0.00,
+      "Total Cost": 494.39,
+      "Plan Rows": 10,
+      "Plan Width": 72,
+      "Actual Startup Time": 0.215,
+      "Actual Total Time": 68.050,
+      "Actual Rows": 10,
+      "Actual Loops": 1,
+      "Shared Hit Blocks": 87,
+      "Shared Read Blocks": 1631,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0,
+      "Plans": [
+        {
+          "Node Type": "Seq Scan",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Relation Name": "raw_contacts",
+          "Alias": "raw_contacts",
+          "Startup Cost": 0.00,
+          "Total Cost": 236072.95,
+          "Plan Rows": 4775,
+          "Plan Width": 72,
+          "Actual Startup Time": 0.211,
+          "Actual Total Time": 68.037,
+          "Actual Rows": 10,
+          "Actual Loops": 1,
+          "Filter": "((doc ->> 'type'::text) = 'district_hospital'::text)",
+          "Rows Removed by Filter": 6988,
+          "Shared Hit Blocks": 87,
+          "Shared Read Blocks": 1631,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "Planning": {
+      "Shared Hit Blocks": 134,
+      "Shared Read Blocks": 0,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0
+    },
+    "Planning Time": 0.764,
+    "Triggers": [
+    ],
+    "Execution Time": 68.407
+  }
+]

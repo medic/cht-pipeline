@@ -1,0 +1,71 @@
+[
+  {
+    "Plan": {
+      "Node Type": "Limit",
+      "Parallel Aware": false,
+      "Startup Cost": 0.00,
+      "Total Cost": 11490.77,
+      "Plan Rows": 10,
+      "Plan Width": 410,
+      "Actual Startup Time": 38836.733,
+      "Actual Total Time": 38836.735,
+      "Actual Rows": 0,
+      "Actual Loops": 1,
+      "Shared Hit Blocks": 7271868,
+      "Shared Read Blocks": 733691,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0,
+      "Plans": [
+        {
+          "Node Type": "Seq Scan",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Relation Name": "couchdb",
+          "Alias": "form",
+          "Startup Cost": 0.00,
+          "Total Cost": 402177.00,
+          "Plan Rows": 350,
+          "Plan Width": 410,
+          "Actual Startup Time": 38836.729,
+          "Actual Total Time": 38836.730,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Filter": "(((doc ->> 'type'::text) = 'data_record'::text) AND ((doc ->> 'form'::text) = ANY ('{family_planning,fp_follow_up_long_term,fp_follow_up_refill,fp_follow_up_prospective,fp_follow_up_short_term}'::text[])))",
+          "Rows Removed by Filter": 2806228,
+          "Shared Hit Blocks": 7271868,
+          "Shared Read Blocks": 733691,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "Planning": {
+      "Shared Hit Blocks": 164,
+      "Shared Read Blocks": 37,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0
+    },
+    "Planning Time": 5.956,
+    "Triggers": [
+    ],
+    "Execution Time": 38836.895
+  }
+]

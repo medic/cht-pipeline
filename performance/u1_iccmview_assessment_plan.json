@@ -1,0 +1,203 @@
+[
+  {
+    "Plan": {
+      "Node Type": "Limit",
+      "Parallel Aware": false,
+      "Startup Cost": 59547.98,
+      "Total Cost": 59552.74,
+      "Plan Rows": 10,
+      "Plan Width": 164,
+      "Actual Startup Time": 20040.935,
+      "Actual Total Time": 20055.995,
+      "Actual Rows": 10,
+      "Actual Loops": 1,
+      "Shared Hit Blocks": 8689586,
+      "Shared Read Blocks": 319303,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0,
+      "Plans": [
+        {
+          "Node Type": "Gather Merge",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Startup Cost": 59547.98,
+          "Total Cost": 60051.98,
+          "Plan Rows": 1080,
+          "Plan Width": 164,
+          "Actual Startup Time": 20040.931,
+          "Actual Total Time": 20055.987,
+          "Actual Rows": 10,
+          "Actual Loops": 1,
+          "Workers Planned": 2,
+          "Workers Launched": 2,
+          "Shared Hit Blocks": 8689586,
+          "Shared Read Blocks": 319303,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0,
+          "Plans": [
+            {
+              "Node Type": "Result",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Startup Cost": 58547.95,
+              "Total Cost": 58770.70,
+              "Plan Rows": 540,
+              "Plan Width": 164,
+              "Actual Startup Time": 20031.072,
+              "Actual Total Time": 20036.406,
+              "Actual Rows": 5,
+              "Actual Loops": 3,
+              "Shared Hit Blocks": 8689586,
+              "Shared Read Blocks": 319303,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Workers": [
+              ],
+              "Plans": [
+                {
+                  "Node Type": "Sort",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Startup Cost": 58547.95,
+                  "Total Cost": 58549.30,
+                  "Plan Rows": 540,
+                  "Plan Width": 294,
+                  "Actual Startup Time": 20029.953,
+                  "Actual Total Time": 20029.957,
+                  "Actual Rows": 5,
+                  "Actual Loops": 3,
+                  "Sort Key": ["((data_record.doc ->> '_id'::text))"],
+                  "Sort Method": "top-N heapsort",
+                  "Sort Space Used": 28,
+                  "Sort Space Type": "Memory",
+                  "Shared Hit Blocks": 8687467,
+                  "Shared Read Blocks": 319255,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0,
+                  "Workers": [
+                    {
+                      "Worker Number": 0,
+                      "Sort Method": "top-N heapsort",
+                      "Sort Space Used": 29,
+                      "Sort Space Type": "Memory"
+                    },
+                    {
+                      "Worker Number": 1,
+                      "Sort Method": "top-N heapsort",
+                      "Sort Space Used": 29,
+                      "Sort Space Type": "Memory"
+                    }
+                  ],
+                  "Plans": [
+                    {
+                      "Node Type": "Bitmap Heap Scan",
+                      "Parent Relationship": "Outer",
+                      "Parallel Aware": true,
+                      "Relation Name": "data_record",
+                      "Alias": "data_record",
+                      "Startup Cost": 8364.70,
+                      "Total Cost": 58523.44,
+                      "Plan Rows": 540,
+                      "Plan Width": 294,
+                      "Actual Startup Time": 72.362,
+                      "Actual Total Time": 20007.245,
+                      "Actual Rows": 13352,
+                      "Actual Loops": 3,
+                      "Recheck Cond": "(form = 'assessment'::text)",
+                      "Rows Removed by Index Recheck": 0,
+                      "Filter": "((CASE WHEN (((doc #>> '{fields,patient_age_in_months}'::text[]) = ''::text) OR ((doc #>> '{fields,patient_age_in_months}'::text[]) ~ 'NaN'::text)) THEN 99 ELSE ((doc #>> '{fields,patient_age_in_months}'::text[]))::integer END >= 2) AND (CASE WHEN (((doc #>> '{fields,patient_age_in_months}'::text[]) = ''::text) OR ((doc #>> '{fields,patient_age_in_months}'::text[]) ~ 'NaN'::text)) THEN 99 ELSE ((doc #>> '{fields,patient_age_in_months}'::text[]))::integer END < 12) AND (((doc #>> '{fields,group_cough,patient_coughs}'::text[]) = 'yes'::text) OR ((doc #>> '{fields,group_diarrhea,patient_diarrhea}'::text[]) = 'yes'::text) OR ((doc #>> '{fields,group_fever,patient_fever}'::text[]) = 'yes'::text) OR ((doc #>> '{fields,group_danger_signs,danger_signs}'::text[]) <> ''::text)))",
+                      "Rows Removed by Filter": 73696,
+                      "Exact Heap Blocks": 14036,
+                      "Lossy Heap Blocks": 0,
+                      "Shared Hit Blocks": 8687451,
+                      "Shared Read Blocks": 319255,
+                      "Shared Dirtied Blocks": 0,
+                      "Shared Written Blocks": 0,
+                      "Local Hit Blocks": 0,
+                      "Local Read Blocks": 0,
+                      "Local Dirtied Blocks": 0,
+                      "Local Written Blocks": 0,
+                      "Temp Read Blocks": 0,
+                      "Temp Written Blocks": 0,
+                      "Workers": [
+                      ],
+                      "Plans": [
+                        {
+                          "Node Type": "Bitmap Index Scan",
+                          "Parent Relationship": "Outer",
+                          "Parallel Aware": false,
+                          "Index Name": "fc41cda851af962dd45beccbc94bb88f",
+                          "Startup Cost": 0.00,
+                          "Total Cost": 8364.38,
+                          "Plan Rows": 260317,
+                          "Plan Width": 0,
+                          "Actual Startup Time": 62.518,
+                          "Actual Total Time": 62.519,
+                          "Actual Rows": 261144,
+                          "Actual Loops": 1,
+                          "Index Cond": "(form = 'assessment'::text)",
+                          "Shared Hit Blocks": 0,
+                          "Shared Read Blocks": 643,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 0,
+                          "Temp Written Blocks": 0,
+                          "Workers": [
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "Planning": {
+      "Shared Hit Blocks": 162,
+      "Shared Read Blocks": 37,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0
+    },
+    "Planning Time": 5.939,
+    "Triggers": [
+    ],
+    "Execution Time": 20056.706
+  }
+]

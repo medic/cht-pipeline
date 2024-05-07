@@ -1,0 +1,101 @@
+[
+  {
+    "Plan": {
+      "Node Type": "Limit",
+      "Parallel Aware": false,
+      "Startup Cost": 1000.00,
+      "Total Cost": 52282.22,
+      "Plan Rows": 10,
+      "Plan Width": 300,
+      "Actual Startup Time": 19258.876,
+      "Actual Total Time": 19262.605,
+      "Actual Rows": 0,
+      "Actual Loops": 1,
+      "Shared Hit Blocks": 7272033,
+      "Shared Read Blocks": 733646,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0,
+      "Plans": [
+        {
+          "Node Type": "Gather",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Startup Cost": 1000.00,
+          "Total Cost": 359975.52,
+          "Plan Rows": 70,
+          "Plan Width": 300,
+          "Actual Startup Time": 19258.875,
+          "Actual Total Time": 19262.603,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Workers Planned": 2,
+          "Workers Launched": 2,
+          "Single Copy": false,
+          "Shared Hit Blocks": 7272033,
+          "Shared Read Blocks": 733646,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0,
+          "Plans": [
+            {
+              "Node Type": "Seq Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": true,
+              "Relation Name": "couchdb",
+              "Alias": "couchdb",
+              "Startup Cost": 0.00,
+              "Total Cost": 358968.52,
+              "Plan Rows": 29,
+              "Plan Width": 300,
+              "Actual Startup Time": 19255.428,
+              "Actual Total Time": 19255.429,
+              "Actual Rows": 0,
+              "Actual Loops": 3,
+              "Filter": "(((doc ->> 'type'::text) = 'data_record'::text) AND ((doc ->> 'form'::text) = 'covid_evacuation_follow_up'::text))",
+              "Rows Removed by Filter": 935409,
+              "Shared Hit Blocks": 7272033,
+              "Shared Read Blocks": 733646,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Workers": [
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "Planning": {
+      "Shared Hit Blocks": 141,
+      "Shared Read Blocks": 1,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0
+    },
+    "Planning Time": 0.317,
+    "Triggers": [
+    ],
+    "Execution Time": 19262.636
+  }
+]
