@@ -9,10 +9,10 @@ SELECT
   contactview_chp.branch_uuid as Branch_ID,contactview_chp.phone as Phone, contactview_chp.phone2 as Phone2,
   contactview_chp.date_of_birth as DOB, contactview_chp.parent_type as Parent_Type, contactview_chp.area_uuid as Area_ID,        contactview_metadata.name AS supervisor_name
 FROM 
-  dbt.contactview_chp,
-  dbt.contactview_branch,
-  dbt.contactview_metadata,
-  dbt.contactview_metadata cm
+  {{ ref("contactview_chp") }},
+  {{ ref("contactview_branch") }},
+  {{ ref("contactview_metadata") }},
+  {{ ref("contactview_metadata") }} cm
 WHERE
   contactview_chp.branch_uuid = contactview_branch.uuid AND
   contactview_chp.supervisor_uuid = contactview_metadata.uuid AND

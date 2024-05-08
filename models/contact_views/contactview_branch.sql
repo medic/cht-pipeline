@@ -10,6 +10,6 @@ SELECT
   couchdb.area,
   couchdb.region
 FROM
-  contactview_hospital
+  {{ ref("contactview_hospital") }}
 INNER JOIN couchdb
 ON (couchdb.uuid = contactview_hospital.uuid AND couchdb.type = 'district_hospital');

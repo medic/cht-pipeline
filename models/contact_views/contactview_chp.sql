@@ -45,11 +45,11 @@ SELECT
     chp.doc #>> '{chp_profile, g_other_details, incentives}'::TEXT[] AS incentives,
     chp.doc #>> '{chp_profile, g_other_details, chp_services}'::TEXT[] AS chp_services
   FROM
-    contactview_chw
-  INNER JOIN contactview_metadata ON contactview_chw.area_uuid = contactview_metadata.uuid
-  INNER JOIN contactview_metadata AS meta ON meta.uuid = contactview_chw.uuid
-  INNER JOIN contactview_branch AS branch ON contactview_chw.branch_uuid = branch.uuid
-  LEFT JOIN contactview_metadata AS chp ON chp.uuid = contactview_chw.uuid
+    {{ ref("contactview_chw") }} chw
+  INNER JOIN {{ ref("contactview_metadata") }} AS cm ON chw.area_uuid = cm.uuid
+  INNER JOIN contactview_metadata AS meta ON meta.uuid = chw.uuid
+  INNER JOIN contactview_branch AS branch ON chw.branch_uuid = branch.uuid
+  LEFT JOIN contactview_metadata AS chp ON chp.uuid = chw.uuid
   LEFT JOIN 
     (
       SELECT
@@ -58,4 +58,4 @@ SELECT
       FROM couchdb AS c
       WHERE type = 'user-settings' AND contact_id IS NOT NULL
       GROUP BY contact_id
-    ) AS user_settings ON user_settings.contact_id = contactview_chw.uuid
+    ) AS user_settings ON user_settings.contact_id = chw.uuid
