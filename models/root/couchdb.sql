@@ -12,7 +12,8 @@
 }}
 
 SELECT
-    doc->>'type' AS type,
+    doc ->> '_id'::text AS uuid,
+    doc ->> 'type'::text AS type,
     doc ->> 'name'::text AS name,
     doc ->> 'contact_type'::text AS contact_type,
     doc ->> 'phone'::text AS phone,
