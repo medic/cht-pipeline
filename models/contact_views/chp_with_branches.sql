@@ -5,9 +5,16 @@
 }}
 
 SELECT 
-  contactview_chp.name as CHP_Name, contactview_chp.uuid as CHP_ID, contactview_branch.name as Branch_Name,
-  contactview_chp.branch_uuid as Branch_ID,contactview_chp.phone as Phone, contactview_chp.phone2 as Phone2,
-  contactview_chp.date_of_birth as DOB, contactview_chp.parent_type as Parent_Type, contactview_chp.area_uuid as Area_ID,        contactview_metadata.name AS supervisor_name
+  chp.name as CHP_Name,
+  chp.uuid as CHP_ID,
+  branch.name as Branch_Name,
+  chp.branch_uuid as Branch_ID,
+  chp.phone as Phone,
+  chp.phone2 as Phone2,
+  chp.date_of_birth as DOB,
+  chp.parent_type as Parent_Type,
+  chp.area_uuid as Area_ID,
+  metadata.name AS supervisor_name
 FROM 
   {{ ref("contactview_chp") }} AS chp,
   {{ ref("contactview_branch") }} AS branch,
