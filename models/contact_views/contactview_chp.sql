@@ -16,7 +16,7 @@ SELECT
     chw.branch_uuid,
     branch.name AS branch_name,
     branch.region,
-    coalesce(nullif(raw_contacts.doc ->> 'supervisor'::TEXT, ''::TEXT), '563649afa0e2a13740a1982abc0a2d0d'::TEXT) AS supervisor_uuid,
+    coalesce(nullif(chp.doc ->> 'supervisor'::TEXT, ''::TEXT), '563649afa0e2a13740a1982abc0a2d0d'::TEXT) AS supervisor_uuid,
     chp.doc #>> '{chp_profile, g_individual_info,nin}'::TEXT[] AS nin,
     chp.doc #>> '{chp_profile, g_individual_info,district_of_residence}'::TEXT[] AS district_of_residence,
     chp.doc #>> '{chp_profile, g_individual_info, county}'::TEXT[] AS county,
