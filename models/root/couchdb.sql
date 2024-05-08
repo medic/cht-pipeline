@@ -3,6 +3,7 @@
         materialized = 'view',
         indexes=[
             {'columns': ['"@timestamp"'], 'type': 'brin'},
+            {'columns': ['reported_date'], 'type': 'brin'},
             {'columns': ['type']},
             {'columns': ['contact_uuid']},
             {'columns': ['parent_uuid']},
@@ -24,5 +25,8 @@ SELECT
     doc ->> 'is_active'::text AS active,
     doc ->> 'notes'::text AS notes,
     doc ->> 'reported_date'::text AS reported_date,
+    doc ->> 'area'::text AS area,
+    doc ->> 'region'::text AS region,
+    doc ->> 'contact_id'::text AS contact_id,
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
