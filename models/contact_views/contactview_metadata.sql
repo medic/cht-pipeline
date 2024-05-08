@@ -22,6 +22,8 @@ SELECT
   parent_uuid,
   active,
   notes,
+  area,
+  region,
   '1970-01-01 03:00:00+03'::timestamp with time zone +
   (((reported_date)::numeric) / 1000::numeric)::double precision *
   '00:00:01'::interval AS reported

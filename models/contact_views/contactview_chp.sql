@@ -47,9 +47,9 @@ SELECT
   FROM
     {{ ref("contactview_chw") }} chw
   INNER JOIN {{ ref("contactview_metadata") }} AS cm ON chw.area_uuid = cm.uuid
-  INNER JOIN contactview_metadata AS meta ON meta.uuid = chw.uuid
-  INNER JOIN contactview_branch AS branch ON chw.branch_uuid = branch.uuid
-  LEFT JOIN contactview_metadata AS chp ON chp.uuid = chw.uuid
+  INNER JOIN {{ ref("contactview_metadata") }} AS meta ON meta.uuid = chw.uuid
+  INNER JOIN {{ ref("contactview_branch") }} AS branch ON chw.branch_uuid = branch.uuid
+  LEFT JOIN {{ ref("contactview_metadata") }} AS chp ON chp.uuid = chw.uuid
   LEFT JOIN 
     (
       SELECT
