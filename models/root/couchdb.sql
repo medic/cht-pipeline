@@ -1,6 +1,7 @@
 {{
     config(
-        materialized = 'view',
+        materialized = 'incremental',
+        unique_key='uuid',
         indexes=[
             {'columns': ['"@timestamp"'], 'type': 'brin'},
             {'columns': ['reported_date'], 'type': 'brin'},
@@ -30,3 +31,6 @@ SELECT
     doc ->> 'contact_id'::text AS contact_id,
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
+{% if is_incremental() %}
+    WHERE "@timestamp" >= (SELECT MAX("@timestamp") FROM {{ this }})
+{% endif %}
