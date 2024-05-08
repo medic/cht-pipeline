@@ -55,7 +55,7 @@ SELECT
       SELECT
         contact_id,
         string_agg(doc ->>'name', ', ') AS username
-      FROM couchdb AS c
+      FROM {{ ref("couchdb") } AS c
       WHERE type = 'user-settings' AND contact_id IS NOT NULL
       GROUP BY contact_id
     ) AS user_settings ON user_settings.contact_id = chw.uuid
