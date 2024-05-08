@@ -5,15 +5,15 @@
 }}
 
 SELECT
-    contactview_chw.name,
-    contactview_chw.uuid,
+    chw.name,
+    chw.uuid,
     user_settings.username,
-    contactview_chw.phone,
-    contactview_chw.phone2,
-    contactview_chw.date_of_birth,
-    contactview_chw.parent_type,
-    contactview_chw.area_uuid,
-    contactview_chw.branch_uuid,
+    chw.phone,
+    chw.phone2,
+    chw.date_of_birth,
+    chw.parent_type,
+    chw.area_uuid,
+    chw.branch_uuid,
     branch.name AS branch_name,
     branch.region,
     coalesce(nullif(raw_contacts.doc ->> 'supervisor'::TEXT, ''::TEXT), '563649afa0e2a13740a1982abc0a2d0d'::TEXT) AS supervisor_uuid,
