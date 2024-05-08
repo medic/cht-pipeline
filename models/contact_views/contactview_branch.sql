@@ -12,4 +12,4 @@ SELECT
 FROM
   {{ ref("contactview_hospital") }}
 INNER JOIN couchdb
-ON (couchdb.uuid = contactview_hospital.uuid AND couchdb.type = 'district_hospital');
+ON (couchdb.uuid = contactview_hospital.uuid AND couchdb.type = 'district_hospital')

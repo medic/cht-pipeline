@@ -16,4 +16,4 @@ SELECT
 FROM {{ ref("contactview_person_fields") }} AS pplfields
 INNER JOIN contactview_metadata AS chw ON chw.uuid = pplfields.uuid
 INNER JOIN contactview_metadata AS chwarea ON chw.parent_uuid = chwarea.uuid
-WHERE pplfields.parent_type = 'health_center'::TEXT;
+WHERE pplfields.parent_type = 'health_center'
