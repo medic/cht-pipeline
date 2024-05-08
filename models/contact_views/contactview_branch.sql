@@ -5,11 +5,11 @@
 }}
 
 SELECT
-  contactview_hospital.uuid,
-  contactview_hospital.name,
-  couchdb.area,
-  couchdb.region
+  ch.uuid,
+  ch.name,
+  cm.area,
+  cm.region
 FROM
-  {{ ref("contactview_hospital") }}
-INNER JOIN couchdb
-ON (couchdb.uuid = contactview_hospital.uuid AND couchdb.type = 'district_hospital')
+  {{ ref("contactview_hospital") }} AS ch
+INNER JOIN {{ ref("contactview_metadata") }} AS cm
+ON (cm.uuid = ch.uuid AND cm.type = 'district_hospital')
