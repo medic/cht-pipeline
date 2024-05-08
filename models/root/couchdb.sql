@@ -23,6 +23,6 @@ SELECT
     doc #>> '{parent,_id}'::text[] AS parent_uuid,
     doc ->> 'is_active'::text AS active,
     doc ->> 'notes'::text AS notes,
-    doc ->> 'reported_date'::text AS reported,
+    doc ->> 'reported_date'::text AS reported_date,
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
