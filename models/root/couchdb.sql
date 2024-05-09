@@ -13,6 +13,10 @@
     )
 }}
 
+WITH max_couchdb_timestamp AS (
+  SELECT coalesce(max("@timestamp"), '1900-01-01') as max_timestamp from {{ this }}
+)
+
 SELECT
     doc ->> '_id'::text AS uuid,
     doc ->> 'type'::text AS type,
@@ -32,5 +36,5 @@ SELECT
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 {% if is_incremental() %}
-  WHERE "@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
+  WHERE "@timestamp" >= select max_timestamp from max_couchdb_timestamp
 {% endif %}
