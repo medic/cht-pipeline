@@ -32,5 +32,5 @@ SELECT
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 {% if is_incremental() %}
-  WHERE "@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
+  WHERE "@timestamp" >= {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
