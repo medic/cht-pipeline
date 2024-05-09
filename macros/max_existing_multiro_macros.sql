@@ -169,7 +169,7 @@
 {% endmacro %}
 
 
-{% macro max_existing_timestamp(timestampfield, target_ref=this) -%}
+{% macro max_existing_timestamp(timestampfield='1990-01-01 23:00.000', target_ref=this) -%}
 {#
     Params:
         timestampfield: date or timestamp
