@@ -12,16 +12,6 @@
         ]
     )
 }}
-WITH max_timestamp AS (
-  DO $$
-  BEGIN
-    IF EXISTS (SELECT 1 FROM PG_CATALOG.PG_TABLES WHERE TABLENAME = 'couchdb') THEN
-      EXECUTE 'SELECT coalesce(max("@timestamp"), ''1900-01-01'') AS max_timestamp FROM dbt.couchdb';
-    ELSE
-      EXECUTE 'SELECT * FROM (values(''1900-01-01'')) AS dummy(max_timestamp)';
-    END IF;
-  END $$;
-)
 
 SELECT
     doc ->> '_id'::text AS uuid,
@@ -42,5 +32,5 @@ SELECT
     *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 {% if is_incremental() %}
-  WHERE "@timestamp" >= SELECT max_timestamp from max_timestamp
+  WHERE "@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
 {% endif %}
