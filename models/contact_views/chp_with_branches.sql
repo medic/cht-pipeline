@@ -1,6 +1,6 @@
 {{
   config(
-    materialized = 'view',
+    materialized = 'incremental',
   )
 }}
 
@@ -26,5 +26,8 @@ WHERE
   chp.supervisor_uuid = metadata.uuid AND
   chp.uuid = cm.contact_uuid AND
   branch.name != 'HQ' AND branch.name != 'HQ OVC'
+  {% if is_incremental() %}
+    AND reported >= {{ max_existing_timestamp('reported') }}
+  {% endif %}
 ORDER BY
   CHP_Name
