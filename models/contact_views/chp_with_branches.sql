@@ -15,7 +15,7 @@ SELECT
   chp.parent_type as Parent_Type,
   chp.area_uuid as Area_ID,
   metadata.name as supervisor_name,
-  metadata.reported as reported
+  metadata.reported as reported_date
 FROM
   {{ ref("contactview_chp") }} AS chp,
   {{ ref("contactview_branch") }} AS branch,
@@ -27,7 +27,7 @@ WHERE
   chp.uuid = cm.contact_uuid AND
   branch.name != 'HQ' AND branch.name != 'HQ OVC'
   {% if is_incremental() %}
-    AND reported >= {{ max_existing_timestamp('reported') }}
+    AND reported_date >= {{ max_existing_timestamp('reported_date') }}
   {% endif %}
 ORDER BY
   CHP_Name
