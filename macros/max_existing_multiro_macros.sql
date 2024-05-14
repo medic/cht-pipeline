@@ -181,7 +181,7 @@
     Returns a SQL expression casting the max value string to a timestamp.
         e.g. "CAST('2019-01-01 23:00.000' AS TIMESTAMP)"
 #}
-    {{ return(_cast_as_type("SELECT MAX(" + timestampfield + ") FROM " + target_ref + " WHERE " + timestampfield + " IS NOT NULL", 'TIMESTAMP')) }}
+    {{ return(_cast_as_type(max_existing(timestampfield, target_ref), 'TIMESTAMP')) }}
 {%- endmacro %}
 
 
