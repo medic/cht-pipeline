@@ -4,7 +4,7 @@
     unique_key='uuid',
     indexes=[
       {'columns': ['"uuid"'], 'type': 'hash'},
-      {'columns': ['"@timestamp"'], 'type': 'brin'},
+      {'columns': ['"@timestamp"'], 'type': 'btree'},
       {'columns': ['"reported"'], 'type': 'brin'},
       {'columns': ['"patient_id"'], 'type': 'hash'},
       {'columns': ['"contact_uuid"'], 'type': 'hash'},

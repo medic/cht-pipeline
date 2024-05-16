@@ -3,7 +3,7 @@
         materialized = 'incremental',
         unique_key='uuid',
         indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
+            {'columns': ['"@timestamp"'], 'type': 'btree'},
             {'columns': ['reported_date'], 'type': 'brin'},
             {'columns': ['type']},
             {'columns': ['contact_uuid']},
