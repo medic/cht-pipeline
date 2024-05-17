@@ -27,7 +27,7 @@ SELECT
   doc ->> 'reported_date'::text AS reported_date,
   doc ->> 'area'::text AS area,
   doc ->> 'region'::text AS region,
-  doc ->> 'contact_id'::text AS contact_id,
+  doc ->> 'contact_id'::text AS contact_id
 
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 WHERE doc ->> 'type' = ANY
