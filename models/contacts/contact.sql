@@ -3,7 +3,7 @@
     materialized = 'incremental',
     indexes=[
       {'columns': ['"@timestamp"'], 'type': 'btree'},
-      {'columns': ['reported_date'], 'type': 'brin'},
+      {'columns': ['reported'], 'type': 'brin'},
       {'columns': ['contact_uuid']},
       {'columns': ['parent_uuid']},
       {'columns': ['type']},
@@ -24,7 +24,7 @@ SELECT
   doc #>> '{parent,_id}'::text[] AS parent_uuid,
   doc ->> 'is_active'::text AS active,
   doc ->> 'notes'::text AS notes,
-  doc ->> 'reported_date'::text AS reported_date,
+  doc ->> 'reported_date'::text AS reported,
   doc ->> 'area'::text AS area,
   doc ->> 'region'::text AS region,
   doc ->> 'contact_id'::text AS contact_id,
