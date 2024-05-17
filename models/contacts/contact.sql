@@ -28,6 +28,7 @@ SELECT
   doc ->> 'area'::text AS area,
   doc ->> 'region'::text AS region,
   doc ->> 'contact_id'::text AS contact_id,
+  doc,
   "@timestamp"
 
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
