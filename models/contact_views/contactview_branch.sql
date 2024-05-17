@@ -11,5 +11,5 @@ SELECT
   cm.region
 FROM
   {{ ref("contactview_hospital") }} AS ch
-INNER JOIN {{ ref("contactview_metadata") }} AS cm
+INNER JOIN {{ ref("contact") }} AS cm
 ON (cm.uuid = ch.uuid AND cm.type = 'district_hospital')

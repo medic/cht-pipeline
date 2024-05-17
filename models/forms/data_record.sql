@@ -15,7 +15,7 @@
 }}
 
 SELECT
-  uuid,
+  doc ->> '_id'::text AS uuid,
   (doc #>> '{fields,patient_id}')::text AS patient_id,
   (doc #>> '{contact,_id}')::text as contact_uuid,
   (doc #>> '{contact,parent,_id}')::text as contact_parent_uuid,
@@ -23,9 +23,8 @@ SELECT
   doc ->> 'form' as form,
   doc,
   "@timestamp"
-FROM {{ ref('couchdb') }}
-WHERE
-  type = 'data_record'
+FROM v1.{{ env_var('POSTGRES_TABLE') }}
+WHERE doc ->> 'type' = 'data_record'
 {% if is_incremental() %}
     AND "@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
  {% endif %}

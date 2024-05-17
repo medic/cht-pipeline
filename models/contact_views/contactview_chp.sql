@@ -46,10 +46,10 @@ SELECT
     chp.doc #>> '{chp_profile, g_other_details, chp_services}'::TEXT[] AS chp_services
   FROM
     {{ ref("contactview_chw") }} chw
-  INNER JOIN {{ ref("contactview_metadata") }} AS cm ON chw.area_uuid = cm.uuid
-  INNER JOIN {{ ref("contactview_metadata") }} AS meta ON meta.uuid = chw.uuid
+  INNER JOIN {{ ref("contact") }} AS cm ON chw.area_uuid = cm.uuid
+  INNER JOIN {{ ref("contact") }} AS meta ON meta.uuid = chw.uuid
   INNER JOIN {{ ref("contactview_branch") }} AS branch ON chw.branch_uuid = branch.uuid
-  LEFT JOIN {{ ref("contactview_metadata") }} AS chp ON chp.uuid = chw.uuid
+  LEFT JOIN {{ ref("contact") }} AS chp ON chp.uuid = chw.uuid
   LEFT JOIN 
     (
       SELECT

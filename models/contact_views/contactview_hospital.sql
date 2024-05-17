@@ -7,5 +7,5 @@
 SELECT
   cmd.uuid,
   cmd.name
-FROM {{ ref("contactview_metadata") }} AS cmd
+FROM {{ ref("contact") }} AS cmd
 WHERE cmd.type = 'district_hospital'

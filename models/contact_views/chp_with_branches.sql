@@ -19,8 +19,8 @@ SELECT
 FROM
   {{ ref("contactview_chp") }} AS chp,
   {{ ref("contactview_branch") }} AS branch,
-  {{ ref("contactview_metadata") }} AS metadata,
-  {{ ref("contactview_metadata") }} cm
+  {{ ref("contact") }} AS metadata,
+  {{ ref("contact") }} cm
 WHERE
   chp.branch_uuid = branch.uuid AND
   chp.supervisor_uuid = metadata.uuid AND
