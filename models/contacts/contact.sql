@@ -29,6 +29,7 @@ SELECT
   doc ->> 'region'::text AS region,
   doc ->> 'contact_id'::text AS contact_id,
   doc,
+  auto_id,
   "@timestamp"
 
 FROM {{ ref('couchdb') }}
