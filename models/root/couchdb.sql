@@ -1,12 +1,13 @@
 {{
   config(
     materialized = 'incremental',
-    indexes=[
+    unique_key='uuid',
+  indexes=[
       {'columns': ['"@timestamp"'], 'type': 'btree'},
-      {'columns': ['reported'], 'type': 'brin'},
+      {'columns': ['reported_date'], 'type': 'brin'},
+      {'columns': ['type']},
       {'columns': ['contact_uuid']},
       {'columns': ['parent_uuid']},
-      {'columns': ['type']},
       {'columns': ['uuid']},
     ]
   )
@@ -24,16 +25,12 @@ SELECT
   doc #>> '{parent,_id}'::text[] AS parent_uuid,
   doc ->> 'is_active'::text AS active,
   doc ->> 'notes'::text AS notes,
-  doc ->> 'reported_date'::text AS reported,
+  doc ->> 'reported_date'::text AS reported_date,
   doc ->> 'area'::text AS area,
   doc ->> 'region'::text AS region,
   doc ->> 'contact_id'::text AS contact_id,
-  doc,
-  "@timestamp"
-
-FROM {{ ref('couchdb') }}
-WHERE doc ->> 'type' = ANY
-  (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
+  *
+FROM v1.{{ env_var('POSTGRES_TABLE') }}
 {% if is_incremental() %}
-  AND "auto_id" > (select max("auto_id") from {{ this }})
+  WHERE "auto_id" > (select max("auto_id") from {{ this }})
 {% endif %}
