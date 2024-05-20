@@ -25,7 +25,7 @@ SELECT
   auto_id,
   "@timestamp"
 FROM {{ ref("couchdb") }}
-WHERE doc ->> 'type' = 'data_record'
+WHERE type = 'data_record'
 {% if is_incremental() %}
   AND "auto_id" > (select max("auto_id") from {{ this }})
 {% endif %}

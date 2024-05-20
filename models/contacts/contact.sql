@@ -33,7 +33,7 @@ SELECT
   "@timestamp"
 
 FROM {{ ref('couchdb') }}
-WHERE doc ->> 'type' = ANY
+WHERE type = ANY
   (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
 {% if is_incremental() %}
   AND "auto_id" > (select max("auto_id") from {{ this }})
