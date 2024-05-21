@@ -22,10 +22,9 @@ SELECT
   to_timestamp((NULLIF(doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision) AS reported,
   doc ->> 'form' as form,
   doc,
-  auto_id,
   "@timestamp"
 FROM {{ ref("couchdb") }}
 WHERE type = 'data_record'
 {% if is_incremental() %}
-  AND "auto_id" > (select max("auto_id") from {{ this }})
+  AND "@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
 {% endif %}

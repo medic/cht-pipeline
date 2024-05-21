@@ -32,5 +32,5 @@ SELECT
   *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 {% if is_incremental() %}
-  WHERE "auto_id" > (select max("auto_id") from {{ this }})
+  WHERE "@timestamp" >= {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}

@@ -29,12 +29,11 @@ SELECT
   doc ->> 'region'::text AS region,
   doc ->> 'contact_id'::text AS contact_id,
   doc,
-  auto_id,
   "@timestamp"
 
 FROM {{ ref('couchdb') }}
 WHERE type = ANY
   (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
 {% if is_incremental() %}
-  AND "auto_id" > (select max("auto_id") from {{ this }})
+  AND "@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
 {% endif %}
