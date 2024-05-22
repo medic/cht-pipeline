@@ -26,5 +26,5 @@ SELECT
 FROM {{ ref("couchdb") }}
 WHERE type = 'data_record'
 {% if is_incremental() %}
-  AND "@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
+  AND "@timestamp" >= {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
