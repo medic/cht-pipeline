@@ -35,5 +35,5 @@ FROM {{ ref('couchdb') }}
 WHERE type = ANY
   (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
 {% if is_incremental() %}
-  AND "@timestamp" > (select max("@timestamp") from {{ this }})
+  AND "@timestamp" >= {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
