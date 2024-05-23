@@ -13,6 +13,11 @@
   )
 }}
 
+WITH latest_timestamp AS (
+  SELECT max_timestamp
+  FROM {{ ref('latest_couchdb_timestamp') }}
+)
+
 SELECT
   doc ->> '_id'::text AS uuid,
   doc ->> 'type'::text AS type,
@@ -32,5 +37,5 @@ SELECT
   *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
 {% if is_incremental() %}
-  WHERE "@timestamp" >= {{ max_existing_timestamp('"@timestamp"') }}
+  WHERE "@timestamp" >= latest_timestamp.max_timestamp
 {% endif %}
