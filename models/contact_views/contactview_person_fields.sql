@@ -1,12 +1,6 @@
 {{
   config(
-    materialized = 'materialized_view',
-    indexes=[
-      {'columns': ['uuid']},
-      {'columns': ['parent_uuid']},
-      {'columns': ['type']},
-      {'columns': ['uuid']},
-    ]
+    materialized = 'materialized_view'
   )
 }}
 
