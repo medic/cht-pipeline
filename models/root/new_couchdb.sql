@@ -22,4 +22,4 @@ SELECT
   doc ->> 'contact_id'::text AS contact_id,
   *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
-WHERE "@timestamp" >= {{ max_existing_timestamp('"@timestamp"', {{ ref('stable_couchdb')}}) }}
+WHERE "@timestamp" >= {{ max_existing_timestamp('"@timestamp"', 'stable_couchdb') }}
