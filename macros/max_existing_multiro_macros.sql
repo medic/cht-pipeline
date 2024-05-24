@@ -45,7 +45,7 @@
 
     {%- endcall %}
     {% set max_existing_field = load_result('get_max_existing').table.columns['max_existing'].values()[0] %}
-    {% if max_existing_field == 'None' %}
+    {% if max_existing_field == 'Null' %}
       {{ return('1990-01-01 23:00.000') }}
     {% else %}
       {{ return(max_existing_field) }}
