@@ -59,3 +59,4 @@ SELECT
       WHERE type = 'user-settings' AND contact_id IS NOT NULL
       GROUP BY contact_id
     ) AS user_settings ON user_settings.contact_id = chw.uuid
+    
