@@ -5,7 +5,7 @@
 }}
 
 with latest_timestamp as (
-  SELECT coalesce(max("@timestamp"), '1900-01-01') AS max_timestamp FROM {{ ref('contact') }}
+  SELECT coalesce(max("@timestamp"), '1900-01-01') AS max_timestamp FROM {{ ref('stable_couchdb') }}
 )
 
 SELECT
