@@ -4,10 +4,10 @@
   )
 }}
 
-combined_tables as (
-  select * from {{ ref('new_couchdb') }}
-  union all
-  select * from {{ ref('stable_couchdb') }}
+WITH combined_tables AS (
+  SELECT * FROM {{ ref('new_couchdb') }}
+  UNION ALL
+  SELECT * FROM {{ ref('stable_couchdb') }}
 )
 
-select * from combined_tables
+SELECT * FROM combined_tables
