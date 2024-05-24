@@ -48,7 +48,7 @@
     {% if max_existing_field == 'Null' %}
       {{ return('1990-01-01 23:00.000') }}
     {% else %}
-      {{ return(coalesce(max_existing_field, '1900-01-01')) }}
+      {{ return(max_existing_field) }}
     {% endif %}
 {%- endmacro %}
 
@@ -180,7 +180,7 @@
     Returns a SQL expression casting the max value string to a timestamp.
         e.g. "CAST('2019-01-01 23:00.000' AS TIMESTAMP)"
 #}
-    {{ return(_cast_as_type(max_existing(timestampfield, target_ref), 'TIMESTAMP')) }}
+    {{ return(_cast_as_type(coalesce(max_existing(timestampfield, target_ref), '1970-01-01 00:00:00'), 'TIMESTAMP')) }}
 {%- endmacro %}
 
 
