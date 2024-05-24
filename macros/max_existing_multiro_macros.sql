@@ -48,7 +48,7 @@
     {% if max_existing_field == 'Null' %}
       {{ return('1990-01-01 23:00.000') }}
     {% else %}
-      {{ return(max_existing_field) }}
+      {{ return(coalesce(max_existing_field, '1900-01-01')) }}
     {% endif %}
 {%- endmacro %}
 
