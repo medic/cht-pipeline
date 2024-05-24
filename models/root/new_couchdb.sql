@@ -26,4 +26,4 @@ SELECT
   doc ->> 'contact_id'::text AS contact_id,
   *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
-WHERE "@timestamp" >= latest_timestamp.max_timestamp
+WHERE "@timestamp" >= (SELECT max_timestamp FROM latest_timestamp)
