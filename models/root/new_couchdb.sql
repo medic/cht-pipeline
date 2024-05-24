@@ -4,6 +4,10 @@
   )
 }}
 
+with latest_timestamp as (
+  SELECT coalesce(max("@timestamp"), '1900-01-01') AS max_timestamp FROM {{ ref('contact') }}
+)
+
 SELECT
   doc ->> '_id'::text AS uuid,
   doc ->> 'type'::text AS type,
@@ -22,4 +26,4 @@ SELECT
   doc ->> 'contact_id'::text AS contact_id,
   *
 FROM v1.{{ env_var('POSTGRES_TABLE') }}
-WHERE "@timestamp" >= {{ max_existing_timestamp('"@timestamp"', 'stable_couchdb') }}
+WHERE "@timestamp" >= latest_timestamp
