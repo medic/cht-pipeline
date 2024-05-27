@@ -7,7 +7,7 @@ sources:
     tables:
       - name: "{{ env_var('POSTGRES_TABLE') }}"
 models:
-  - name: couchdb
+  - name: medic
     columns:
       - name: _id
         tests:
