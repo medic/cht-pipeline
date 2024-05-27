@@ -14,7 +14,8 @@ SELECT
   ch.chw_name,
   ch.chw_phone,
   ch.area,
-  ch.region
+  ch.region,
+  ch."@timestamp"
 FROM
   {{ ref("contactview_hierarchy") }} ch
 INNER JOIN
@@ -24,5 +25,5 @@ ON
 WHERE
   branch_name != 'HQ' AND branch_name != 'HQ OVC'
 {% if is_incremental() %}
-  AND reported_date >= (SELECT MAX(reported_date) FROM {{ this }} WHERE reported_date IS NOT NULL)
+  AND ch."@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
 {% endif %}

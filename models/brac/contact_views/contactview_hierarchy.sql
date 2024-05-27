@@ -14,7 +14,8 @@ SELECT
   chp.name AS chw_name,
   chp.phone AS chw_phone,
   branch.area,
-  branch.region
+  branch.region,
+  chp."@timestamp"
 FROM {{ ref("contactview_chp") }} AS chp
 INNER JOIN {{ ref("contactview_branch") }} AS branch ON chp.branch_uuid = branch.uuid
 INNER JOIN {{ ref("contact") }} AS cmeta ON cmeta.uuid = chp.supervisor_uuid
