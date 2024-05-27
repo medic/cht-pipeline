@@ -29,4 +29,5 @@ GROUP BY
   chp.name,
   chp.phone,
   branch.area,
-  branch.region
+  branch.region,
+  chp."@timestamp"
