@@ -2,12 +2,12 @@
   config(
     materialized = 'incremental',
     indexes=[
-      {{{ var('columns') }}: ['"@timestamp"'], 'type': 'btree'},
-      {{{ var('columns') }}: ['reported'], 'type': 'brin'},
-      {{{ var('columns') }}: ['contact_uuid']},
-      {{{ var('columns') }}: ['parent_uuid']},
-      {{{ var('columns') }}: ['type']},
-      {{{ var('columns') }}: ['uuid']},
+      {'columns': ['"@timestamp"'], 'type': 'btree'},
+      {'columns': ['reported'], 'type': 'brin'},
+      {'columns': ['contact_uuid']},
+      {'columns': ['parent_uuid']},
+      {'columns': ['type']},
+      {'columns': ['uuid']},
     ]
   )
 }}

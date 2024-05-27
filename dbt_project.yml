@@ -50,7 +50,3 @@ models:
       materialized: incremental
     contact_views:
       materialized: view
-
-vars:
-  columns: 'columns'
-  

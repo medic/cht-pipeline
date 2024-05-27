@@ -3,12 +3,12 @@
     materialized = 'incremental',
     unique_key='uuid',
     indexes=[
-      {{{ var('columns') }}: ['"@timestamp"'], 'type': 'btree'},
-      {{{ var('columns') }}: ['reported_date'], 'type': 'brin'},
-      {{{ var('columns') }}: ['type']},
-      {{{ var('columns') }}: ['contact_uuid']},
-      {{{ var('columns') }}: ['parent_uuid']},
-      {{{ var('columns') }}: ['uuid']},
+      {'columns': ['"@timestamp"'], 'type': 'btree'},
+      {'columns': ['reported_date'], 'type': 'brin'},
+      {'columns': ['type']},
+      {'columns': ['contact_uuid']},
+      {'columns': ['parent_uuid']},
+      {'columns': ['uuid']},
     ]
   )
 }}
