@@ -5,7 +5,7 @@
 }}
 
 SELECT
-    chw."@timestamp",
+    chw."@timestamp" AS "@timestamp",
     chw.name,
     chw.uuid,
     user_settings.username,

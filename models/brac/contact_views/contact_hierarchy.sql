@@ -15,7 +15,7 @@ SELECT
   ch.chw_phone,
   ch.area,
   ch.region,
-  ch."@timestamp"
+  ch."@timestamp" AS "@timestamp"
 FROM
   {{ ref("contactview_hierarchy") }} ch
 INNER JOIN
