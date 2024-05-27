@@ -10,7 +10,8 @@ WITH filtered_person AS (
     phone,
     phone2,
     date_of_birth,
-    parent_uuid
+    parent_uuid,
+    "@timestamp"
   FROM {{ ref("contact") }}
   WHERE type = 'person'
 )
@@ -20,7 +21,8 @@ SELECT
   person.phone,
   person.phone2,
   person.date_of_birth,
-  parent.type AS parent_type
+  parent.type AS parent_type,
+  person."@timestamp"
 FROM filtered_person AS person
 LEFT JOIN {{ ref("contact") }} AS parent
 ON person.parent_uuid = parent.uuid

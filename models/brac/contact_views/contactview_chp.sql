@@ -1,10 +1,11 @@
 {{
   config(
-    materialized = 'view',
+    materialized = 'incremental',
   )
 }}
 
 SELECT
+    chw."@timestamp",
     chw.name,
     chw.uuid,
     user_settings.username,
@@ -59,4 +60,7 @@ SELECT
       WHERE type = 'user-settings' AND contact_id IS NOT NULL
       GROUP BY contact_id
     ) AS user_settings ON user_settings.contact_id = chw.uuid
+  {% if is_incremental() %}
+    WHERE "@timestamp" >= (select coalesce(max("@timestamp"), '1900-01-01') from {{ this }})
+  {% endif %}
     
