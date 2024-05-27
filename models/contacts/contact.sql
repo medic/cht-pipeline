@@ -1,6 +1,7 @@
 {{
   config(
     materialized = 'incremental',
+    unique_key='uuid',
     indexes=[
       {'columns': ['"@timestamp"'], 'type': 'btree'},
       {'columns': ['reported'], 'type': 'brin'},
