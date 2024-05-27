@@ -17,7 +17,7 @@ SELECT
   branch.region
 FROM {{ ref("contactview_chp") }} AS chp
 INNER JOIN {{ ref("contactview_branch") }} AS branch ON chp.branch_uuid = branch.uuid
-INNER JOIN {{ ref("contactview") }} AS cmeta ON cmeta.uuid = chp.supervisor_uuid
+INNER JOIN {{ ref("contact") }} AS cmeta ON cmeta.uuid = chp.supervisor_uuid
 GROUP BY
   branch.uuid,
   branch.name,
