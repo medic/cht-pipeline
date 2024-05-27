@@ -5,16 +5,16 @@
 }}
 
 SELECT 
-  branch_uuid,
-  branch_name,
-  supervisor_uuid,
-  supervisor_name,
-  chw_area_uuid,
-  chw_uuid,
-  chw_name,
-  chw_phone,
-  area,
-  region
+  ch.branch_uuid,
+  ch.branch_name,
+  ch.supervisor_uuid,
+  ch.supervisor_name,
+  ch.chw_area_uuid,
+  ch.chw_uuid,
+  ch.chw_name,
+  ch.chw_phone,
+  ch.area,
+  ch.region
 FROM
   {{ ref("contactview_hierarchy") }} ch
 INNER JOIN
