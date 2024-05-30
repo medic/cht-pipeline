@@ -1,8 +1,15 @@
+{{
+  config(
+    materialized = 'view',
+  )
+}}
+
 SELECT
-    contactview_hospital.uuid,
-    contactview_hospital.name,
-    couchdb.doc->>'area' AS area,
-    couchdb.doc->>'region' AS region
+  ch.uuid,
+  ch.name,
+  cm.area,
+  cm.region
 FROM
-    {{ ref("contactview_hospital") }}
-    INNER JOIN {{ ref("couchdb") }} ON (couchdb.doc ->> '_id'::text = contactview_hospital.uuid AND couchdb.doc ->> 'type' = 'district_hospital')
+  {{ ref("contactview_hospital") }} AS ch
+INNER JOIN {{ ref("contact") }} AS cm
+ON (cm.uuid = ch.uuid AND cm.type = 'district_hospital')

@@ -1,0 +1,12 @@
+version: 1
+
+models:
+  - name: contact
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+      - name: auto_id
+        constraints:
+          - type: not_null
+          - type: primary_key

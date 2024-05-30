@@ -1,11 +1,11 @@
 version: 2
 
 sources:
-  - name: medic
+  - name: couchdb
     database: "{{ env_var('POSTGRES_DB') }}"
-    schema: "v1"
+    schema: "{{ env_var('POSTGRES_SCHEMA') }}"
     tables:
-      - name: medic
+      - name: "{{ env_var('POSTGRES_TABLE') }}"
 models:
   - name: medic
     columns:
@@ -15,8 +15,7 @@ models:
       - name: _rev
         tests:
           - not_null
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - _id
-            - _rev
+      - name: auto_id
+        constraints:
+          - type: not_null
+          - type: primary_key

@@ -1,13 +1,13 @@
 {{
-    config(
-        materialized = 'view',
-        indexes=[
-            {'columns': ['"@timestamp"'], 'type': 'brin'},
-        ]
-    )
+  config(
+    materialized = 'view'
+  )
 }}
 
-SELECT
-    doc->>'type' AS type,
-    *
-FROM v1.{{ env_var('POSTGRES_TABLE') }}
+WITH combined_tables AS (
+  SELECT * FROM {{ ref('new_couchdb') }}
+  UNION ALL
+  SELECT * FROM {{ ref('stable_couchdb') }}
+)
+
+SELECT * FROM combined_tables

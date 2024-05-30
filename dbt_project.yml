@@ -28,6 +28,19 @@ clean-targets: # directories to be removed by `dbt clean`
   - 'dbt_modules'
 
 models:
+  pipeline:
+    contact_views:
+      +required_tests: { 'unique.*|not_null': 1 }
+    households:
+      +required_tests: { 'unique.*|not_null': 1 }
+    reports_tables:
+      +required_tests: { 'unique.*|not_null': 1 }
+    root:
+      +required_tests: { 'unique.*|not_null': 1 }
+    types:
+      +required_tests: { 'unique.*|not_null': 1 }
+    user_tables:
+      +required_tests: { 'unique.*|not_null': 1 }
   type_partitions:
     root:
       materialized: view
