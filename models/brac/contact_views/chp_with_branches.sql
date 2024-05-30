@@ -27,7 +27,7 @@ WHERE
   chp.uuid = cm.contact_uuid AND
   branch.name != 'HQ' AND branch.name != 'HQ OVC'
   {% if is_incremental() %}
-    AND metadata.reported >= (SELECT MAX(reported) FROM {{ this }} WHERE reported IS NOT NULL)
+    AND metadata.reported >= {{ max_existing_timestamp('reported') }}
   {% endif %}
 ORDER BY
   CHP_Name
