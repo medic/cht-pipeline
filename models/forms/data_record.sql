@@ -23,7 +23,7 @@ SELECT
   form,
   doc,
   "@timestamp"
-FROM {{ ref('couchdb') }}
+FROM {{ ref('stable_couchdb') }}
 WHERE
   type = 'data_record'
 {% if is_incremental() %}

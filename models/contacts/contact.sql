@@ -32,7 +32,7 @@ SELECT
   doc,
   "@timestamp"
 
-FROM {{ ref('couchdb') }}
+FROM {{ ref('stable_couchdb') }}
 WHERE type = ANY
   (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
 {% if is_incremental() %}
