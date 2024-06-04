@@ -16,11 +16,11 @@
 
 SELECT
   uuid,
-  (doc #>> '{fields,patient_id}')::text AS patient_id,
-  (doc #>> '{contact,_id}')::text as contact_uuid,
-  (doc #>> '{contact,parent,_id}')::text as contact_parent_uuid,
-  to_timestamp((NULLIF(doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision) AS reported,
-  doc ->> 'form' as form,
+  patient_id,
+  contact_uuid,
+  contact_parent_uuid,
+  reported,
+  form,
   doc,
   "@timestamp"
 FROM {{ ref('couchdb') }}
