@@ -156,16 +156,21 @@
 {% endmacro %}
 
 {% macro lookup_max_value(max_values_list, lookup_value, lookup_key='type', return_key='max_val') %}
-{#
-    Use with the result of the max_existing_multirow macro.
-    Does a lookup into that list of dicts for a given lookup_key.
+    {#
+        Use with the result of the max_existing_multirow macro.
+        Does a lookup into that list of dicts for a given lookup_key.
 
-    Params:  max_values - the output of the max_existing_multirow macro, a list of dicts
-      must have a 'type' and 'max_val' key
-    Return: literal string of the max value if found or None
-    None will print blank and probably cause an error in the SQL of your model.
-#}
-    {{ return (max_values_list | selectattr(lookup_key, 'eq', lookup_value) | map(attribute=return_key) | list | first) }}
+        Params:  max_values - the output of the max_existing_multirow macro, a list of dicts
+          must have a 'type' and 'max_val' key
+        Return: literal string of the max value if found or a default timestamp
+        The default timestamp will print when the table is empty.
+    #}
+    {% set max_value = (max_values_list | selectattr(lookup_key, 'eq', lookup_value) | map(attribute=return_key) | list | first) %}
+    {% if type=='TIMESTAMP' and max_value == 'None' %}
+        {{ return('1970-01-01 00:00:00') }}
+    {% else %}
+        {{ return(max_value) }}
+    {% endif %}
 {% endmacro %}
 
 {% macro _cast_as_type(stringvalue, as_type) %}
