@@ -45,7 +45,7 @@
 
     {%- endcall %}
     {% set max_existing_field = load_result('get_max_existing').table.columns['max_existing'].values()[0] %}
-    {% if max_existing_field == 'NULL' %}
+    {% if max_existing_field == none %}
       {{ return('1990-01-01 23:00.000') }}
     {% else %}
       {{ return(max_existing_field) }}
@@ -169,7 +169,7 @@
 {% endmacro %}
 
 {% macro _cast_as_type(stringvalue, as_type) %}
-    {{ return("CAST('test' AS " ~ as_type ~ ")") }}
+    {{ return("CAST('" ~ stringvalue ~ "' AS " ~ as_type ~ ")") }}
 {% endmacro %}
 
 
