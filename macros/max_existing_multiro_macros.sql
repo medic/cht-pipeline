@@ -169,7 +169,11 @@
 {% endmacro %}
 
 {% macro _cast_as_type(stringvalue, as_type) %}
-    {{ return("CAST('" ~ stringvalue ~ "' AS " ~ as_type ~ ")") }}
+    {% if stringvalue == 'None' %}
+        {{ return("CAST('1970-01-01 00:00:00' AS " ~ as_type ~ ")") }}
+    {% else %}
+        {{ return("CAST('" ~ stringvalue ~ "' AS " ~ as_type ~ ")") }}
+    {% endif %}
 {% endmacro %}
 
 
