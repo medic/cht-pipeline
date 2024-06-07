@@ -17,7 +17,7 @@ SELECT
   doc ->> 'reported_date'::text AS reported,
   "@timestamp"
 
-FROM {{ ref('couchdb') }}
+FROM {{ ref('contact') }}
 WHERE type = 'person'
 {% if is_incremental() %}
   AND "@timestamp" >= {{ max_existing_timestamp('"@timestamp"') }}
