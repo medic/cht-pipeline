@@ -3,38 +3,29 @@
     materialized = 'incremental',
     unique_key='uuid',
     indexes=[
-      {'columns': ['"@timestamp"'], 'type': 'btree'},
-      {'columns': ['reported'], 'type': 'brin'},
-      {'columns': ['contact_uuid']},
+      {'columns': ['"uuid"'], 'type': 'hash'},
+      {'columns': ['"@timestamp"']},
+      {'columns': ['reported']},
       {'columns': ['parent_uuid']},
-      {'columns': ['type']},
-      {'columns': ['uuid']},
+      {'columns': ['contact_type']},
     ]
   )
 }}
 
 SELECT
-  doc ->> '_id'::text AS uuid,
-  doc ->> 'type'::text AS type,
-  doc ->> 'name'::text AS name,
-  doc ->> 'contact_type'::text AS contact_type,
-  doc ->> 'phone'::text AS phone,
-  doc ->> 'alternative_phone'::text AS phone2,
-  doc ->> 'date_of_birth'::text AS date_of_birth,
-  doc #>> '{contact,_id}'::text[] AS contact_uuid,
-  doc #>> '{parent,_id}'::text[] AS parent_uuid,
-  doc ->> 'is_active'::text AS active,
-  doc ->> 'notes'::text AS notes,
-  doc ->> 'reported_date'::text AS reported,
-  doc ->> 'area'::text AS area,
-  doc ->> 'region'::text AS region,
-  doc ->> 'contact_id'::text AS contact_id,
-  doc,
-  "@timestamp"
-
-FROM {{ ref('stable_couchdb') }}
-WHERE type = ANY
-  (ARRAY ['contact'::text, 'clinic'::text, 'district_hospital'::text, 'health_center'::text, 'person'::text])
+  _id as uuid,
+  "@timestamp",
+  to_timestamp((NULLIF(doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision) AS reported,
+  doc->'parent'->>'_id' AS parent_uuid,
+  doc->>'name' AS name,
+  COALESCE(doc->>'contact_type', doc->>'type') as contact_type,
+  doc->>'phone' AS phone,
+  doc->>'alternative_phone' AS phone2,
+  doc->>'is_active' AS active,
+  doc->>'notes' AS notes,
+  doc->>'contact_id' AS contact_id
+FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
+WHERE doc->>'type' IN ('contact', 'clinic', 'district_hospital', 'health_center', 'person')
 {% if is_incremental() %}
   AND "@timestamp" >= {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}

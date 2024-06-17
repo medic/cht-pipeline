@@ -6,7 +6,13 @@ models:
       - name: uuid
         tests:
           - not_null
-      - name: auto_id
-        constraints:
-          - type: not_null
-          - type: primary_key
+  - name: person
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+  - name: place
+    columns:
+      - name: uuid
+        tests:
+          - not_null

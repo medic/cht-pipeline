@@ -6,16 +6,3 @@ sources:
     schema: "{{ env_var('POSTGRES_SCHEMA') }}"
     tables:
       - name: "{{ env_var('POSTGRES_TABLE') }}"
-models:
-  - name: medic
-    columns:
-      - name: _id
-        tests:
-          - not_null
-      - name: _rev
-        tests:
-          - not_null
-      - name: auto_id
-        constraints:
-          - type: not_null
-          - type: primary_key
