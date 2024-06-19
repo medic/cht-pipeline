@@ -1,0 +1,18 @@
+version: 1
+
+models:
+  - name: contact
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+  - name: person
+    columns:
+      - name: uuid
+        tests:
+          - not_null
+  - name: place
+    columns:
+      - name: uuid
+        tests:
+          - not_null
