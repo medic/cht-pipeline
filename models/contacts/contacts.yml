@@ -5,7 +5,7 @@ models:
     columns:
       - name: uuid
         constraints:
-          -type: unique
+          -type: [unique]
         tests:
           - not_null
   - name: person
