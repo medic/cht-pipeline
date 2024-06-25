@@ -4,6 +4,8 @@ models:
   - name: contact
     columns:
       - name: uuid
+        constraints:
+          -type: unique
         tests:
           - not_null
   - name: person
