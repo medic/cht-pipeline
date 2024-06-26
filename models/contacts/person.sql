@@ -19,5 +19,5 @@ FROM {{ ref("contact") }} contact
 INNER JOIN {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb ON couchdb._id = uuid
 WHERE contact.contact_type = 'person'
 {% if is_incremental() %}
-  AND contact."@timestamp" >= {{ max_existing_timestamp('"_timestamp"') }}
+  AND contact."@timestamp" >= {{ max_existing_timestamp('_timestamp') }}
 {% endif %}
