@@ -2,7 +2,7 @@
   config(
     materialized = 'incremental',
     unique_key='uuid',
-    on_schema_change='fail'
+    on_schema_change='append_new_columns'
   )
 }}
 
