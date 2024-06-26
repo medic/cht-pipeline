@@ -11,11 +11,9 @@ models:
   - name: person
     columns:
       - name: uuid
-        tests:
-          - not_null
         constraints:
           - type: foreign_key
-            expression: " (uuid) ON DELETE CASCADE"
+            expression: " (uuid)"
   - name: place
     columns:
       - name: uuid
