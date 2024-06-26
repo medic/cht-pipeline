@@ -15,6 +15,9 @@ models:
     columns:
       - name: uuid
         data_type: string
+        constraints:
+          - type: foreign_key
+            expression: "contact (uuid) ON DELETE CASCADE"
         tests:
           - not_null
       - name: _timestamp
