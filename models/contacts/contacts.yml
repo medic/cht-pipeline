@@ -15,7 +15,7 @@ models:
           - not_null
         constraints:
           - type: foreign_key
-            expression: contact (uuid)
+            expression: " (uuid) ON DELETE CASCADE"
   - name: place
     columns:
       - name: uuid
