@@ -12,7 +12,7 @@ models:
           - type: unique
         tests:
           - not_null
-      - name: savedTimestamp
+      - name: "@timestamp"
         data_type: timestamp
       - name: reported
         data_type: timestamp with time zone

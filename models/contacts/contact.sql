@@ -5,7 +5,7 @@
     on_schema_change='append_new_columns',
     indexes=[
       {'columns': ['"uuid"'], 'type': 'hash'},
-      {'columns': ['savedTimestamp']},
+      {'columns': ['"@timestamp"']},
       {'columns': ['reported']},
       {'columns': ['parent_uuid']},
       {'columns': ['contact_type']},
@@ -15,7 +15,7 @@
 
 SELECT
   _id as uuid,
-  "@timestamp" as savedTimestamp,
+  "@timestamp",
   to_timestamp((NULLIF(doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision) AS reported,
   doc->'parent'->>'_id' AS parent_uuid,
   doc->>'name' AS name,
