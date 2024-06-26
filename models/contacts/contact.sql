@@ -28,5 +28,5 @@ SELECT
 FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
 WHERE doc->>'type' IN ('contact', 'clinic', 'district_hospital', 'health_center', 'person')
 {% if is_incremental() %}
-  AND "@timestamp" >= {{ max_existing_timestamp('@timestamp') }}
+  AND "@timestamp" >= {{ max_existing_timestamp('"@timestamp"') }}
 {% endif %}
