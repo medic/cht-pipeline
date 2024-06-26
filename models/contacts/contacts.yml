@@ -17,7 +17,7 @@ models:
         data_type: string
         tests:
           - not_null
-      - name: '@timestamp'
+      - name: _timestamp
         data_type: string
       - name: date_of_birth
         data_type: string

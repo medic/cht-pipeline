@@ -8,7 +8,7 @@
 
 SELECT
   contact.uuid,
-  contact."@timestamp",
+  contact."@timestamp" as _timestamp,
   couchdb.doc->>'date_of_birth' as date_of_birth,
   couchdb.doc->>'sex' as sex
 FROM {{ ref("contact") }} contact
