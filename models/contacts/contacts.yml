@@ -17,6 +17,12 @@ models:
         data_type: string
         tests:
           - not_null
+      - name: '@timestamp'
+        data_type: string
+      - name: date_of_birth
+        data_type: string
+      - name: sex
+        data_type: string
   - name: place
     columns:
       - name: uuid
