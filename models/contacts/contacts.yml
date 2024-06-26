@@ -16,9 +16,6 @@ models:
       - name: uuid
         tests:
           - not_null
-        constraints:
-          - type: foreign_key
-            expression: contact (uuid)
   - name: place
     columns:
       - name: uuid
