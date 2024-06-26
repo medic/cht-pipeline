@@ -9,9 +9,6 @@ models:
         tests:
           - not_null
   - name: person
-    config:
-      contract:
-        enforced: true
     columns:
       - name: uuid
         tests:
