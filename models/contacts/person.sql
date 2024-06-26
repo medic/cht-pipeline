@@ -5,8 +5,7 @@
     indexes=[
       {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['"@timestamp"']},
-    ],
-    on_schema_change: 'fail'
+    ]
   )
 }}
 
