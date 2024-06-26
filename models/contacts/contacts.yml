@@ -2,9 +2,6 @@ version: 1
 
 models:
   - name: contact
-    config:
-      contract:
-        enforced: true
     columns:
       - name: uuid
         constraints:
@@ -12,10 +9,16 @@ models:
         tests:
           - not_null
   - name: person
+    config:
+      contract:
+        enforced: true
     columns:
       - name: uuid
         tests:
           - not_null
+        constraints:
+          - type: foreign_key
+            expression: "contact (uuid) ON DELETE CASCADE"
   - name: place
     columns:
       - name: uuid
