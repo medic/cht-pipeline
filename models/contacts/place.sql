@@ -3,8 +3,8 @@
     materialized = 'incremental',
     unique_key='uuid',
     indexes=[
-      {'columns': ['"uuid"'], 'type': 'hash'},
-      {'columns': ['"@timestamp"']},
+      {'columns': ['uuid'], 'type': 'hash'},
+      {'columns': ['savedTimestamp']},
       {'columns': ['place_id']},
     ]
   )
