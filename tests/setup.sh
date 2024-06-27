@@ -29,7 +29,7 @@ psql -h localhost -p 5432 -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbnam
     CREATE SCHEMA IF NOT EXISTS $POSTGRES_SCHEMA AUTHORIZATION $DBT_POSTGRES_USER;
     CREATE TABLE IF NOT EXISTS $POSTGRES_SCHEMA.$POSTGRES_TABLE(
       "@version" text NULL,
-      "@timestamp" timestamp NULL,
+      savedTimestamp timestamp NULL,
       "_id" text NULL,
       "_rev" text NULL,
       doc jsonb NULL,
