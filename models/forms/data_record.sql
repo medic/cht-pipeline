@@ -39,5 +39,5 @@ FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
 WHERE
   doc->>'type' = 'data_record'
 {% if is_incremental() %}
-  AND "savedTimestamp" >= {{ max_existing_timestamp('savedTimestamp') }}
+  AND savedTimestamp >= {{ max_existing_timestamp('savedTimestamp') }}
 {% endif %}
