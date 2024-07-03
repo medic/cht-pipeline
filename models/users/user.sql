@@ -4,14 +4,14 @@
     unique_key='user_id',
     indexes=[
       {'columns': ['user_id'], 'type': 'hash'},
-      {'columns': ['savedTimestamp']},
+      {'columns': ['saved_timestamp']},
     ]
   )
 }}
 
 SELECT
   _id as user_id,
-  savedTimestamp,
+  saved_timestamp,
   COALESCE(
     doc->>'contact_id',
     doc->>'facility_id'
@@ -21,5 +21,5 @@ SELECT
 FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
 WHERE doc->>'type' = 'user-settings'
 {% if is_incremental() %}
-  AND savedTimestamp >= {{ max_existing_timestamp('savedTimestamp') }}
+  AND saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
