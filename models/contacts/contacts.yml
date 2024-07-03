@@ -2,17 +2,95 @@ version: 1
 
 models:
   - name: contact
+    config:
+      contract:
+        enforced: true
     columns:
       - name: uuid
+        data_type: string
+        constraints:
+          - type: unique
         tests:
           - not_null
+      - name: saved_timestamp
+        data_type: timestamp
+      - name: reported
+        data_type: timestamp with time zone
+      - name: parent_uuid
+        data_type: string
+      - name: name
+        data_type: string
+      - name: contact_type
+        data_type: string
+      - name: phone
+        data_type: string
+      - name: phone2
+        data_type: string
+      - name: active
+        data_type: string
+      - name: notes
+        data_type: string
+      - name: contact_id
+        data_type: string
+      - name: contact_id
+        data_type: string
+
   - name: person
+    config:
+      contract:
+        enforced: true
     columns:
       - name: uuid
+        data_type: string
+        constraints:
+          - type: foreign_key
+            expression: "{{ env_var('DBT_POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
         tests:
           - not_null
+          - relationships:
+              to: ref('contact')
+              field: uuid
+      - name: saved_timestamp
+        data_type: timestamp
+      - name: date_of_birth
+        data_type: string
+      - name: sex
+        data_type: string
   - name: place
+    config:
+      contract:
+        enforced: true
     columns:
       - name: uuid
+        data_type: string
+        constraints:
+          - type: foreign_key
+            expression: "{{ env_var('DBT_POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
         tests:
           - not_null
+          - relationships:
+              to: ref('contact')
+              field: uuid
+      - name: saved_timestamp
+        data_type: timestamp
+      - name: place_id
+        data_type: string
+  - name: patient
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: uuid
+        data_type: string
+        constraints:
+          - type: foreign_key
+            expression: "{{ env_var('DBT_POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('contact')
+              field: uuid
+      - name: saved_timestamp
+        data_type: timestamp
+      - name: patient_id
+        data_type: string
