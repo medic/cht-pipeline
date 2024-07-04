@@ -2,6 +2,7 @@
   config(
     materialized = 'incremental',
     unique_key='uuid',
+    on_schema_change='append_new_columns',
     indexes=[
       {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['saved_timestamp']},
