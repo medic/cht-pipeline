@@ -17,7 +17,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
         if: steps.get-docker-hub-username.outputs.dockerhub_username
-        working-directory: ./tests
       - name: Run dbt and tests
         run: ./run_dbt_tests.sh
         working-directory: ./tests
