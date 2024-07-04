@@ -44,7 +44,7 @@ models:
         data_type: string
         constraints:
           - type: foreign_key
-            expression: "{{ env_var('DBT_POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
+            expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
         tests:
           - not_null
           - relationships:
@@ -65,7 +65,7 @@ models:
         data_type: string
         constraints:
           - type: foreign_key
-            expression: "{{ env_var('DBT_POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
+            expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
         tests:
           - not_null
           - relationships:
@@ -84,7 +84,7 @@ models:
         data_type: string
         constraints:
           - type: foreign_key
-            expression: "{{ env_var('DBT_POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
+            expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
         tests:
           - not_null
           - relationships:

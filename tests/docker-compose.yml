@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    volumes:
+      # - ./setup.sh:/docker-entrypoint-initdb.d/init-dbt-resources.sh:z
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_USER=pipelinetest
+      - POSTGRES_PASSWORD=pipelinetest
+      - POSTGRES_DB=pipelinetest
+      - POSTGRES_SCHEMA=v1
+      - POSTGRES_TABLE=couchdb
+  dbt:
+    build:
+      context: ../
+      dockerfile: ./tests/dbt/Dockerfile
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=pipelinetest
+      - POSTGRES_PASSWORD=pipelinetest
+      - POSTGRES_DB=pipelinetest
+      - POSTGRES_TABLE=couchdb
+      - POSTGRES_SCHEMA=v1
