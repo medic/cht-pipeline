@@ -1,30 +1,27 @@
 version: 1
 
 models:
-  - name: data_record
+  - name: user
     config:
       contract:
         enforced: true
     columns:
-      - name: uuid
+      - name: user_id
         data_type: string
         constraints:
           - type: unique
+          - type: foreign_key
+            expression: "{{ env_var('DBT_POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
         tests:
           - not_null
+          - relationships:
+              to: ref('contact')
+              field: uuid
       - name: saved_timestamp
         data_type: timestamp
-      - name: reported
-        data_type: timestamp with time zone
-      - name: form
-        data_type: string
-      - name: from_phone
-        data_type: string
-      - name: patient_id
-        data_type: string
-      - name: place_id
-        data_type: string
       - name: contact_uuid
         data_type: string
-      - name: fields
-        data_type: JSONB
+      - name: language
+        data_type: string
+      - name: roles
+        data_type: string
