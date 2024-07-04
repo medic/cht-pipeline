@@ -1,0 +1,27 @@
+version: 1
+
+models:
+  - name: user
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: user_id
+        data_type: string
+        constraints:
+          - type: unique
+          - type: foreign_key
+            expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('contact')
+              field: uuid
+      - name: saved_timestamp
+        data_type: timestamp
+      - name: contact_uuid
+        data_type: string
+      - name: language
+        data_type: string
+      - name: roles
+        data_type: string

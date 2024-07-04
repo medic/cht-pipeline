@@ -8,9 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
       - name: Get Docker Hub username
         id: get-docker-hub-username
         run: echo '::set-output name=dockerhub_username::${{ secrets.DOCKERHUB_USERNAME }}'
@@ -20,24 +17,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
         if: steps.get-docker-hub-username.outputs.dockerhub_username
-      - name: Install PostgreSQL client
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes postgresql-client
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.8"
-      - name: Install dependencies
-        run: |
-          pip install dbt-postgres
-          dbt deps
-      - name: Setup test
-        run: ./setup.sh
-        working-directory: ./tests
       - name: Run dbt and tests
         run: ./run_dbt_tests.sh
-        working-directory: ./tests
-      - name: Cleanup
-        run: ./tear_down.sh
         working-directory: ./tests

@@ -1,20 +1,20 @@
-#!/bin/bash
-set -e
-export POSTGRES_USER=root
-export POSTGRES_PASSWORD=supercoolpassword
-export POSTGRES_DB=data
-export POSTGRES_SCHEMA=v1
-export POSTGRES_TABLE=medic
-export DBT_POSTGRES_USER=dbt_user
-export DBT_POSTGRES_PASSWORD=supercoolpassword
-export DBT_POSTGRES_SCHEMA=dbt
-export DBT_POSTGRES_HOST=postgres
+docker-compose up -d postgres
 
-export DBT_PROFILES_DIR=$PWD
-echo Install dbt dependencies ...
-dbt deps
-echo Running dbt ...
-dbt run
-echo Running tests ...
-dbt test
+# Give PostgreSQL some time to start up
+echo "Waiting for PostgreSQL to be ready..."
+sleep 10
 
+docker compose up --build --abort-on-container-exit dbt
+exit_status=$?
+
+# Stop and remove all containers
+docker compose down
+
+# Determine if the tests passed or failed based on the exit status
+if [ $exit_status -eq 0 ]; then
+  echo "DBT tests passed"
+  exit 0
+else
+  echo "DBT tests failed"
+  exit 1
+fi

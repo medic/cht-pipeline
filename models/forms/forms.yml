@@ -1,0 +1,30 @@
+version: 1
+
+models:
+  - name: data_record
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: uuid
+        data_type: string
+        constraints:
+          - type: unique
+        tests:
+          - not_null
+      - name: saved_timestamp
+        data_type: timestamp
+      - name: reported
+        data_type: timestamp with time zone
+      - name: form
+        data_type: string
+      - name: from_phone
+        data_type: string
+      - name: patient_id
+        data_type: string
+      - name: place_id
+        data_type: string
+      - name: contact_uuid
+        data_type: string
+      - name: fields
+        data_type: JSONB

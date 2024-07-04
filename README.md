@@ -9,33 +9,13 @@ Follow the instructions in [the Local CHT Sync Setup documentation](https://docs
 
 ### Prerequisites
 - `Docker`
-- (Optional) `PostgreSQL Client`
 
 ### Run the tests
 
 1. Navigate to `tests` folder.
-2. Run the `setup` script:
-
-```sh
-# Set environment variables, create postgres database, schema and user:
-./setup.sh
-```
-
-3. Run the `dbt` tests:
+2. Run the test script
 
 ```sh
 # set environment variables, install dbt dependencies, seed data, run dbt, run test
 ./run_dbt_tests.sh
-```
-
-4. Check for test coverage:
-
-```sh
-# Run dbt run-operation required_tests command
-./check_tests_coverage.sh
-```
-
-5. Clean up:
-```sh
-./tear_down.sh
 ```
