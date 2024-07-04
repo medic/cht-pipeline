@@ -1,7 +1,7 @@
 SELECT
-FROM v1.couchdb couchdb
-LEFT JOIN v1.person person ON couchdb._id = person.uuid
-LEFT JOIN v1.contact contact ON contact.uuid = person.uuid
+FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb
+LEFT JOIN {{ ref('person') }} person ON couchdb._id = person.uuid
+LEFT JOIN {{ ref('contact') }} contact ON contact.uuid = person.uuid
 WHERE
   -- person conditions
   (

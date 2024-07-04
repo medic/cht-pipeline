@@ -1,6 +1,6 @@
 SELECT
-FROM v1.couchdb couchdb
-LEFT JOIN v1.contact contact ON couchdb._id = contact.uuid
+FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb
+LEFT JOIN {{ ref('contact') }} contact ON couchdb._id = contact.uuid
 WHERE
   couchdb.doc->>'type' IN ('contact', 'clinic', 'district_hospital', 'health_center', 'person')
   -- TEST CONDITIONS

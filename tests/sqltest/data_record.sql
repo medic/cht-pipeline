@@ -1,6 +1,6 @@
 SELECT
-FROM v1.couchdb couchdb
-LEFT JOIN v1.data_record data_record ON couchdb._id = data_record.uuid
+FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb
+LEFT JOIN {{ ref('data_record') }} data_record ON couchdb._id = data_record.uuid
 WHERE
   couchdb.doc->>'type' = 'data_record'
   -- TEST CONDITIONS
