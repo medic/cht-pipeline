@@ -6,3 +6,19 @@ sources:
     schema: "{{ env_var('POSTGRES_SCHEMA') }}"
     tables:
       - name: "{{ env_var('POSTGRES_TABLE') }}"
+models:
+  - name: document_metadata
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: uuid
+        data_type: string
+        constraints:
+          - type: unique
+        tests:
+          - not_null
+      - name: saved_timestamp
+        data_type: timestamp
+      - name: doc_type
+        data_type: string
