@@ -24,7 +24,8 @@ SELECT
   doc->>'alternative_phone' AS phone2,
   doc->>'is_active' AS active,
   doc->>'notes' AS notes,
-  doc->>'contact_id' AS contact_id
+  doc->>'contact_id' AS contact_id,
+  NULLIF(doc ->> 'muted'::text, ''::text) AS muted
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
   {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table
