@@ -11,6 +11,8 @@
       {'columns': ['form']},
       {'columns': ['patient_id']},
       {'columns': ['contact_uuid']},
+      {'columns': ['parent_uuid']},
+      {'columns': ['grandparent_uuid']},
     ]
   )
 }}
@@ -34,8 +36,9 @@ SELECT
   ) AS place_id,
 
   doc->'contact'->>'_id' as contact_uuid,
+  doc->'contact'->'parent'->>'_id' as parent_uuid,
+  doc->'contact'->'parent'->'parent'->>'_id' as grandparent_uuid
 
-  doc->'fields' as fields
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
   {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table
