@@ -34,6 +34,8 @@ models:
         data_type: string
       - name: contact_id
         data_type: string
+      - name: muted
+        data_type: string
 
   - name: person
     config:
