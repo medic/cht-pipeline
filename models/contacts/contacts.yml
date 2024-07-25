@@ -55,7 +55,7 @@ models:
       - name: saved_timestamp
         data_type: timestamp
       - name: date_of_birth
-        data_type: string
+        data_type: date
       - name: sex
         data_type: string
   - name: place
