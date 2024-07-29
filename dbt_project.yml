@@ -4,3 +4,6 @@ config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
 profile: 'default'
+
+on-run-end: 
+  - "{{ log_dbt_results(results) }}"
