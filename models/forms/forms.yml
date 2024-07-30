@@ -26,5 +26,7 @@ models:
         data_type: string
       - name: contact_uuid
         data_type: string
-      - name: fields
-        data_type: JSONB
+      - name: parent_uuid
+        data_type: string
+      - name: grandparent_uuid
+        data_type: string

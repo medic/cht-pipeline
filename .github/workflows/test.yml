@@ -19,4 +19,4 @@ jobs:
         if: steps.get-docker-hub-username.outputs.dockerhub_username
       - name: Run dbt and tests
         run: ./run_dbt_tests.sh
-        working-directory: ./tests
+        working-directory: ./test

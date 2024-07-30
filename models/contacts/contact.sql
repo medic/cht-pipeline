@@ -15,7 +15,7 @@
 
 SELECT
   _id as uuid,
-  saved_timestamp,
+  document_metadata.saved_timestamp,
   to_timestamp((NULLIF(doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision) AS reported,
   doc->'parent'->>'_id' AS parent_uuid,
   doc->>'name' AS name,
@@ -24,9 +24,14 @@ SELECT
   doc->>'alternative_phone' AS phone2,
   doc->>'is_active' AS active,
   doc->>'notes' AS notes,
-  doc->>'contact_id' AS contact_id
-FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
-WHERE doc->>'type' IN ('contact', 'clinic', 'district_hospital', 'health_center', 'person')
+  doc->>'contact_id' AS contact_id,
+  NULLIF(doc->> 'muted', '') AS muted
+FROM {{ ref('document_metadata') }} document_metadata
+INNER JOIN
+  {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table
+  ON source_table._id = document_metadata.uuid
+WHERE
+  document_metadata.doc_type IN ('contact', 'clinic', 'district_hospital', 'health_center', 'person')
 {% if is_incremental() %}
-  AND saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+  AND document_metadata.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
