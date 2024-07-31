@@ -14,11 +14,11 @@ RUN adduser dbt
 USER dbt
 
 WORKDIR /dbt/
-COPY tests/profiles.yml profiles.yml 
+COPY test/profiles.yml profiles.yml 
 COPY dbt_project.yml dbt_project.yml
 COPY models models
 COPY macros macros
-COPY tests/sqltest tests
-COPY tests/run_dbt_tests_docker.sh run_dbt_tests_docker.sh
+COPY test/sqltest tests
+COPY test/run_dbt_tests_docker.sh run_dbt_tests_docker.sh
 
 CMD ["bash", "./run_dbt_tests_docker.sh"]

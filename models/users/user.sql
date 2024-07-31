@@ -12,15 +12,19 @@
 
 SELECT
   _id as user_id,
-  saved_timestamp,
+  document_metadata.saved_timestamp,
   COALESCE(
     doc->>'contact_id',
     doc->>'facility_id'
   ) as contact_uuid,
   doc->>'language' as language,
   doc->>'roles' as roles
-FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }}
-WHERE doc->>'type' = 'user-settings'
+FROM {{ ref('document_metadata') }} document_metadata
+INNER JOIN
+  {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table
+  ON source_table._id = document_metadata.uuid
+WHERE
+  document_metadata.doc_type = 'user-settings'
 {% if is_incremental() %}
-  AND saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+  AND document_metadata.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
