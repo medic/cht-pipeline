@@ -30,3 +30,5 @@ models:
         data_type: string
       - name: grandparent_uuid
         data_type: string
+      - name: deleted
+        data_type: boolean
