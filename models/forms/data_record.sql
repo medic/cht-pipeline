@@ -44,6 +44,7 @@ INNER JOIN
   ON source_table._id = document_metadata.uuid
 WHERE
   document_metadata.doc_type = 'data_record'
+  AND document_metadata._deleted = false
 {% if is_incremental() %}
   AND document_metadata.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
