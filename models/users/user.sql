@@ -11,7 +11,7 @@
 }}
 
 SELECT
-  _id as user_id,
+  document_metadata.uuid as user_id,
   document_metadata.saved_timestamp,
   COALESCE(
     doc->>'contact_id',
@@ -25,6 +25,7 @@ INNER JOIN
   ON source_table._id = document_metadata.uuid
 WHERE
   document_metadata.doc_type = 'user-settings'
+  AND document_metadata._deleted = false
 {% if is_incremental() %}
   AND document_metadata.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}

@@ -14,7 +14,7 @@
 }}
 
 SELECT
-  _id as uuid,
+  document_metadata.uuid as uuid,
   document_metadata.saved_timestamp,
   to_timestamp((NULLIF(doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision) AS reported,
   doc->'parent'->>'_id' AS parent_uuid,
@@ -32,6 +32,7 @@ INNER JOIN
   ON source_table._id = document_metadata.uuid
 WHERE
   document_metadata.doc_type IN ('contact', 'clinic', 'district_hospital', 'health_center', 'person')
+  AND document_metadata._deleted = false
 {% if is_incremental() %}
   AND document_metadata.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}

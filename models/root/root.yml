@@ -20,5 +20,7 @@ models:
           - not_null
       - name: saved_timestamp
         data_type: timestamp
+      - name: _deleted
+        data_type: boolean
       - name: doc_type
         data_type: string
