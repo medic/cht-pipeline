@@ -3,7 +3,6 @@
     materialized = 'incremental',
     unique_key='uuid',
     on_schema_change='append_new_columns',
-    post_hook='delete from {{this}} where deleted=true',
     indexes=[
       {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['saved_timestamp']},
@@ -26,8 +25,7 @@ SELECT
   doc->>'is_active' AS active,
   doc->>'notes' AS notes,
   doc->>'contact_id' AS contact_id,
-  NULLIF(doc->> 'muted', '') AS muted,
-  source_table._deleted as deleted
+  NULLIF(doc->> 'muted', '') AS muted
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
   {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table

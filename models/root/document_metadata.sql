@@ -3,16 +3,19 @@
     materialized = 'incremental',
     unique_key='uuid',
     on_schema_change='append_new_columns',
+    post_hook='delete from {{this}} where _deleted=true',
     indexes=[
       {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['saved_timestamp']},
       {'columns': ['doc_type']},
+      {'columns': ['_deleted']},
     ]
   )
 }}
 
 SELECT
   _id as uuid,
+  _deleted,
   saved_timestamp,
   doc->>'type' as doc_type
 FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table

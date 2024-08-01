@@ -3,7 +3,6 @@
     materialized = 'incremental',
     unique_key='uuid',
     on_schema_change='append_new_columns',
-    post_hook='delete from {{this}} where deleted=true',
     indexes=[
       {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['saved_timestamp']},
@@ -38,9 +37,7 @@ SELECT
 
   doc->'contact'->>'_id' as contact_uuid,
   doc->'contact'->'parent'->>'_id' as parent_uuid,
-  doc->'contact'->'parent'->'parent'->>'_id' as grandparent_uuid,
-  source_table._deleted as deleted
-
+  doc->'contact'->'parent'->'parent'->>'_id' as grandparent_uuid
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
   {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table
