@@ -13,8 +13,9 @@
 SELECT
   contact.uuid,
   contact.saved_timestamp,
-  (couchdb.doc->>'date_of_birth')::date as date_of_birth,
-  couchdb.doc->>'sex' as sex
+  (couchdb.doc->>'date_of_birth')::date AS date_of_birth,
+  couchdb.doc->>'sex' AS sex,
+  contact.deleted AS deleted
 FROM {{ ref("contact") }} contact
 INNER JOIN {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb ON couchdb._id = uuid
 WHERE contact.contact_type = 'person'

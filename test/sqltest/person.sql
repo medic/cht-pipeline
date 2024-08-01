@@ -10,8 +10,6 @@ WHERE
   )
   -- TEST CONDITIONS
   AND (
-    -- in couchdb, not in person
-    person.uuid IS NULL OR
-    -- a person, but not a contact?
-    contact.uuid IS NULL
+    -- deleted is true
+    (person.deleted = true)
   )

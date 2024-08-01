@@ -9,6 +9,6 @@ WHERE
   couchdb.doc->>'patient_id' IS NOT NULL
   -- TEST CONDITIONS
   AND (
-    -- in couchdb, not in patients
-    patient.uuid IS NULL
+    -- deleted is true
+    (patient.deleted = true)
   )

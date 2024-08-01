@@ -60,6 +60,8 @@ models:
         data_type: date
       - name: sex
         data_type: string
+      - name: deleted
+        data_type: boolean
   - name: place
     config:
       contract:
@@ -79,6 +81,8 @@ models:
         data_type: timestamp
       - name: place_id
         data_type: string
+      - name: deleted
+        data_type: boolean
   - name: patient
     config:
       contract:
@@ -98,3 +102,5 @@ models:
         data_type: timestamp
       - name: patient_id
         data_type: string
+      - name: deleted
+        data_type: boolean

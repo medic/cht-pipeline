@@ -14,7 +14,8 @@
 SELECT
   uuid,
   contact.saved_timestamp,
-  couchdb.doc->>'place_id' as place_id
+  couchdb.doc->>'place_id' AS place_id,
+  contact.deleted AS deleted
 FROM {{ ref('contact') }} contact
 INNER JOIN {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb ON couchdb._id = uuid
 WHERE
