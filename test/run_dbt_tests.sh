@@ -1,4 +1,4 @@
-docker-compose up -d postgres
+docker compose up -d postgres
 
 # Give PostgreSQL some time to start up
 echo "Waiting for PostgreSQL to be ready..."
