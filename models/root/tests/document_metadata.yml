@@ -1,0 +1,16 @@
+unit_tests:
+  - name: test_document_metadata
+    description: |
+      This unit test validates the transformation logic in the `document_metadata` model
+      for the first test scenario, ensuring that the input data from `source_table` is correctly transformed.
+    model: document_metadata
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('test_source_table')
+        format: csv
+        fixture: contacts_test_source_table_input
+    expect:
+      format: csv
+      fixture: contacts_document_metadata_input

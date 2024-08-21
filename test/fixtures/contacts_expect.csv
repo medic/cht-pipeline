@@ -1,0 +1,3 @@
+uuid,name,phone,phone2,active,notes,contact_id,muted,parent_uuid,reported
+"1","John Doe","1234567890","0987654321",true,"Test note","C123",false,"parent1","2021-08-01 00:00:00"
+"2","Jane Doe","1234567890","0987654321",false,"Another note","C124",false,"parent2","2021-08-01 00:00:00"

@@ -12,7 +12,7 @@ models:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.document_metadata (uuid) ON DELETE CASCADE"
           - type: unique
-        tests:
+        data_tests:
           - not_null
           - relationships:
               to: ref('document_metadata')
@@ -51,7 +51,7 @@ models:
         constraints:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
-        tests:
+        data_tests:
           - not_null
           - relationships:
               to: ref('contact')
@@ -72,7 +72,7 @@ models:
         constraints:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
-        tests:
+        data_tests:
           - not_null
           - relationships:
               to: ref('contact')
@@ -91,7 +91,7 @@ models:
         constraints:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
-        tests:
+        data_tests:
           - not_null
           - relationships:
               to: ref('contact')

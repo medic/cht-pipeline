@@ -12,7 +12,7 @@ models:
           - type: unique
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.document_metadata (uuid) ON DELETE CASCADE"
-        tests:
+        data_tests:
           - not_null
           - relationships:
               to: ref('contact')
