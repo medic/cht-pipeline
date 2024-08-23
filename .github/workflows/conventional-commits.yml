@@ -17,8 +17,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
-      - name: Install dependencies
-        run: npm install
+          node-version: 20.x
+      - name: Install commitlint
+        run: |
+          npm install conventional-changelog-conventionalcommits
+          npm install commitlint@latest
       - name: Lint title
         run: npx --no -- commitlint <<< "${{ github.event.pull_request.title }}"
