@@ -16,6 +16,8 @@ models:
         data_type: string
         constraints:
           - type: unique
+        tests:
+          - not_null
       - name: saved_timestamp
         data_type: timestamp
       - name: _deleted
