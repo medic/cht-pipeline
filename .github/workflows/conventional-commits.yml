@@ -20,7 +20,7 @@ jobs:
           node-version: 20.x
       - name: Install commitlint
         run: |
-          npm install conventional-changelog-conventionalcommits
+          npm install @commitlint/config-conventional
           npm install commitlint@latest
       - name: Lint title
         run: npx --no -- commitlint <<< "${{ github.event.pull_request.title }}"
