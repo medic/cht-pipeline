@@ -8,7 +8,7 @@ unit_tests:
       macros:
         is_incremental: false
     given:
-      - input: ref('test_source_table')
+      - input: source('couchdb', "{{ env_var('POSTGRES_TABLE') }}")
         format: csv
         fixture: contacts_test_source_table_input
     expect:
