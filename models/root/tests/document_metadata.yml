@@ -1,8 +1,5 @@
 unit_tests:
   - name: test_document_metadata
-    description: |
-      This unit test validates the transformation logic in the `document_metadata` model
-      for the first test scenario, ensuring that the input data from `source_table` is correctly transformed.
     model: document_metadata
     overrides:
       macros:
@@ -10,7 +7,8 @@ unit_tests:
     given:
       - input: source('couchdb', "{{ env_var('POSTGRES_TABLE') }}")
         format: csv
-        fixture: contacts_initial_data
+        fixture: document_metadata_initial
     expect:
       format: csv
-      fixture: contacts_document_metadata_initial_expected
+      fixture: document_metadata_initial_expected
+

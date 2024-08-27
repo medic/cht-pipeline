@@ -19,8 +19,15 @@ models:
               field: uuid
       - name: saved_timestamp
         data_type: timestamp
+        data_tests:
+          - not_null
       - name: contact_uuid
         data_type: string
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('contact')
+              field: uuid
       - name: language
         data_type: string
       - name: roles
