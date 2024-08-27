@@ -10,7 +10,7 @@ unit_tests:
     given:
       - input: source('couchdb', "{{ env_var('POSTGRES_TABLE') }}")
         format: csv
-        fixture: contacts_test_source_table_input
+        fixture: contacts_initial_data
     expect:
       format: csv
-      fixture: contacts_document_metadata_input
+      fixture: contacts_document_metadata_initial_expected
