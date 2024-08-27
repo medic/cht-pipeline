@@ -40,7 +40,7 @@ SELECT
   doc->'contact'->'parent'->'parent'->>'_id' as grandparent_uuid
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
-  {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table
+  {{ source('couchdb', env_var('POSTGRES_TABLE')) }} source_table
   ON source_table._id = document_metadata.uuid
 WHERE
   document_metadata.doc_type = 'data_record'
