@@ -18,9 +18,20 @@ models:
           - type: unique
         tests:
           - not_null
+          - unique
       - name: saved_timestamp
         data_type: timestamp
+        tests:
+          - not_null
       - name: _deleted
         data_type: boolean
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
       - name: doc_type
         data_type: string
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['person', 'clinic']
