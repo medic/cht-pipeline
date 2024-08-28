@@ -1,0 +1,5 @@
+_id,saved_timestamp,_deleted,doc
+p1,2024-08-01 00:00:00,false,"{""patient_id"": ""P-001""}"
+p2,2024-08-01 00:00:00,false,"{""patient_id"": ""P-002""}"
+p3,2024-08-02 00:00:00,false,"{""patient_id"": ""P-003""}"
+p4,2024-08-02 00:00:00,false,"{""type"": ""person""}"
