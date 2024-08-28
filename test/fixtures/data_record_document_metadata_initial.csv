@@ -1,0 +1,5 @@
+uuid,saved_timestamp,doc_type,_deleted
+r1,2024-08-01 00:00:00,data_record,false
+r2,2024-08-01 00:00:00,data_record,false
+r3,2024-08-02 00:00:00,data_record,false
+r4,2024-08-02 00:00:00,data_record,false

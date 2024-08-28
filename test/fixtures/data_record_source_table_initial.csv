@@ -1,0 +1,5 @@
+_id,saved_timestamp,_deleted,doc
+r1,2024-08-01 00:00:00,false,"{""reported_date"": ""1690876800000"", ""form"": ""form1"", ""from"": ""1234567890"", ""patient_id"": ""p1"", ""place_id"": ""pl1"", ""contact"": {""_id"": ""c1"", ""parent"": {""_id"": ""p1"", ""parent"": {""_id"": ""p2""}}}}"
+r2,2024-08-01 00:00:00,false,"{""reported_date"": ""1690963200000"", ""form"": ""form2"", ""from"": ""0987654321"", ""patient_id"": ""p2"", ""place_id"": ""pl2"", ""contact"": {""_id"": ""c2"", ""parent"": {""_id"": ""p2"", ""parent"": {""_id"": ""p3""}}}}"
+r3,2024-08-02 00:00:00,false,"{""reported_date"": ""1691049600000"", ""form"": ""form3"", ""from"": ""1122334455"", ""patient_id"": ""p3"", ""place_id"": ""pl3"", ""contact"": {""_id"": ""c3"", ""parent"": {""_id"": ""p3"", ""parent"": {""_id"": ""p4""}}}}"
+r4,2024-08-02 00:00:00,false,"{""reported_date"": ""1691136000000"", ""form"": ""form4"", ""from"": ""5566778899"", ""patient_id"": ""p4"", ""place_id"": ""pl4"", ""contact"": {""_id"": ""c4"", ""parent"": {""_id"": ""p4"", ""parent"": {""_id"": ""p5""}}}}"
