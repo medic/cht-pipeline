@@ -1,0 +1,19 @@
+unit_tests:
+  - name: test_patient_model_transformation_and_data_integrity
+    description: |
+      This unit test validates the transformation logic in the `patient` model and ensures data integrity.
+      It uses fixture data for both `person` and `couchdb` to test the complete logic.
+    model: patient
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('person')
+        format: csv
+        fixture: patient_person_initial
+      - input: source('couchdb', "{{ env_var('POSTGRES_TABLE') }}")
+        format: csv
+        fixture: patient_source_table_initial
+    expect:
+      format: csv
+      fixture: patient_initial_expected

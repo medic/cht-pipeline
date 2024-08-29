@@ -1,0 +1,7 @@
+saved_timestamp,_id,_deleted,doc
+2024-08-01 00:00:00,1,false,"{""type"": ""user-settings"", ""contact_id"": ""1001"", ""language"": ""en"", ""roles"": ""admin""}"
+2024-08-01 00:00:00,2,false,"{""type"": ""user-settings"", ""facility_id"": ""1002"", ""language"": ""fr"", ""roles"": ""user""}"
+2024-08-02 00:00:00,3,false,"{""type"": ""user-settings"", ""contact_id"": ""1003"", ""language"": ""es"", ""roles"": ""guest""}"
+2024-08-02 00:00:00,4,false,"{""type"": ""user-settings"", ""contact_id"": ""1004"", ""language"": ""de"", ""roles"": ""user""}"
+2024-08-02 00:00:00,5,true,"{""type"": ""other-type"", ""contact_id"": ""1005"", ""language"": ""it"", ""roles"": ""admin""}"
+

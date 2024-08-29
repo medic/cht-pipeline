@@ -1,0 +1,7 @@
+user_id,saved_timestamp,contact_uuid,language,roles
+1,2024-08-01 00:00:00,1001,en,admin
+2,2024-08-01 00:00:00,1002,fr,user
+3,2024-08-02 00:00:00,1003,es,guest
+4,2024-08-02 00:00:00,1004,de,user
+
+

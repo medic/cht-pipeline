@@ -1,0 +1,5 @@
+uuid,saved_timestamp,reported,parent_uuid,name,contact_type,phone,phone2,active,notes,contact_id,muted
+c1,2024-08-01 00:00:00,2024-07-31 08:00:00+00,p1,John Doe,person,12345,54321,true,Note 1,C-123,false
+c2,2024-08-01 00:00:00,2024-07-31 08:00:00+00,p2,Jane Doe,clinic,67890,09876,true,Note 2,C-456,true
+c3,2024-08-02 00:00:00,2024-07-31 08:00:00+00,p3,Mike Smith,person,11223,33211,false,Note 3,C-789,false
+c4,2024-08-02 00:00:00,2024-07-31 08:00:00+00,p4,Sara Smith,district_hospital,44556,65544,true,Note 4,C-101,true

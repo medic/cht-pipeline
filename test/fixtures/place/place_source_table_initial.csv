@@ -1,0 +1,6 @@
+_id,saved_timestamp,_deleted,doc
+p1,2024-08-01 00:00:00,false,"{""place_id"": ""P-001"", ""type"": ""clinic""}"
+p2,2024-08-01 00:00:00,false,"{""place_id"": ""P-002"", ""type"": ""health_center""}"
+p3,2024-08-02 00:00:00,false,"{""place_id"": ""P-003"", ""type"": ""district_hospital""}"
+p4,2024-08-02 00:00:00,false,"{""type"": ""person""}"
+p5,2024-08-02 00:00:00,false,"{""place_id"": ""P-004"", ""type"": ""contact""}"

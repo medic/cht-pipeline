@@ -16,11 +16,20 @@ models:
         data_type: string
         constraints:
           - type: unique
-        tests:
+        data-tests:
           - not_null
+          - unique
       - name: saved_timestamp
         data_type: timestamp
+        data-tests:
+          - not_null
       - name: _deleted
         data_type: boolean
+        data-tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
       - name: doc_type
         data_type: string
+        data-tests:
+          - not_null

@@ -1,5 +1,5 @@
 SELECT
-FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb
+FROM {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb
 LEFT JOIN {{ ref('user') }} cht_user ON couchdb._id = cht_user.user_id
 WHERE
   couchdb.doc->>'type' = 'user-settings'

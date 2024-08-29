@@ -1,5 +1,5 @@
 SELECT
-FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb
+FROM {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb
 LEFT JOIN {{ ref('data_record') }} data_record ON couchdb._id = data_record.uuid
 WHERE
   couchdb.doc->>'type' = 'data_record'

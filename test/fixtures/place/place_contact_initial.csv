@@ -1,0 +1,6 @@
+uuid,saved_timestamp,contact_type
+p1,2024-08-01 00:00:00,clinic
+p2,2024-08-01 00:00:00,health_center
+p3,2024-08-02 00:00:00,district_hospital
+p4,2024-08-02 00:00:00,person
+p5,2024-08-02 00:00:00,contact

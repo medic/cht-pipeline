@@ -1,0 +1,19 @@
+unit_tests:
+  - name: test_place_model_transformation_and_data_integrity
+    description: |
+      This unit test validates the transformation logic in the `place` model and ensures data integrity.
+      It uses fixture data for both `contact` and `couchdb` to test the complete logic.
+    model: place
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('contact')
+        format: csv
+        fixture: place_contact_initial
+      - input: source('couchdb', "{{ env_var('POSTGRES_TABLE') }}")
+        format: csv
+        fixture: place_source_table_initial
+    expect:
+      format: csv
+      fixture: place_initial_expected

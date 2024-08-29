@@ -1,0 +1,5 @@
+uuid,saved_timestamp,doc_type,_deleted
+c1,2024-08-01 00:00:00,contact,false
+c2,2024-08-01 00:00:00,clinic,false
+c3,2024-08-02 00:00:00,person,false
+c4,2024-08-02 00:00:00,district_hospital,false
