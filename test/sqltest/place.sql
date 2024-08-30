@@ -1,5 +1,5 @@
 SELECT
-FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb
+FROM {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb
 LEFT JOIN {{ ref('place') }} place ON couchdb._id = place.uuid
 LEFT JOIN {{ ref('contact') }} contact ON contact.uuid = place.uuid
 WHERE

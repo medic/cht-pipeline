@@ -21,7 +21,7 @@ SELECT
   doc->>'roles' as roles
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
-  {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} source_table
+  {{ source('couchdb', env_var('POSTGRES_TABLE')) }} source_table
   ON source_table._id = document_metadata.uuid
 WHERE
   document_metadata.doc_type = 'user-settings'

@@ -1,0 +1,14 @@
+unit_tests:
+  - name: test_document_metadata
+    model: document_metadata
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: source('couchdb', "{{ env_var('POSTGRES_TABLE') }}")
+        format: csv
+        fixture: document_metadata_initial
+    expect:
+      format: csv
+      fixture: document_metadata_initial_expected
+

@@ -16,7 +16,7 @@ SELECT
   contact.saved_timestamp,
   couchdb.doc->>'place_id' as place_id
 FROM {{ ref('contact') }} contact
-INNER JOIN {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb ON couchdb._id = uuid
+INNER JOIN {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb ON couchdb._id = uuid
 WHERE
   (
     (couchdb.doc->>'place_id' IS NOT NULL) OR

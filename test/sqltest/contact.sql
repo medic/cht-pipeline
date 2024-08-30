@@ -1,5 +1,5 @@
 SELECT
-FROM {{ env_var('POSTGRES_SCHEMA') }}.{{ env_var('POSTGRES_TABLE') }} couchdb
+FROM {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb
 LEFT JOIN {{ ref('contact') }} contact ON couchdb._id = contact.uuid
 WHERE
   couchdb.doc->>'type' IN ('contact', 'clinic', 'district_hospital', 'health_center', 'person')
