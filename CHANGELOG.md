@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/medic/cht-pipeline/compare/v1.0.0...v1.1.0) (2024-09-02)
+
+
+### Features
+
+* update postgres version to 16 ([9c44962](https://github.com/medic/cht-pipeline/commit/9c44962cd6fcb130638c1de11535e34506ca4c3e))
+
 # 1.0.0 (2024-08-27)
 
 
