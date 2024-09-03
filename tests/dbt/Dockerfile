@@ -1,16 +1,14 @@
 FROM python:3 AS testing
 
-RUN pip install flake8
-
-RUN flake8 dbt-run.py
+RUN pip install flake8 \
+  && flake8 dbt-run.py
 
 FROM python:3 AS release
 
 RUN pip install --upgrade cffi \
   && pip install cryptography~=3.4 \
-  && pip install dbt-core dbt-postgres
-
-RUN adduser dbt
+  && pip install dbt-core dbt-postgres \
+  && adduser dbt
 USER dbt
 
 WORKDIR /dbt/
