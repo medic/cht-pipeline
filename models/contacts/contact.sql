@@ -20,11 +20,8 @@ SELECT
   doc->'parent'->>'_id' AS parent_uuid,
   doc->>'name' AS name,
   COALESCE(doc->>'contact_type', doc->>'type') as contact_type,
-  doc->>'phone' AS phone,
-  doc->>'alternative_phone' AS phone2,
   doc->>'is_active' AS active,
   doc->>'notes' AS notes,
-  doc->>'contact_id' AS contact_id,
   NULLIF(doc->> 'muted', '') AS muted
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
