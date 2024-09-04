@@ -11,6 +11,9 @@ unit_tests:
       - input: ref('contact')
         format: csv
         fixture: person_contact_initial
+      - input: ref('contact_type')
+        format: csv
+        fixture: contact_type_initial_expected
       - input: source('couchdb', "{{ env_var('POSTGRES_TABLE') }}")
         format: csv
         fixture: person_source_table_initial

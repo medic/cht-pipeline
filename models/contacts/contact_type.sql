@@ -18,6 +18,6 @@ SELECT
     WHEN id = 'person' THEN TRUE
     ELSE COALESCE(settings.element->>'person', 'false')::boolean
   END AS person,
-  (settings.element IS NULL) AS configured
+  (settings.element IS NOT NULL) AS configured
 FROM settings
 FULL OUTER JOIN existing ON existing.id = settings.element->>'id'

@@ -1,0 +1,4 @@
+id,person,configured
+person,TRUE,FALSE
+clinic,FALSE,FALSE
+district_hospital,FALSE,FALSE

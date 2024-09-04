@@ -1,0 +1,17 @@
+unit_tests:
+  - name: test_contact_types
+    description: |
+      This unit test validates the transformation logic in the `contact_type` model and ensures data integrity.
+      It uses fixture data for both `contact` and `source_table` to test the complete logic.
+    model: contact_type
+    given:
+      - input: source('couchdb', "{{ env_var('POSTGRES_TABLE') }}")
+        format: csv
+        fixture: person_source_table_initial
+      - input: ref('contact')
+        format: csv
+        fixture: contact_initial_expected
+    expect:
+      format: csv
+      fixture: contact_type_initial_expected
+
