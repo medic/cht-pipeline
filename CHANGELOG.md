@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/medic/cht-pipeline/compare/v1.1.0...v1.1.1) (2024-09-04)
+
+
+### Bug Fixes
+
+* **#156:** unit test fixture not found when integrating with cht-sync ([#158](https://github.com/medic/cht-pipeline/issues/158)) ([ad88744](https://github.com/medic/cht-pipeline/commit/ad88744a4827824e290d474f4af8e82d64288e5f)), closes [#156](https://github.com/medic/cht-pipeline/issues/156)
+
 # [1.1.0](https://github.com/medic/cht-pipeline/compare/v1.0.0...v1.1.0) (2024-09-02)
 
 
