@@ -15,7 +15,7 @@ services:
   dbt:
     build:
       context: ../
-      dockerfile: ./test/dbt/Dockerfile
+      dockerfile: ./tests/dbt/Dockerfile
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_USER=pipelinetest
