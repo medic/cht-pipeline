@@ -3,3 +3,4 @@ c1,2024-08-01 00:00:00,2024-07-31 08:00:00+00,p1,John Doe,person,true,Note 1,fal
 c2,2024-08-01 00:00:00,2024-07-31 08:00:00+00,p2,Jane Doe,clinic,true,Note 2,true
 c3,2024-08-02 00:00:00,2024-07-31 08:00:00+00,p3,Mike Smith,person,false,Note 3,false
 c4,2024-08-02 00:00:00,2024-07-31 08:00:00+00,p4,Sara Smith,district_hospital,true,Note 4,true
+c5,2024-08-02 00:00:00,2024-07-31 08:00:00+00,p5,James Munroe,health_center,true,Note 5,true
