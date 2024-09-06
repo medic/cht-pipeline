@@ -13,5 +13,5 @@ WHERE
     OR -- fields dont match
     contact.parent_uuid <> couchdb.doc->'parent'->>'_id' OR
     contact.contact_type <> COALESCE(couchdb.doc->>'contact_type', couchdb.doc->>'type') OR
-    contact.phone <> couchdb.doc->>'phone'
+    contact.name <> couchdb.doc->>'name'
   )

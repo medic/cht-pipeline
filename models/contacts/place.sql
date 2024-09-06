@@ -14,14 +14,12 @@
 SELECT
   uuid,
   contact.saved_timestamp,
+  couchdb.doc->>'contact_id' as contact_id,
   couchdb.doc->>'place_id' as place_id
 FROM {{ ref('contact') }} contact
+INNER JOIN {{ ref('contact_type') }} contact_type ON contact_type.id = contact.contact_type
 INNER JOIN {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb ON couchdb._id = uuid
-WHERE
-  (
-    (couchdb.doc->>'place_id' IS NOT NULL) OR
-    (contact.contact_type <> 'person')
-  )
+WHERE contact_type.person = false
 {% if is_incremental() %}
   AND contact.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
