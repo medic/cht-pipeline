@@ -13,7 +13,7 @@
 SELECT
   contact.uuid,
   contact.saved_timestamp,
-  (couchdb.doc->>'date_of_birth')::date as date_of_birth,
+  NULLIF(couchdb.doc->>'date_of_birth', '')::date as date_of_birth,
   couchdb.doc->>'sex' as sex,
   couchdb.doc->>'phone' AS phone,
   couchdb.doc->>'alternative_phone' AS phone2,
