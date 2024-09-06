@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/medic/cht-pipeline/compare/v1.1.1...v1.2.0) (2024-09-06)
+
+
+### Features
+
+* **#144:** add macros to reduce boilerplate ([#155](https://github.com/medic/cht-pipeline/issues/155)) ([ecf4487](https://github.com/medic/cht-pipeline/commit/ecf4487337b8380ada75fa404875bd6860cdfebc)), closes [#144](https://github.com/medic/cht-pipeline/issues/144) [#144](https://github.com/medic/cht-pipeline/issues/144) [#144](https://github.com/medic/cht-pipeline/issues/144) [#144](https://github.com/medic/cht-pipeline/issues/144) [#144](https://github.com/medic/cht-pipeline/issues/144) [#144](https://github.com/medic/cht-pipeline/issues/144) [#144](https://github.com/medic/cht-pipeline/issues/144) [#144](https://github.com/medic/cht-pipeline/issues/144)
+
 ## [1.1.1](https://github.com/medic/cht-pipeline/compare/v1.1.0...v1.1.1) (2024-09-04)
 
 
