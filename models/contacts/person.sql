@@ -13,7 +13,12 @@
 SELECT
   contact.uuid,
   contact.saved_timestamp,
-  (couchdb.doc->>'date_of_birth')::date as date_of_birth,
+  CASE
+    WHEN couchdb.doc->>'date_of_birth' IS NULL OR couchdb.doc->>'date_of_birth' = '' THEN NULL
+    WHEN trim(couchdb.doc->>'date_of_birth') = '' THEN NULL
+    WHEN (couchdb.doc->>'date_of_birth') ~ '^\d{4}-\d{2}-\d{2}$' THEN (couchdb.doc->>'date_of_birth')::date
+    ELSE NULL
+  END as date_of_birth,
   couchdb.doc->>'sex' as sex
 FROM {{ ref("contact") }} contact
 INNER JOIN {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb ON couchdb._id = uuid
