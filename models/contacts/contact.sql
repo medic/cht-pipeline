@@ -14,7 +14,7 @@
 }}
 
 SELECT
-  document_metadata.uuid as uuid,
+  document_metadata.uuid1 as uuid,
   document_metadata.saved_timestamp,
   to_timestamp((NULLIF(doc ->> 'reported_date'::text, ''::text)::bigint / 1000)::double precision) AS reported,
   doc->'parent'->>'_id' AS parent_uuid,
