@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/medic/cht-pipeline/compare/v1.2.0...v1.2.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* fail builds if dbt run fails ([7babb39](https://github.com/medic/cht-pipeline/commit/7babb396bc110889b14ff2d9f5ca0bea02eaff3f))
+
 # [1.2.0](https://github.com/medic/cht-pipeline/compare/v1.1.1...v1.2.0) (2024-09-06)
 
 
