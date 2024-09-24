@@ -13,7 +13,12 @@
 SELECT
   contact.uuid,
   contact.saved_timestamp,
-  NULLIF(couchdb.doc->>'date_of_birth', '')::date as date_of_birth,
+  CASE
+    WHEN NULLIF(couchdb.doc->>'date_of_birth', '') IS NULL THEN NULL
+    WHEN couchdb.doc->>'date_of_birth' ~ '^\d{4}-\d{2}-\d{2}$' THEN (couchdb.doc->>'date_of_birth')::date
+    WHEN couchdb.doc->>'date_of_birth' ~ '^\d{2}/\d{2}/\d{4}$' THEN TO_DATE(couchdb.doc->>'date_of_birth', 'DD/MM/YYYY')
+    ELSE NULL
+  END as date_of_birth,
   couchdb.doc->>'sex' as sex,
   couchdb.doc->>'phone' AS phone,
   couchdb.doc->>'alternative_phone' AS phone2,
