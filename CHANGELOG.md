@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/medic/cht-pipeline/compare/v1.2.1...v1.2.2) (2024-09-24)
+
+
+### Bug Fixes
+
+* remove unused macro ([3b2057f](https://github.com/medic/cht-pipeline/commit/3b2057ffd7a8c827dd29ce943afe6dbe0682906d))
+
 ## [1.2.1](https://github.com/medic/cht-pipeline/compare/v1.2.0...v1.2.1) (2024-09-17)
 
 
