@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/medic/cht-pipeline/compare/v1.2.2...v1.2.3) (2024-09-24)
+
+
+### Bug Fixes
+
+* **#165:** removing potentially ambiguous date format ([26f4da7](https://github.com/medic/cht-pipeline/commit/26f4da7157980b8e70fc5e412b68468a3e15daac)), closes [#165](https://github.com/medic/cht-pipeline/issues/165)
+
 ## [1.2.2](https://github.com/medic/cht-pipeline/compare/v1.2.1...v1.2.2) (2024-09-24)
 
 
