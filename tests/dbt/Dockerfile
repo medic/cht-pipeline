@@ -19,6 +19,7 @@ COPY models models
 COPY macros macros
 COPY tests/fixtures tests/fixtures
 COPY tests/sqltest tests
+COPY tests/generic tests/generic
 COPY tests/run_dbt_tests_docker.sh run_dbt_tests_docker.sh
 
 CMD ["bash", "./run_dbt_tests_docker.sh"]
