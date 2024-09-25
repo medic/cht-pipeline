@@ -73,6 +73,8 @@ models:
         data_type: timestamp
       - name: date_of_birth
         data_type: date
+        data_tests:
+          - assert_date_format
       - name: sex
         data_type: string
       - name: patient_id
