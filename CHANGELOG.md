@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/medic/cht-pipeline/compare/v1.2.3...v1.2.4) (2024-09-25)
+
+
+### Bug Fixes
+
+* add extra validation to date format ([dfd3e7d](https://github.com/medic/cht-pipeline/commit/dfd3e7d17378cf1adfc5c71448e83e1d03cc8b86))
+
 ## [1.2.3](https://github.com/medic/cht-pipeline/compare/v1.2.2...v1.2.3) (2024-09-24)
 
 
