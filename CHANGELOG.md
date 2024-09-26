@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/medic/cht-pipeline/compare/v1.2.4...v1.3.0) (2024-09-26)
+
+
+### Features
+
+* remove date_of_birth column from person model ([76a0ddf](https://github.com/medic/cht-pipeline/commit/76a0ddfd5c213a7664647925a9ec9710d3663c0a))
+
 ## [1.2.4](https://github.com/medic/cht-pipeline/compare/v1.2.3...v1.2.4) (2024-09-25)
 
 
