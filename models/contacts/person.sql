@@ -13,15 +13,6 @@
 SELECT
   contact.uuid,
   contact.saved_timestamp,
-  CASE
-    WHEN NULLIF(couchdb.doc->>'date_of_birth', '') IS NULL THEN NULL
-    WHEN couchdb.doc->>'date_of_birth' ~ '^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$' THEN
-        CASE
-            WHEN couchdb.doc->>'date_of_birth' IS NOT NULL AND TO_DATE(couchdb.doc->>'date_of_birth', 'YYYY-MM-DD')::text = couchdb.doc->>'date_of_birth' THEN TO_DATE(couchdb.doc->>'date_of_birth', 'YYYY-MM-DD')
-            ELSE NULL
-        END
-    ELSE NULL
-  END as date_of_birth,
   couchdb.doc->>'sex' as sex,
   couchdb.doc->>'phone' AS phone,
   couchdb.doc->>'alternative_phone' AS phone2,
