@@ -13,14 +13,28 @@
   )
 }}
 
-SELECT
-  _id as uuid,
-  _deleted,
-  saved_timestamp,
-  doc->>'type' as doc_type
-from {{ source('couchdb', env_var('POSTGRES_TABLE')) }} source_table
-{% if var('start_timestamp') is not none and var('end_timestamp' is not none)%}
-  WHERE source_table.saved_timestamp >= {{ var('start_timestamp') }} AND source_table.saved_timestamp <= {{ var('end_timestamp') }}
-{% elif is_incremental() %}
-  WHERE source_table.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+WITH source_table AS (
+  SELECT
+    _id as uuid,
+    _deleted,
+    saved_timestamp,
+    doc->>'type' as doc_type
+  from {{ source('couchdb', env_var('POSTGRES_TABLE')) }}
+)
+
+{% if var('start_timestamp') is not none and var('batch_size' is not none) %}
+  WITH batched_data AS (
+    SELECT *
+    FROM source_table
+    WHERE saved_timestamp >= {{ var('start_timestamp') }}
+    ORDER BY saved_timestamp
+    LIMIT {{ var('batch_size') }}
+  )
+{% else %}
+
+  SELECT *
+  from {{ source('couchdb', env_var('POSTGRES_TABLE')) }} source_table
+  {% if is_incremental() %}
+    WHERE source_table.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+  {% endif %}
 {% endif %}
