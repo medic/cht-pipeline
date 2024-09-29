@@ -13,7 +13,7 @@
   )
 }}
 
-WITH source_table AS (
+WITH source_table_CTE AS (
   SELECT
     _id as uuid,
     _deleted,
@@ -23,13 +23,11 @@ WITH source_table AS (
 )
 
 {% if var("start_timestamp") is not none and var("batch_size") is not none %}
-  WITH batched_data AS (
-    SELECT *
-    FROM source_table
-    WHERE saved_timestamp >= {{ var('start_timestamp') }}
-    ORDER BY saved_timestamp
-    LIMIT {{ var('batch_size') }}
-  )
+  SELECT *
+  FROM source_table_CTE
+  WHERE saved_timestamp >= {{ var('start_timestamp') }}
+  ORDER BY saved_timestamp
+  LIMIT {{ var('batch_size') }}
 {% else %}
 
   SELECT
