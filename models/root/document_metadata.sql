@@ -22,7 +22,7 @@ WITH source_table AS (
   FROM {{ source('couchdb', env_var('POSTGRES_TABLE')) }}
 )
 
-{% if {{ var("start_timestamp") }} is not none and {{ var("batch_size") }} is not none %}
+{% if var("start_timestamp") is not none and var("batch_size") is not none %}
   WITH batched_data AS (
     SELECT *
     FROM source_table
