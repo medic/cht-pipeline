@@ -25,7 +25,7 @@ WITH source_table_CTE AS (
 {% if var("start_timestamp") is not none and var("batch_size") is not none %}
   SELECT *
   FROM source_table_CTE
-  WHERE saved_timestamp >= {{ var('start_timestamp') }}
+  WHERE saved_timestamp >= '{{ var("start_timestamp") }}'
   ORDER BY saved_timestamp
   LIMIT {{ var('batch_size') }}
 {% else %}
