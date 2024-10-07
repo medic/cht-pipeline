@@ -7,3 +7,7 @@ profile: 'default'
 
 on-run-end:
   - "{{ log_dbt_results(results) }}"
+
+vars:
+  start_timestamp: null
+  batch_size: null
