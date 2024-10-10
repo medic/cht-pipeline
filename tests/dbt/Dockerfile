@@ -5,7 +5,7 @@ RUN pip install flake8 \
 
 FROM python:3 AS release
 
-RUN pip install --upgrade cffi==1.17.0 \
+RUN pip install --upgrade cffi \
   && pip install cryptography~=3.4 \
   && pip install dbt-core dbt-postgres \
   && adduser dbt
