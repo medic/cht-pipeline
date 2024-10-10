@@ -1,9 +1,9 @@
-FROM python:3 AS testing
+FROM python:3.12 AS testing
 
 RUN pip install flake8 \
   && flake8 dbt-run.py
 
-FROM python:3 AS release
+FROM python:3.12 AS release
 
 RUN pip install --upgrade cffi \
   && pip install cryptography~=3.4 \
