@@ -9,3 +9,5 @@ tests/.user.yml
 dbt-env/*
 .user.yml
 dbt-env/*
+.idea
+.DS_Store
