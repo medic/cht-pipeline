@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/medic/cht-pipeline/compare/v1.3.0...v1.3.1) (2024-10-10)
+
+
+### Bug Fixes
+
+* **#176:** use python 3.12 ([#177](https://github.com/medic/cht-pipeline/issues/177)) ([d542e3c](https://github.com/medic/cht-pipeline/commit/d542e3c881bf62e3d168c7b340fa38056bfcafb2)), closes [#176](https://github.com/medic/cht-pipeline/issues/176)
+
 # [1.3.0](https://github.com/medic/cht-pipeline/compare/v1.2.4...v1.3.0) (2024-09-26)
 
 
