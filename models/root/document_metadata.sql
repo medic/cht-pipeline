@@ -4,7 +4,7 @@
     incremental_strategy='microbatch',
     event_time='saved_timestamp',
     begin='2020-01-01',
-    batch_size='day'
+    batch_size='day',
     unique_key='uuid',
     on_schema_change='append_new_columns',
     post_hook='delete from {{this}} where _deleted=true',
