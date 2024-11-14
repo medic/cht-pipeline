@@ -6,6 +6,8 @@
     indexes=[
       {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['saved_timestamp']},
+      {'columns': ['period_start']},
+      {'columns': ['android_version']},
     ]
   )
 }}

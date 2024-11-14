@@ -6,6 +6,9 @@
     indexes=[
       {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['saved_timestamp']},
+      {'columns': ['period_start']},
+      {'columns': ['user_name']},
+      {'columns': ['app_version']},
     ]
   )
 }}
