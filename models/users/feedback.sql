@@ -1,13 +1,14 @@
+{% set COLUMNS = 'columns' %}
 {{
   config(
     materialized = 'incremental',
     unique_key='uuid',
     on_schema_change='append_new_columns',
     indexes=[
-      {'columns': ['uuid'], 'type': 'hash'},
-      {'columns': ['saved_timestamp']},
-      {'columns': ['period_start']},
-      {'columns': ['user_name']},
+      {COLUMNS: ['uuid'], 'type': 'hash'},
+      {COLUMNS: ['saved_timestamp']},
+      {COLUMNS: ['period_start']},
+      {COLUMNS: ['user_name']},
     ]
   )
 }}
