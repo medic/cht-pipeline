@@ -1,17 +1,17 @@
 {{
   config(
     materialized = 'incremental',
-    unique_key='telemetry_id',
+    unique_key='uuid',
     on_schema_change='append_new_columns',
     indexes=[
-      {'columns': ['feedback_id'], 'type': 'hash'},
+      {'columns': ['uuid'], 'type': 'hash'},
       {'columns': ['saved_timestamp']},
     ]
   )
 }}
 
 SELECT
-  document_metadata.uuid as telemetry_id,
+  document_metadata.uuid as uuid,
   document_metadata.saved_timestamp,
   CONCAT_WS(                                --> Date concatenation from JSON fields, eg. 2021-5-17
     '-',
