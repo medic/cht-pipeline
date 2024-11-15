@@ -34,9 +34,9 @@ SELECT
       THEN
         doc#>>'{metadata,day}'
       ELSE
-        '1'
+        '1970-01-01'
     END
-  )::date AS period_start,
+  )::timestamptz AS period_start,
   doc#>>'{metadata,user}' AS user_name,
   doc#>>'{metadata,versions,app}' AS app_version,
   doc#>>'{metrics,boot_time,min}' AS boot_time_min,

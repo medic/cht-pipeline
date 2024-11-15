@@ -16,7 +16,7 @@
 SELECT
   document_metadata.uuid as uuid,
   document_metadata.saved_timestamp,
-  doc#>>'{meta,source}' AS SOURCE,    
+  doc#>>'{meta,source}' AS source,    
   doc#>>'{meta,url}' AS url,
   doc#>>'{meta,user,name}' AS user_name,
   doc#>>'{meta,time}' AS period_start,

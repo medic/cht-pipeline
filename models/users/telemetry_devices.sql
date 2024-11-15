@@ -19,7 +19,6 @@ SELECT
   telemetry.period_start,
   doc #>> '{device,deviceInfo,hardware,manufacturer}' AS device_manufacturer,
   doc #>> '{device,deviceInfo,hardware,model}' AS device_model,
-  doc #>> '{dbInfo,doc_count}' AS doc_count,
   doc #>> '{device,userAgent}' AS user_agent,
   doc #>> '{device,deviceInfo,app,version}' AS cht_android_version,
   doc #>> '{device,deviceInfo,software,androidVersion}' AS android_version,
