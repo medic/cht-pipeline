@@ -1,4 +1,3 @@
-
 target/
 dbt_modules/
 dbt_packages/
@@ -11,3 +10,4 @@ dbt-env/*
 dbt-env/*
 .idea
 .DS_Store
+env/
