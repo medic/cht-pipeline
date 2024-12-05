@@ -34,7 +34,7 @@ SELECT
       THEN
         doc#>>'{metadata,day}'
       ELSE
-        '1970-01-01'
+        '1'
     END
   )::timestamptz AS period_start,
   doc#>>'{metadata,user}' AS user_name,
