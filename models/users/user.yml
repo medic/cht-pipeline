@@ -32,3 +32,109 @@ models:
         data_type: string
       - name: roles
         data_type: string
+  - name: feedback
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: uuid
+        data_type: string
+        constraints:
+          - type: unique
+          - type: foreign_key
+            expression: "{{ env_var('POSTGRES_SCHEMA') }}.document_metadata (uuid) ON DELETE CASCADE"
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('document_metadata')
+              field: uuid
+      - name: saved_timestamp
+        data_type: timestamp
+        data_tests:
+          - not_null
+      - name: source
+        data_type: string
+      - name: url
+        data_type: string
+      - name: user_name
+        data_type: string
+      - name: period_start
+        data_type: string
+      - name: cause
+        data_type: string
+      - name: message
+        data_type: string
+  - name: telemetry
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: uuid
+        data_type: string
+        constraints:
+          - type: unique
+          - type: foreign_key
+            expression: "{{ env_var('POSTGRES_SCHEMA') }}.document_metadata (uuid) ON DELETE CASCADE"
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('document_metadata')
+              field: uuid
+      - name: saved_timestamp
+        data_type: timestamp
+        data_tests:
+          - not_null
+      - name: period_start
+        data_type: timestamp with time zone
+      - name: user_name
+        data_type: string
+      - name: app_version
+        data_type: string
+      - name: boot_time_min
+        data_type: string
+      - name: boot_time_max
+        data_type: string
+      - name: boot_time_count
+        data_type: string
+      - name: doc_count_on_local_db
+        data_type: string
+  - name: telemetry_devices
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: uuid
+        data_type: string
+        constraints:
+          - type: unique
+          - type: foreign_key
+            expression: "{{ env_var('POSTGRES_SCHEMA') }}.document_metadata (uuid) ON DELETE CASCADE"
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('document_metadata')
+              field: uuid
+      - name: saved_timestamp
+        data_type: timestamp
+        data_tests:
+          - not_null
+      - name: period_start
+        data_type: timestamp with time zone
+      - name: device_manufacturer
+        data_type: string
+      - name: device_model
+        data_type: string
+      - name: user_agent
+        data_type: string
+      - name: cht_android_version
+        data_type: string
+      - name: android_version
+        data_type: string
+      - name: storage_free
+        data_type: string
+      - name: storage_total
+        data_type: string
+      - name: network_up_speed
+        data_type: string
+      - name: network_down_speed
+        data_type: string

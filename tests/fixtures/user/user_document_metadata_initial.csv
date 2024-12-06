@@ -4,4 +4,7 @@ uuid,_deleted,saved_timestamp,doc_type
 3,false,2024-08-02 00:00:00,user-settings
 4,false,2024-08-02 00:00:00,user-settings
 5,true,2024-08-02 00:00:00,other-type
-
+6,false,2024-08-02 00:00:00,feedback
+7,true,2024-08-02 00:00:00,feedback
+8,false,2024-08-02 00:00:00,telemetry
+9,true,2024-08-02 00:00:00,telemetry
