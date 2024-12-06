@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/medic/cht-pipeline/compare/v1.3.1...v1.4.0) (2024-12-06)
+
+
+### Features
+
+* add users meta base models ([#181](https://github.com/medic/cht-pipeline/issues/181)) ([c5b8285](https://github.com/medic/cht-pipeline/commit/c5b82855c24cd85b90af2b910d456b04650c4f49))
+
 ## [1.3.1](https://github.com/medic/cht-pipeline/compare/v1.3.0...v1.3.1) (2024-10-10)
 
 
