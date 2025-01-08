@@ -1,0 +1,2 @@
+uuid,saved_timestamp,source,url,user_name,period_start,cause,message
+6,2024-08-02 00:00:00,automatic,http://example.com,admin,2024-08-02 00:00:00,bug,this is a bug
