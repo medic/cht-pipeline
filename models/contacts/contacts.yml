@@ -7,7 +7,7 @@ models:
         enforced: true
     columns:
       - name: uuid
-        data_type: string
+        data_type: text
         constraints:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.document_metadata (uuid) ON DELETE CASCADE"
@@ -27,28 +27,28 @@ models:
         data_tests:
           - not_null
       - name: parent_uuid
-        data_type: string
+        data_type: text
       - name: name
-        data_type: string
+        data_type: text
         data_tests:
           - not_null
       - name: contact_type
-        data_type: string
+        data_type: text
         data_tests:
           - not_null
       - name: active
-        data_type: string
+        data_type: text
       - name: notes
-        data_type: string
+        data_type: text
       - name: muted
-        data_type: string
+        data_type: text
   - name: contact_type
     config:
       contract:
         enforced: true
     columns:
       - name: id
-        data_type: string
+        data_type: text
       - name: person
         data_type: boolean
       - name: configured
@@ -59,7 +59,7 @@ models:
         enforced: true
     columns:
       - name: uuid
-        data_type: string
+        data_type: text
         constraints:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
@@ -72,20 +72,20 @@ models:
       - name: saved_timestamp
         data_type: timestamp
       - name: sex
-        data_type: string
+        data_type: text
       - name: patient_id
-        data_type: string
+        data_type: text
       - name: phone
-        data_type: string
+        data_type: text
       - name: phone2
-        data_type: string
+        data_type: text
   - name: place
     config:
       contract:
         enforced: true
     columns:
       - name: uuid
-        data_type: string
+        data_type: text
         constraints:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
@@ -97,16 +97,16 @@ models:
       - name: saved_timestamp
         data_type: timestamp
       - name: place_id
-        data_type: string
+        data_type: text
       - name: contact_id
-        data_type: string
+        data_type: text
   - name: patient
     config:
       contract:
         enforced: true
     columns:
       - name: uuid
-        data_type: string
+        data_type: text
         constraints:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.contact (uuid) ON DELETE CASCADE"
@@ -118,4 +118,4 @@ models:
       - name: saved_timestamp
         data_type: timestamp
       - name: patient_id
-        data_type: string
+        data_type: text

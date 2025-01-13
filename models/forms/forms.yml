@@ -7,7 +7,7 @@ models:
         enforced: true
     columns:
       - name: uuid
-        data_type: string
+        data_type: text
         constraints:
           - type: foreign_key
             expression: "{{ env_var('POSTGRES_SCHEMA') }}.document_metadata (uuid) ON DELETE CASCADE"
@@ -22,16 +22,16 @@ models:
       - name: reported
         data_type: timestamp with time zone
       - name: form
-        data_type: string
+        data_type: text
       - name: from_phone
-        data_type: string
+        data_type: text
       - name: patient_id
-        data_type: string
+        data_type: text
       - name: place_id
-        data_type: string
+        data_type: text
       - name: contact_uuid
-        data_type: string
+        data_type: text
       - name: parent_uuid
-        data_type: string
+        data_type: text
       - name: grandparent_uuid
-        data_type: string
+        data_type: text

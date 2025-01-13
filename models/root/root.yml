@@ -13,7 +13,7 @@ models:
         enforced: true
     columns:
       - name: uuid
-        data_type: string
+        data_type: text
         constraints:
           - type: unique
         data-tests:
@@ -30,6 +30,6 @@ models:
           - accepted_values:
               values: [true, false]
       - name: doc_type
-        data_type: string
+        data_type: text
         data-tests:
           - not_null
