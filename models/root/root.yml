@@ -9,6 +9,7 @@ sources:
 models:
   - name: document_metadata
     config:
+      tags: ["base"]
       contract:
         enforced: true
     columns:

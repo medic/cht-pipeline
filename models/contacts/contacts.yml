@@ -3,6 +3,7 @@ version: 1
 models:
   - name: contact
     config:
+      tags: ["base"]
       contract:
         enforced: true
     columns:
@@ -44,6 +45,7 @@ models:
         data_type: string
   - name: contact_type
     config:
+      tags: ["base"]
       contract:
         enforced: true
     columns:
@@ -55,6 +57,7 @@ models:
         data_type: boolean
   - name: person
     config:
+      tags: ["base"]
       contract:
         enforced: true
     columns:
@@ -81,6 +84,7 @@ models:
         data_type: string
   - name: place
     config:
+      tags: ["base"]
       contract:
         enforced: true
     columns:
