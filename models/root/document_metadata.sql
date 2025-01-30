@@ -9,7 +9,7 @@
       {'columns': ['saved_timestamp']},
       {'columns': ['doc_type']},
       {'columns': ['_deleted']},
-      {'columns': ['isntance']},
+      {'columns': ['instance']},
       {'columns': ['dbname']},
     ]
   )
