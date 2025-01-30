@@ -3,6 +3,7 @@ version: 1
 models:
   - name: user
     config:
+      tags: ["user"]
       contract:
         enforced: true
     columns:
@@ -34,6 +35,7 @@ models:
         data_type: string
   - name: feedback
     config:
+      tags: ["user"]
       contract:
         enforced: true
     columns:
@@ -66,6 +68,7 @@ models:
         data_type: string
   - name: telemetry
     config:
+      tags: ["user"]
       contract:
         enforced: true
     columns:
@@ -100,6 +103,7 @@ models:
         data_type: string
   - name: telemetry_devices
     config:
+      tags: ["user"]
       contract:
         enforced: true
     columns:
