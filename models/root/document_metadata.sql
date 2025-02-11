@@ -19,6 +19,13 @@ SELECT
   saved_timestamp,
   doc->>'type' as doc_type
 from {{ source('couchdb', env_var('POSTGRES_TABLE')) }} source_table
+
 {% if is_incremental() %}
-WHERE source_table.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+  WHERE source_table.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+
+  {% if var("batch_size") is not none %}
+    ORDER BY saved_timestamp
+    LIMIT {{ var('batch_size') }}
+  {% endif %}
+
 {% endif %}
