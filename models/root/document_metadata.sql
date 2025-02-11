@@ -24,7 +24,7 @@ from {{ source('couchdb', env_var('POSTGRES_TABLE')) }} source_table
   WHERE source_table.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
 
-{% if var("batch_size") is not none %}
+{% if var("batch_size", none) is not none %}
   ORDER BY saved_timestamp
   LIMIT {{ var('batch_size') }}
 {% endif %}
