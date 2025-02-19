@@ -1,4 +1,4 @@
-_id,saved_timestamp,_deleted,source.doc
+_id,saved_timestamp,_deleted,source,doc
 p1,2024-08-01 00:00:00,false,"host/medic","{""date_of_birth"": ""1980-01-01"", ""sex"": ""M"", ""phone"": ""12345"", ""alternative_phone"": ""54321""}"
 p2,2024-08-01 00:00:00,false,"host/medic","{""date_of_birth"": ""1990-05-15"", ""sex"": ""F"", ""phone"": ""67890"", ""alternative_phone"": ""9876"" }"
 p3,2024-08-02 00:00:00,false,"host/medic","{""type"": ""clinic""}"

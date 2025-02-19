@@ -2,7 +2,7 @@ docker compose up -d postgres
 
 # Give PostgreSQL some time to start up
 echo "Waiting for PostgreSQL to be ready..."
-sleep 10
+sleep 30
 
 docker compose up --build --abort-on-container-exit dbt
 exit_status=$?

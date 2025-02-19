@@ -20,7 +20,7 @@ WITH source_records AS (
     _id as uuid,
     _deleted,
     saved_timestamp,
-    doc->>'type' as doc_type
+    doc->>'type' as doc_type,
   split_part(source, '/', 1) AS instance,
   split_part(source, '/', 2) AS dbname
   FROM {{ source('couchdb', env_var('POSTGRES_TABLE')) }} source_table
