@@ -17,7 +17,7 @@ unit_tests:
     overrides:
       macros:
         is_incremental: true
-        max_existing_timestamp: "'2024-08-02 00:00:00.000'"
+        max_existing_timestamp: "'2024-08-01 00:00:00.000'"
       vars:
         batch_size: 2
     given:
