@@ -27,7 +27,7 @@ unit_tests:
     expect:
       format: csv
       # tests that all records with the same max_timestamp are copied
-      # plus 2 more because bathc_size is set to 2
-      # but the last record is not copied becuase neither same timestamp
+      # plus 2 more because batch_size is set to 2
+      # but the last record is not copied because neither same timestamp
       # nor in the batch
       fixture: document_metadata_batch_expected

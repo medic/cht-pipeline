@@ -27,7 +27,7 @@
   -- if not incremental (the table is being created for the first time)
   -- and batch size is defined
   -- apply a limit of batch size so the entire table is not created
-  -- in a sinlge batch
+  -- in a single batch
   {% else %}
     SELECT * FROM {{ source_cte_name }}
     {% if var("batch_size", none) is not none %}

@@ -2,7 +2,6 @@ export DBT_PROFILES_DIR=$PWD
 echo Install dbt dependencies ...
 dbt deps
 echo Running dbt ...
-#dbt run --vars '{batch_size: 10}'
 dbt run
 run_exit_status=$?
 if [ $run_exit_status -ne 0 ]; then
