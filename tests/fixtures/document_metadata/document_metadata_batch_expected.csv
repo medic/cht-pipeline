@@ -1,5 +1,5 @@
 uuid,_deleted,saved_timestamp,doc_type,instance,dbname
-"same_timestamp_1",false,"2024-08-01 00:00:00.000","person","host","medic"
-"same_timestamp_2",false,"2024-08-01 00:00:00.000","person","host","medic"
-"in_batch_3",false,"2024-08-02 00:00:00.000","person","host","medic"
-"in_batch_4",false,"2024-08-03 00:00:00.000","person","host","medic"
+"in_batch_1",false,"2024-08-01 00:00:00.000","person","host","medic"
+"in_batch_2",false,"2024-08-01 00:00:00.000","person","host","medic"
+"same_timestamp_3",false,"2024-08-01 00:00:00.000","person","host","medic"
+"same_timestamp_4",false,"2024-08-01 00:00:00.000","person","host","medic"
