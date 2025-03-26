@@ -41,7 +41,7 @@ models:
         data_type: string
       - name: notes
         data_type: string
-      - name: muted_changed
+      - name: muted_changed_1
         data_type: string
   - name: contact_type
     config:
