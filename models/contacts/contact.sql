@@ -22,7 +22,7 @@ SELECT
   COALESCE(doc->>'contact_type', doc->>'type') as contact_type,
   doc->>'is_active' AS active,
   doc->>'notes' AS notes,
-  NULLIF(doc->> 'muted', '') AS muted
+  NULLIF(doc->> 'muted', '') AS muted_changed
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
   {{ source('couchdb', env_var('POSTGRES_TABLE')) }} source_table
