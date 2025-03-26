@@ -32,5 +32,5 @@ WHERE
   document_metadata.doc_type IN ('contact', 'clinic', 'district_hospital', 'health_center', 'person')
   AND document_metadata._deleted = false
 {% if is_incremental() %}
-  AND document_metadata.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+  AND document_metadata.saved_timestamp > {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
