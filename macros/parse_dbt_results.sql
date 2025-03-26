@@ -12,8 +12,8 @@
       {% set rows_affected = 0 %}
     {%- endif -%}
     {# Extract start_time and end_time from the timing entry with name='execute' #}
-    {% set start_time = none %}
-    {% set end_time = none %}
+    {% set start_time = '' %}
+    {% set end_time = '' %}
     {% for timing in run_result_dict.get('timing', []) %}
       {% if timing.get('name') == 'execute' %}
         {% set start_time = timing.get('started_at') %}
