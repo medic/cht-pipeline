@@ -16,6 +16,8 @@ with empty_table as (
         null as name,
         null as resource_type,
         null as status,
+        null as start_time,
+        null as end_time,
         cast(null as float) as execution_time,
         cast(null as int) as rows_affected
 )
