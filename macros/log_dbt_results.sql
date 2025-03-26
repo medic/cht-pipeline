@@ -32,6 +32,8 @@
               '{{ parsed_result_dict.get('status') }}',
               {{ parsed_result_dict.get('execution_time') }},
               {{ parsed_result_dict.get('rows_affected') }}
+              {{ parsed_result_dict.get('start_time') }},
+              {{ parsed_result_dict.get('end_time') }}
             ) {{- "," if not loop.last else "" -}}
           {%- endfor -%}
       {%- endset -%}

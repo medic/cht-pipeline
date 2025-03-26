@@ -11,6 +11,16 @@
     {%- if not rows_affected -%}
       {% set rows_affected = 0 %}
     {%- endif -%}
+    {# Extract start_time and end_time from the timing entry with name='execute' #}
+    {% set start_time = none %}
+    {% set end_time = none %}
+    {% for timing in run_result_dict.get('timing', []) %}
+      {% if timing.get('name') == 'execute' %}
+        {% set start_time = timing.get('started_at') %}
+        {% set end_time = timing.get('completed_at') %}
+      {% endif %}
+    {% endfor %}
+    
     {% set parsed_result_dict = {
         'result_id': invocation_id ~ '.' ~ node.get('unique_id'),
         'invocation_id': invocation_id,
@@ -21,7 +31,9 @@
         'resource_type': node.get('resource_type'),
         'status': run_result_dict.get('status'),
         'execution_time': run_result_dict.get('execution_time'),
-        'rows_affected': rows_affected
+        'rows_affected': rows_affected,
+        'start_time': start_time,
+        'end_time': end_time
         }%}
     {% do parsed_results.append(parsed_result_dict) %}
   {% endfor %}
