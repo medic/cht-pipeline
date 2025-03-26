@@ -3,9 +3,6 @@
   {%- if execute -%}
     {%- set parsed_results = parse_dbt_results(results) -%}
     {%- if parsed_results | length  > 0 -%}
-      {% set delete_dbt_results_query -%}
-        delete from {{ ref('dbt_results') }}
-      {%- endset -%}
       {% set insert_dbt_results_query -%}
         insert into {{ ref('dbt_results') }}
           (
