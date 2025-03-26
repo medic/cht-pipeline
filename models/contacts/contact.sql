@@ -22,7 +22,7 @@ SELECT
   COALESCE(doc->>'contact_type', doc->>'type') as contact_type,
   doc->>'is_active' AS active,
   doc->>'notes' AS notes,
-  NULLIF(doc->> 'muted', '') AS muted_changed_1,
+  doc->>'name' AS muted_changed_1,
   doc->>'name' AS muted_changed_2
 FROM {{ ref('document_metadata') }} document_metadata
 INNER JOIN
