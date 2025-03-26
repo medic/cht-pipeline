@@ -34,7 +34,6 @@
             ) {{- "," if not loop.last else "" -}}
           {%- endfor -%}
       {%- endset -%}
-      {%- do run_query(delete_dbt_results_query) -%}
       {%- do run_query(insert_dbt_results_query) -%}
     {%- endif -%}
   {%- endif -%}
