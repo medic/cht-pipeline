@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/medic/cht-pipeline/compare/v1.4.0...v2.0.0) (2025-03-28)
+
+
+### Features
+
+* **#190:** version 2: add multi-db, batching and tags ([#192](https://github.com/medic/cht-pipeline/issues/192)) ([d2067b6](https://github.com/medic/cht-pipeline/commit/d2067b6a6d64f7a2b970ce89f9a01599307d99b2)), closes [#190](https://github.com/medic/cht-pipeline/issues/190) [#172](https://github.com/medic/cht-pipeline/issues/172) [#190](https://github.com/medic/cht-pipeline/issues/190) [#156](https://github.com/medic/cht-pipeline/issues/156)
+
+
+### BREAKING CHANGES
+
+* **#190:** batching, instance and dbname added to document_metadata
+
 # [1.4.0](https://github.com/medic/cht-pipeline/compare/v1.3.1...v1.4.0) (2024-12-06)
 
 
