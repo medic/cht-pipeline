@@ -1,0 +1,6 @@
+saved_timestamp,_id,_deleted,source,doc
+"2024-08-01 00:00:00.000","in_batch_1",false,"host/medic","{""type"": ""person""}"
+"2024-08-01 00:00:00.000","in_batch_2",false,"host/medic","{""type"": ""person""}"
+"2024-08-01 00:00:00.000","same_timestamp_3",false,"host/medic","{""type"": ""person""}"
+"2024-08-01 00:00:00.000","same_timestamp_4",false,"host/medic","{""type"": ""person""}"
+"2024-08-03 00:00:00.000","not_in_batch_5",false,"host/medic","{""type"": ""person""}"

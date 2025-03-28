@@ -1,0 +1,9 @@
+selectors:
+  - name: base_models
+    description: "Incremental models for the medic database, including contacts and form submissions"
+    definition:
+      tag: "base"
+  - name: users
+    description: "Models for telemetry and other user data"
+    definition:
+      tag: "user"

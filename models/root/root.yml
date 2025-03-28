@@ -9,6 +9,7 @@ sources:
 models:
   - name: document_metadata
     config:
+      tags: ["base"]
       contract:
         enforced: true
     columns:
@@ -33,3 +34,7 @@ models:
         data_type: string
         data-tests:
           - not_null
+      - name: instance
+        data_type: string
+      - name: dbname
+        data_type: string
