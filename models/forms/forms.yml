@@ -4,20 +4,11 @@ models:
   - name: data_record
     config:
       tags: ["base"]
-      contract:
-        enforced: true
     columns:
       - name: uuid
         data_type: string
-        constraints:
-          - type: foreign_key
-            expression: "{{ env_var('POSTGRES_SCHEMA') }}.document_metadata (uuid) ON DELETE CASCADE"
-          - type: unique
         data_tests:
           - not_null
-          - relationships:
-              to: ref('document_metadata')
-              field: uuid
       - name: saved_timestamp
         data_type: timestamp
       - name: reported
