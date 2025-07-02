@@ -17,6 +17,7 @@
   )
 }}
 
+{% set base_query %}
 SELECT
   _id as uuid,
   couchdb.saved_timestamp as saved_timestamp,
@@ -40,8 +41,26 @@ SELECT
   doc->'contact'->'parent'->>'_id' as parent_uuid,
   doc->'contact'->'parent'->'parent'->>'_id' as grandparent_uuid
 FROM {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb
-WHERE doc->>'type' = 'data_record'
+WHERE 
+  doc->>'type' = 'data_record'
   AND _deleted = false
+{% endset %}
+
 {% if is_incremental() %}
-  AND couchdb.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+  {% if var("batch_size", none) is not none %}
+    (
+      {{ base_query }}
+      AND couchdb.saved_timestamp > {{ max_existing_timestamp('saved_timestamp') }}
+      ORDER BY saved_timestamp
+      LIMIT {{ var('batch_size') }}
+    ) UNION (
+      {{ base_query }}
+      AND couchdb.saved_timestamp = {{ max_existing_timestamp('saved_timestamp') }}
+    )
+  {% else %}
+    {{ base_query }}
+    AND couchdb.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+  {% endif %}
+{% else %}
+  {{ base_query }}
 {% endif %}
