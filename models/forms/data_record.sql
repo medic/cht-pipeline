@@ -43,5 +43,5 @@ FROM {{ source('couchdb', env_var('POSTGRES_TABLE')) }} couchdb
 WHERE doc->>'type' = 'data_record'
   AND _deleted = false
 {% if is_incremental() %}
-  AND document_metadata.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
+  AND couchdb.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
