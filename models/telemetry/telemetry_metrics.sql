@@ -46,8 +46,8 @@ FROM
 WHERE
   doc->>'type' = 'telemetry'
   AND _deleted = false
-GROUP BY
-  1,2,3,4
 {% if is_incremental() %}
   AND source_table.saved_timestamp >= {{ max_existing_timestamp('saved_timestamp') }}
 {% endif %}
+GROUP BY
+  1,2,3,4
