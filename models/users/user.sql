@@ -17,7 +17,7 @@ SELECT
     doc->>'contact_id',
     doc->>'facility_id'
   ) as contact_uuid,
-  doc->>'inactive' as inactive,
+  (doc->>'inactive')::boolean as inactive,
   TO_CHAR(TO_TIMESTAMP((doc->>'deletion_date')::bigint / 1000), 'YYYY/MM/DD') as deletion_date,
   doc->>'language' as language,
   doc->>'roles' as roles
