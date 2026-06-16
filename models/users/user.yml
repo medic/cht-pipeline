@@ -29,6 +29,10 @@ models:
           - relationships:
               to: ref('contact')
               field: uuid
+      - name: inactive
+        data_type: boolean
+      - name: deletion_date
+        data_type: string
       - name: language
         data_type: string
       - name: roles
