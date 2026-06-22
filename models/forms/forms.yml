@@ -24,6 +24,8 @@ models:
         data_type: timestamp with time zone
       - name: form
         data_type: string
+      - name: source
+        data_type: string
       - name: from_phone
         data_type: string
       - name: patient_id
